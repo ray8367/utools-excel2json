@@ -1,0 +1,16 @@
+{
+  "main": "./index.html",
+  "preload": "./preload/index.js",
+  "logo": "logo.png",
+  "development": {
+    "main": "http://127.0.0.1:3000"
+  },
+  "features": [
+    {
+      "code": "keyword",
+      "label": "易翻",
+      "explain": "易翻：自动翻译、英文翻译中文、中文翻译英文",
+      "cmds": ["易翻", "ef", "1f"]
+    }
+  ]
+}
