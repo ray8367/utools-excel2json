@@ -1,9 +1,9 @@
-<script setup>
-import View from "./View/index.vue";
-</script>
-
 <template>
   <View />
 </template>
+
+<script setup>
+import View from '@/view/index.vue'
+</script>
 
 <style></style>
