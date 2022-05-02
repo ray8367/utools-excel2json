@@ -20,7 +20,10 @@
         class="border-solid border-[#d9d9d9] border-b-width-1px flex-1"
       ></div>
     </section>
+
+    <Loading v-if="loading" class="flex-1" />
     <a-textarea
+      v-else
       v-model:value="resultText"
       class="flex-1 resize-none"
       placeholder="翻译结果"
@@ -30,6 +33,7 @@
 </template>
 
 <script setup>
+const loading = ref(true)
 const userInput = ref('')
 const resultText = ref('')
 const radioValue = ref('a')
