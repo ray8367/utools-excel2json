@@ -49,7 +49,7 @@
         stroke-dasharray="87.96 494"
       />
     </svg>
-    <p class="mt-20px text-16px">正在翻译...</p>
+    <p class="mt-20px text-16px text-gray-500">正在翻译...</p>
   </div>
 </template>
 
