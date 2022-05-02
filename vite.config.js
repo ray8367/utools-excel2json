@@ -9,6 +9,10 @@ import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
   base: './',
+  define: {
+    // 去除vue的options api
+    __VUE_OPTIONS_API__: false
+  },
   plugins: [
     vue(),
     WindiCSS(),
