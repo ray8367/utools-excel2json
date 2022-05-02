@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^8.2.4",
+    "ant-design-vue": "^3.2.2",
     "vue": "^3.2.31"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.26.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^7.32.0",
