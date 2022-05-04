@@ -2,7 +2,7 @@
   "main": "./index.html",
   "logo": "logo.png",
   "development": {
-    "main": "http://127.0.0.1:3000"
+    "main": "http://127.0.0.1:6789"
   },
   "features": [
     {

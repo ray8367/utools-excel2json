@@ -52,5 +52,15 @@ export default defineConfig({
         drop_debugger: true
       }
     }
+  },
+  server: {
+    proxy: {
+      // 百度翻译
+      '/baiduApi': {
+        target: 'https://fanyi-api.baidu.com/api/trans/vip/translate',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/baiduApi/, '')
+      }
+    }
   }
 })

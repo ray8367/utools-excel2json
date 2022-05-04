@@ -5,6 +5,7 @@
         v-model:value="userInput"
         class="flex-1 resize-none rounded-t-8px"
         placeholder="请输入要翻译的内容"
+        @change="changeTextHandler"
       />
       <section class="flex my-16px">
         <a-radio-group v-model:value="radioValue" button-style="solid">
@@ -18,26 +19,41 @@
         ></div>
       </section>
 
-      <Loading
-        v-if="loading"
-        class="flex-1 rounded-b-8px border-solid border-[#d9d9d9] border-width-1px"
-      />
-      <a-textarea
-        v-else
-        v-model:value="resultText"
-        class="flex-1 rounded-b-8px resize-none"
-        placeholder="翻译结果"
-        readonly
-      />
+      <div class="flex-1">
+        <Loading
+          v-if="loading"
+          class="h-full rounded-b-8px border-solid border-[#d9d9d9] border-width-1px"
+        />
+        <a-textarea
+          v-else
+          v-model:value="resultText"
+          class="!h-full rounded-b-8px resize-none"
+          placeholder="翻译结果"
+          readonly
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const loading = ref(true)
+import translation from '@/apis/translation'
+
+const loading = ref(false)
 const userInput = ref('')
 const resultText = ref('')
 const radioValue = ref('a')
+
+async function changeTextHandler() {
+  loading.value = true
+  const result = await translation.baidu({
+    q: userInput.value,
+    from: 'auto',
+    to: 'zh'
+  })
+  resultText.value = result
+  loading.value = false
+}
 </script>
 
 <style lang="scss" scoped></style>
