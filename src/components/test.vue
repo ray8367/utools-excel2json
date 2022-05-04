@@ -5,17 +5,16 @@
         v-model:value="userInput"
         class="flex-1 resize-none rounded-t-8px"
         placeholder="请输入要翻译的内容"
-        @change="changeTextHandler"
       />
       <section class="flex my-16px">
         <a-radio-group v-model:value="radioValue" button-style="solid">
-          <a-radio-button value="a">百度翻译</a-radio-button>
-          <a-radio-button value="b">腾讯翻译</a-radio-button>
-          <a-radio-button value="c">谷歌翻译</a-radio-button>
-          <a-radio-button value="d">阿里云</a-radio-button>
+          <a-radio-button value="baidu">百度翻译</a-radio-button>
+          <a-radio-button value="tencent">腾讯翻译</a-radio-button>
+          <a-radio-button value="google">谷歌翻译</a-radio-button>
+          <a-radio-button value="ali">阿里云</a-radio-button>
         </a-radio-group>
         <div
-          class="border-solid border-[#d9d9d9] border-b-width-1px flex-1"
+          class="border-solid border-[#d9d9d9] border-b-width-1px flex-1 flex justify-end"
         ></div>
       </section>
 
@@ -37,23 +36,62 @@
 </template>
 
 <script setup>
+import { debounce } from 'lodash-es'
 import translation from '@/apis/translation'
 
 const loading = ref(false)
 const userInput = ref('')
 const resultText = ref('')
-const radioValue = ref('a')
+const radioValue = ref('baidu')
 
-async function changeTextHandler() {
+// 监听用户输入
+watch(
+  userInput,
+  debounce(function () {
+    userIsInput()
+  }, 1200)
+)
+
+// 分发翻译请求
+function userIsInput() {
+  switch (radioValue.value) {
+    case 'baidu':
+      baiduTranslate()
+      break
+    case 'tencent':
+      tencentTranslate()
+      break
+    case 'google':
+      googleTranslate()
+      break
+    case 'ali':
+      aliTranslate()
+      break
+    default:
+      break
+  }
+}
+
+// 百度翻译
+async function baiduTranslate() {
   loading.value = true
-  const result = await translation.baidu({
+  const obj = {
     q: userInput.value,
     from: 'auto',
     to: 'zh'
-  })
-  resultText.value = result
+  }
   loading.value = false
+  resultText.value = await translation.baidu(obj)
 }
+
+// 腾讯翻译
+async function tencentTranslate() {}
+
+// 谷歌翻译
+async function googleTranslate() {}
+
+// 阿里云翻译
+async function aliTranslate() {}
 </script>
 
 <style lang="scss" scoped></style>
