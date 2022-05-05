@@ -8,7 +8,7 @@
           placeholder="请输入要翻译的内容"
         />
       </div>
-      <section class="flex my-16px">
+      <section class="flex my-8px">
         <a-radio-group
           v-model="radioValue"
           type="button"
@@ -22,25 +22,26 @@
         <div
           class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end"
         >
-          <a-dropdown trigger="hover" @select="handleSelect">
-            <a-button> {{ 当前翻译方式 }} <icon-down /> </a-button>
-            <template #content>
-              <a-doption
-                v-for="item in 翻译方式数组"
-                :key="item.value"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-doption>
-            </template>
-          </a-dropdown>
+          <a-select
+            v-model="currentType"
+            :style="{ width: '120px' }"
+            @change="changeTranslateType"
+          >
+            <a-option
+              v-for="item in translateTypeArr"
+              :key="item.value"
+              :value="item.value"
+            >
+              {{ item.label }}
+            </a-option>
+          </a-select>
         </div>
       </section>
 
       <div class="flex flex-1">
         <Loading
-          v-if="loading"
-          class="w-full rounded-b-8px border-solid border-[#ddd] border-width-1px"
+          v-if="pageLoading"
+          class="w-full rounded-b-8px border-solid border-[#e9e9e9] border-width-1px"
         />
         <div v-else class="text_wrapper text_readonly flex flex-1">
           <a-textarea
@@ -57,21 +58,21 @@
 
 <script setup>
 import { debounce } from 'lodash-es'
-import { IconDown } from '@arco-design/web-vue/es/icon'
 import translation from '@/apis/translation'
 
-const loading = ref(false)
-const userInput = ref('')
-const resultText = ref('')
-const radioValue = ref('baidu')
-const 当前翻译方式 = ref('自动检测')
+const pageLoading = ref(false) // 是否正在翻译
+const userInput = ref('') // 输入的内容
+const resultText = ref('') // 翻译结果
+const radioValue = ref('baidu') // 翻译api
+const currentType = ref('auto,zh') // 当前翻译方式
 
-const 翻译方式数组 = [
-  { label: '自动检测', value: 'auto' },
-  { label: '中 → 英', value: 'aaaa' },
-  { label: '英 → 中', value: 'bbbb' }
+// 翻译方式选项
+const translateTypeArr = [
+  { label: '自动检测', value: 'auto,zh' },
+  { label: '中 → 英', value: 'zh,en' },
+  { label: '英 → 中', value: 'en,zh' }
 ]
-// 监听用户输入
+// 监听用户输入，防抖1200ms
 watch(
   userInput,
   debounce(function () {
@@ -81,7 +82,7 @@ watch(
 
 // 分发翻译请求，并开始翻译
 function startTranslation() {
-  loading.value = true
+  pageLoading.value = true
   switch (radioValue.value) {
     case 'baidu':
       baiduTranslate()
@@ -100,11 +101,14 @@ function startTranslation() {
   }
 }
 
+// 返回翻译的from、to
+function returnTranslateFromTo() {
+  const [from, to] = currentType.value.split(',')
+  return { from, to }
+}
+
 // 切换翻译方式
-function handleSelect(e) {
-  console.log(e)
-  // 动态给下拉菜单赋值文字
-  当前翻译方式.value = 翻译方式数组.find(i => i.value === e).label
+function changeTranslateType() {
   startTranslation()
 }
 
@@ -112,22 +116,20 @@ function handleSelect(e) {
 async function baiduTranslate() {
   const obj = {
     q: userInput.value,
-    from: 'auto',
-    to: 'zh'
+    ...returnTranslateFromTo()
   }
   resultText.value = await translation.baidu(obj)
-  loading.value = false
+  pageLoading.value = false
 }
 
 // 腾讯翻译
 async function tencentTranslate() {
   const obj = {
     q: userInput.value,
-    from: 'auto',
-    to: 'zh'
+    ...returnTranslateFromTo()
   }
   resultText.value = await translation.tencent(obj)
-  loading.value = false
+  pageLoading.value = false
 }
 
 // 谷歌翻译
@@ -145,7 +147,7 @@ async function aliTranslate() {}
   }
   ::v-deep(.arco-textarea-wrapper) {
     background-color: #fff;
-    border-color: #ddd;
+    border-color: #e9e9e9;
   }
   ::v-deep(.arco-textarea-focus) {
     border-color: #165dff;
@@ -153,15 +155,7 @@ async function aliTranslate() {}
 }
 .text_readonly {
   ::v-deep(.arco-textarea-focus) {
-    border-color: #ddd;
-  }
-}
-.arco-icon {
-  transition: all 0.3s ease;
-}
-.arco-dropdown-open {
-  .arco-icon-down {
-    transform: rotate(-180deg);
+    border-color: #e9e9e9;
   }
 }
 </style>
