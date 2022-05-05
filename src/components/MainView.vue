@@ -32,7 +32,7 @@
               v-for="item in translateFromOptions"
               :key="item.value"
               :value="item.value"
-              :disabled="item.value === translateTo.value"
+              :disabled="item.value === translateTo"
             >
               {{ item.label }}
             </a-option>
@@ -48,7 +48,7 @@
               v-for="item in translateToOptions"
               :key="item.value"
               :value="item.value"
-              :disabled="item.value === translateFrom.value"
+              :disabled="item.value === translateFrom"
             >
               {{ item.label }}
             </a-option>
