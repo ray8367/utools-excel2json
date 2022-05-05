@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
 import WindiCSS from 'vite-plugin-windicss'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   base: './',
@@ -25,7 +25,7 @@ export default defineConfig({
       imports: ['vue', '@vueuse/core']
     }),
     Components({
-      resolvers: [AntDesignVueResolver()]
+      resolvers: [ArcoResolver()]
     }),
     chunkSplitPlugin({
       strategy: 'default',

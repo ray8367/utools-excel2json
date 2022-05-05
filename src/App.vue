@@ -1,10 +1,9 @@
 <template>
-  <Test />
+  <MainView />
 </template>
 
 <script setup>
-// import View from '@/view/index.vue'
-import Test from '@/components/test.vue'
+import MainView from '@/components/MainView.vue'
 </script>
 
 <style></style>
