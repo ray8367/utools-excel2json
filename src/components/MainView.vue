@@ -20,17 +20,35 @@
           <a-radio value="ali">阿里云</a-radio>
         </a-radio-group>
         <div
-          class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end"
+          class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px"
         >
+          <!-- 翻译From的select -->
           <a-select
-            v-model="currentType"
+            v-model="translateFrom"
             :style="{ width: '120px' }"
             @change="changeTranslateType"
           >
             <a-option
-              v-for="item in translateTypeArr"
+              v-for="item in translateFromOptions"
               :key="item.value"
               :value="item.value"
+              :disabled="item.value === translateTo.value"
+            >
+              {{ item.label }}
+            </a-option>
+          </a-select>
+          <icon-swap />
+          <!-- 翻译To的select -->
+          <a-select
+            v-model="translateTo"
+            :style="{ width: '120px' }"
+            @change="changeTranslateType"
+          >
+            <a-option
+              v-for="item in translateToOptions"
+              :key="item.value"
+              :value="item.value"
+              :disabled="item.value === translateFrom.value"
             >
               {{ item.label }}
             </a-option>
@@ -57,21 +75,28 @@
 </template>
 
 <script setup>
-import { debounce } from 'lodash-es'
+import { debounce, dropWhile } from 'lodash-es'
+import { IconSwap } from '@arco-design/web-vue/es/icon'
 import translation from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
 const radioValue = ref('baidu') // 翻译api
-const currentType = ref('auto,zh') // 当前翻译方式
+const translateFrom = ref('auto') // 当前翻译From
+const translateTo = ref('zh') // 当前翻译to
 
-// 翻译方式选项
-const translateTypeArr = [
-  { label: '自动检测', value: 'auto,zh' },
-  { label: '中 → 英', value: 'zh,en' },
-  { label: '英 → 中', value: 'en,zh' }
+// 翻译方式选项From
+const translateFromOptions = [
+  { label: '自动检测', value: 'auto' },
+  { label: '中文', value: 'zh' },
+  { label: '英语', value: 'en' }
 ]
+
+// 翻译方式选项To
+const translateToOptions = dropWhile(translateFromOptions, function (i) {
+  return i.value === 'auto'
+})
 // 监听用户输入，防抖1200ms
 watch(
   userInput,
@@ -101,12 +126,6 @@ function startTranslation() {
   }
 }
 
-// 返回翻译的from、to
-function returnTranslateFromTo() {
-  const [from, to] = currentType.value.split(',')
-  return { from, to }
-}
-
 // 切换翻译方式
 function changeTranslateType() {
   startTranslation()
@@ -116,7 +135,8 @@ function changeTranslateType() {
 async function baiduTranslate() {
   const obj = {
     q: userInput.value,
-    ...returnTranslateFromTo()
+    from: translateFrom.value,
+    to: translateTo.value
   }
   resultText.value = await translation.baidu(obj)
   pageLoading.value = false
@@ -126,7 +146,8 @@ async function baiduTranslate() {
 async function tencentTranslate() {
   const obj = {
     q: userInput.value,
-    ...returnTranslateFromTo()
+    from: translateFrom.value,
+    to: translateTo.value
   }
   resultText.value = await translation.tencent(obj)
   pageLoading.value = false
