@@ -23,16 +23,32 @@ const errors = {
   58002: '服务当前已关闭，请前往管理控制台开启服务',
   90107: '认证未通过或未生效，请前往我的认证查看认证进度'
 }
+
+const last = {
+  optionsStr: '',
+  result: ''
+}
+
 /**
  * 通用翻译
- * @param {String} param0.q 请求翻译query(UTF-8编码)
- * @param {String} param0.from 翻译源语言(可设置为auto)
- * @param {String} param0.to 翻译目标语言(不可设置为auto)
+ * @param {String} options.q 请求翻译query(UTF-8编码)
+ * @param {String} options.from 翻译源语言(可设置为auto)
+ * @param {String} options.to 翻译目标语言(不可设置为auto)
  */
-export default function ({ q, from, to }) {
+export default function (options) {
+  const { q, from, to } = options
+  // 空值优化
   if (!q) {
     return ''
   }
+
+  // 重复值优化
+  const optionsStr = JSON.stringify(options)
+  if (optionsStr === last.optionsStr) {
+    return last.result
+  }
+  last.optionsStr = optionsStr
+
   const url = import.meta.env.VITE_BAIDU_BASEURL
   const { appid, token } = getKey(TYPE_NAEM)
   // 	随机数:可为字母或数字的字符串
@@ -48,6 +64,7 @@ export default function ({ q, from, to }) {
     salt,
     sign
   }
+  console.log('axios..')
 
   return axios
     .get(url, { params })
@@ -60,12 +77,14 @@ export default function ({ q, from, to }) {
         trans_result.map(item => {
           result += item.dst + '\n'
         })
+
+        last.result = result
         return result
-        // return trans_result[0].dst
       }
     })
     .catch(err => {
-      return '翻译失败：' + err.message
-      // console.log('err:', err)
+      const result = '翻译失败：' + err.message
+      last.result = result
+      return result
     })
 }

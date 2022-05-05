@@ -60,6 +60,12 @@ export default defineConfig({
         target: 'https://fanyi-api.baidu.com/api/trans/vip/translate',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/baiduApi/, '')
+      },
+      // 腾讯翻译
+      '/tencentApi': {
+        target: 'https://tmt.tencentcloudapi.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/tencentApi/, '')
       }
     }
   }
