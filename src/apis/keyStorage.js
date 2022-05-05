@@ -1,5 +1,5 @@
 /**密钥存取(临时) */
-import { baidu } from '@/config'
+import { baidu, tencent } from '@/config'
 
 /**
  * 获取密钥
@@ -7,7 +7,8 @@ import { baidu } from '@/config'
  */
 export function getKey(type) {
   const keyDatas = {
-    baidu: baidu
+    baidu,
+    tencent
   }
   return keyDatas[type]
 }

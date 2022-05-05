@@ -6,7 +6,7 @@
         class="flex-1 resize-none rounded-t-8px"
         placeholder="请输入要翻译的内容"
       />
-      <section class="flex my-16px">
+      <section class="flex my-16px" @change="userIsInput">
         <a-radio-group v-model:value="radioValue" button-style="solid">
           <a-radio-button value="baidu">百度翻译</a-radio-button>
           <a-radio-button value="tencent">腾讯翻译</a-radio-button>
@@ -42,14 +42,14 @@ import translation from '@/apis/translation'
 const loading = ref(false)
 const userInput = ref('')
 const resultText = ref('')
-const radioValue = ref('baidu')
+const radioValue = ref('tencent')
 
 // 监听用户输入
 watch(
   userInput,
   debounce(function () {
     userIsInput()
-  }, 1200)
+  }, 200)
 )
 
 // 分发翻译请求
@@ -80,12 +80,21 @@ async function baiduTranslate() {
     from: 'auto',
     to: 'zh'
   }
-  loading.value = false
   resultText.value = await translation.baidu(obj)
+  loading.value = false
 }
 
 // 腾讯翻译
-async function tencentTranslate() {}
+async function tencentTranslate() {
+  loading.value = true
+  const obj = {
+    q: userInput.value,
+    from: 'auto',
+    to: 'zh'
+  }
+  resultText.value = await translation.tencent(obj)
+  loading.value = false
+}
 
 // 谷歌翻译
 async function googleTranslate() {}
