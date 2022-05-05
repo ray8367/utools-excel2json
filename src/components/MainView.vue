@@ -14,10 +14,13 @@
           type="button"
           @change="startTranslation"
         >
-          <a-radio value="baidu">百度翻译</a-radio>
-          <a-radio value="tencent">腾讯翻译</a-radio>
-          <a-radio value="google">谷歌翻译</a-radio>
-          <a-radio value="ali">阿里云</a-radio>
+          <a-radio
+            v-for="item in translateApiOptions"
+            :key="item.item"
+            :value="item.value"
+          >
+            {{ item.label }}
+          </a-radio>
         </a-radio-group>
         <div
           class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px"
@@ -32,12 +35,11 @@
               v-for="item in translateFromOptions"
               :key="item.value"
               :value="item.value"
-              :disabled="item.value === translateTo"
             >
               {{ item.label }}
             </a-option>
           </a-select>
-          <icon-swap />
+          <icon-swap stroke-linejoin="round" stroke-linecap="square" />
           <!-- 翻译To的select -->
           <a-select
             v-model="translateTo"
@@ -48,7 +50,6 @@
               v-for="item in translateToOptions"
               :key="item.value"
               :value="item.value"
-              :disabled="item.value === translateFrom"
             >
               {{ item.label }}
             </a-option>
@@ -90,13 +91,25 @@ const translateTo = ref('zh') // 当前翻译to
 const translateFromOptions = [
   { label: '自动检测', value: 'auto' },
   { label: '中文', value: 'zh' },
-  { label: '英语', value: 'en' }
+  { label: '文言文', value: 'wyw' },
+  { label: '英语', value: 'en' },
+  { label: '日语', value: 'jp' },
+  { label: '俄语', value: 'ru' },
+  { label: '德语', value: 'de' },
+  { label: '法语', value: 'fra' }
 ]
 
 // 翻译方式选项To
 const translateToOptions = dropWhile(translateFromOptions, function (i) {
   return i.value === 'auto'
 })
+// 翻译Api的选项
+const translateApiOptions = [
+  { label: '百度翻译', value: 'baidu' },
+  { label: '腾讯翻译', value: 'tencent' },
+  { label: '谷歌翻译', value: 'google' },
+  { label: '阿里云', value: 'ali' }
+]
 // 监听用户输入，防抖1200ms
 watch(
   userInput,
@@ -165,6 +178,7 @@ async function aliTranslate() {}
   ::v-deep(.arco-textarea) {
     resize: none;
     height: 100%;
+    font-size: 16px;
   }
   ::v-deep(.arco-textarea-wrapper) {
     background-color: #fff;
