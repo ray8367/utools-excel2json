@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vitalets/google-translate-api": "^8.0.0",
     "@vueuse/core": "^8.4.1",
     "axios": "^0.27.2",
     "lodash-es": "^4.17.21",

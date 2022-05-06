@@ -64,7 +64,6 @@ export default function (options) {
     salt,
     sign
   }
-  console.log('axios..')
 
   return axios
     .get(url, { params })
@@ -73,17 +72,24 @@ export default function (options) {
       if (error_code) {
         return errors[error_code] || '翻译失败：' + error_msg
       } else {
-        let result = ''
+        let text = ''
         trans_result.map(item => {
-          result += item.dst + '\n'
+          text += item.dst + '\n'
         })
 
+        const result = {
+          code: 200,
+          text: text
+        }
         last.result = result
         return result
       }
     })
     .catch(err => {
-      const result = '翻译失败：' + err.message
+      const result = {
+        code: 199,
+        text: '翻译失败：' + err.message
+      }
       last.result = result
       return result
     })

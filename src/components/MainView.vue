@@ -98,7 +98,7 @@ import translation from '@/apis/translation'
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
-const radioValue = ref('baidu') // 翻译api
+const radioValue = ref('google') // 翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
@@ -183,7 +183,8 @@ async function baiduTranslate() {
     from: translateFrom.value,
     to: translateTo.value
   }
-  resultText.value = await translation.baidu(obj)
+  const { text } = await translation.baidu(obj)
+  resultText.value = text
   pageLoading.value = false
 }
 
@@ -194,12 +195,22 @@ async function tencentTranslate() {
     from: translateFrom.value,
     to: translateTo.value
   }
-  resultText.value = await translation.tencent(obj)
+  const { text } = await translation.tencent(obj)
+  resultText.value = text
   pageLoading.value = false
 }
 
 // 谷歌翻译
-async function googleTranslate() {}
+async function googleTranslate() {
+  const obj = {
+    q: userInput.value,
+    from: translateFrom.value,
+    to: translateTo.value
+  }
+  const { text } = await translation.google(obj)
+  resultText.value = text
+  pageLoading.value = false
+}
 
 // 阿里云翻译
 async function aliTranslate() {}

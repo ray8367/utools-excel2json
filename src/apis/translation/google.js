@@ -1,11 +1,7 @@
 /**
- * 腾讯翻译接口
- * https://cloud.tencent.com/document/api/551/15619
+ * 谷歌翻译接口
+ * https://github.com/vitalets/google-translate-api
  *  */
-
-const TYPE_NAEM = 'tencent'
-import { getKey } from '../keyStorage'
-import google from './google'
 
 const last = {
   optionsStr: '',
@@ -14,14 +10,13 @@ const last = {
 
 /**
  * 机器翻译
- * @param {String} options.q 请求翻译query(UTF-8编码)
+ * @param {String} options.q 请求翻译query
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言(不可设置为auto)
  */
 export default function (options) {
-  const { q, from, to } = options
   // 空值优化
-  if (!q) {
+  if (!options.q) {
     return ''
   }
 
@@ -32,37 +27,22 @@ export default function (options) {
   }
   last.optionsStr = optionsStr
 
-  const credential = getKey(TYPE_NAEM)
-  const params = {
-    SourceText: q,
-    Source: from,
-    Target: to,
-    ProjectId: 0
-  }
-
   if (window.servers) {
     return window.servers
-      .tencentTextTranslate(credential, params)
+      .googleTextTranslate(options)
       .then(res => {
+        console.log(res)
         const result = {
           code: 200,
-          text: res.TargetText
+          text: res.text
         }
         last.result = result
         return result
       })
-      .catch(async err => {
-        const errQ = err.toString()
-        // 翻译报错
-        let { code: gCode, text: gText } = await google({
-          q: errQ,
-          from: 'auto',
-          to: 'zh'
-        })
-
+      .catch(err => {
         const result = {
           code: 199,
-          text: gCode === 200 ? gText : errQ
+          text: '翻译失败：' + err
         }
         last.result = result
         return result

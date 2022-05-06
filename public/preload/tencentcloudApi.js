@@ -1,4 +1,6 @@
-/**涉及node业务 */
+/**
+ * 腾讯云翻译
+ */
 const tencentcloud = require('tencentcloud-sdk-nodejs/tencentcloud/services/tmt')
 
 // 导入对应产品模块的client models。
