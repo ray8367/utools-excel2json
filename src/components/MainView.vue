@@ -2,6 +2,7 @@
   <div class="flex justify-center h-screen pt-18px pb-24px relative">
     <div
       class="setting_icon absolute right-8px bottom-8px text-22px text-[#666] cursor-pointer"
+      @click="openSettingModal"
     >
       <icon-settings />
     </div>
@@ -77,12 +78,21 @@
         </div>
       </div>
     </div>
+
+    <!-- 设置弹窗 -->
+    <SettingModal
+      ref="settingModalRef"
+      @ok="settingOk"
+      @cancel="settingCancel"
+    />
   </div>
 </template>
 
 <script setup>
 import { debounce, dropWhile } from 'lodash-es'
 import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
+
+import SettingModal from './SettingModal.vue'
 import translation from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
@@ -91,8 +101,23 @@ const resultText = ref('') // 翻译结果
 const radioValue = ref('baidu') // 翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
+const settingModalRef = ref() // 设置弹窗的ref
 
-// 翻译方式选项From
+// 弹框点击了确定
+function settingOk(data) {
+  console.log('data: ', data)
+}
+// 弹框点击了取消
+function settingCancel(data) {
+  console.log('data: ', data)
+}
+
+// 打开设置模态框
+function openSettingModal() {
+  settingModalRef.value.openSettingModal()
+  console.log()
+}
+// 翻译方式From的选项
 const translateFromOptions = [
   { label: '自动检测', value: 'auto' },
   { label: '中文', value: 'zh' },
@@ -104,10 +129,11 @@ const translateFromOptions = [
   { label: '法语', value: 'fra' }
 ]
 
-// 翻译方式选项To
+// 翻译方式To的选项
 const translateToOptions = dropWhile(translateFromOptions, function (i) {
   return i.value === 'auto'
 })
+
 // 翻译Api的选项
 const translateApiOptions = [
   { label: '百度翻译', value: 'baidu' },
@@ -115,6 +141,7 @@ const translateApiOptions = [
   { label: '谷歌翻译', value: 'google' },
   { label: '阿里云', value: 'ali' }
 ]
+
 // 监听用户输入，防抖1200ms
 watch(
   userInput,
@@ -180,9 +207,12 @@ async function aliTranslate() {}
 
 <style lang="scss" scoped>
 .setting_icon {
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   &:hover {
     transform: rotate(60deg);
+  }
+  &:active {
+    transform: scale(0.8) rotate(60deg);
   }
 }
 .text_wrapper {

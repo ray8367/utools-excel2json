@@ -1,20 +1,46 @@
 <template>
   <div class="">
-    <a-modal fullscreen @ok="handleOk" @cancel="handleCancel">
-      <template #title> Title </template>
-      <div>
-        You can cusstomize modal body text by the current situation. This modal
-        will be closed immediately once you press the OK button.
-      </div>
+    <a-modal
+      :visible="modalVis"
+      fullscreen
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <template #title> 设置 </template>
+      <div>还没写</div>
     </a-modal>
   </div>
 </template>
 
 <script setup>
-function handleOk() {}
-function handleCancel() {}
-const attrs = useAttrs()
-console.log('attrs: ', attrs)
+const modalVis = ref(false)
+const emit = defineEmits(['ok', 'cancel'])
+// 点击弹框确定
+function handleOk() {
+  emit('ok', 'ok要传的')
+  closeSettingModal()
+}
+
+// 点击弹框取消
+function handleCancel() {
+  emit('cancel', 'cancel要传的')
+  closeSettingModal()
+}
+
+// 打开弹窗
+function openSettingModal() {
+  modalVis.value = true
+}
+
+// 关闭弹窗
+function closeSettingModal() {
+  modalVis.value = false
+}
+
+// 暴露打开弹窗的函数，供父组件调用
+defineExpose({
+  openSettingModal
+})
 </script>
 
 <style lang="scss" scoped></style>
