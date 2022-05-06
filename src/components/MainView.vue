@@ -16,7 +16,7 @@
       </div>
       <section class="flex my-8px">
         <a-radio-group
-          v-model="radioValue"
+          v-model="currentTranslation"
           type="button"
           @change="startTranslation"
         >
@@ -34,13 +34,14 @@
           <!-- 翻译From的select -->
           <a-select
             v-model="translateFrom"
-            :style="{ width: '120px' }"
+            :style="{ width: '130px' }"
             @change="changeTranslateType"
           >
             <a-option
               v-for="item in translateFromOptions"
               :key="item.value"
               :value="item.value"
+              :disabled="item.disabled"
             >
               {{ item.label }}
             </a-option>
@@ -49,13 +50,14 @@
           <!-- 翻译To的select -->
           <a-select
             v-model="translateTo"
-            :style="{ width: '120px' }"
+            :style="{ width: '130px' }"
             @change="changeTranslateType"
           >
             <a-option
               v-for="item in translateToOptions"
               :key="item.value"
               :value="item.value"
+              :disabled="item.disabled"
             >
               {{ item.label }}
             </a-option>
@@ -89,7 +91,7 @@
 </template>
 
 <script setup>
-import { debounce, dropWhile } from 'lodash-es'
+import { debounce } from 'lodash-es'
 import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
 
 import SettingModal from './SettingModal.vue'
@@ -98,16 +100,16 @@ import translation from '@/apis/translation'
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
-const radioValue = ref('google') // 翻译api
+const currentTranslation = ref('baidu') // 翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 
-// 弹框点击了确定
+// 设置弹框点击了确定
 function settingOk(data) {
   console.log('data: ', data)
 }
-// 弹框点击了取消
+// 设置弹框点击了取消
 function settingCancel(data) {
   console.log('data: ', data)
 }
@@ -115,26 +117,26 @@ function settingCancel(data) {
 // 打开设置模态框
 function openSettingModal() {
   settingModalRef.value.openSettingModal()
-  console.log()
 }
-// 翻译方式From的选项
-const translateFromOptions = [
-  { label: '自动检测', value: 'auto' },
-  { label: '中文', value: 'zh' },
-  { label: '文言文', value: 'wyw' },
-  { label: '英语', value: 'en' },
-  { label: '日语', value: 'jp' },
-  { label: '俄语', value: 'ru' },
-  { label: '德语', value: 'de' },
-  { label: '法语', value: 'fra' }
-]
 
-// 翻译方式To的选项
-const translateToOptions = dropWhile(translateFromOptions, function (i) {
-  return i.value === 'auto'
+// 翻译方式From参数的选项
+const translateFromOptions = ref([
+  { label: '自动检测', value: 'auto', disabled: false },
+  { label: '中文', value: 'zh', disabled: false },
+  { label: '文言文-百度', value: 'wyw', disabled: false },
+  { label: '英语', value: 'en', disabled: false },
+  { label: '日语', value: 'jp', disabled: false },
+  { label: '俄语', value: 'ru', disabled: false },
+  { label: '德语', value: 'de', disabled: false },
+  { label: '法语', value: 'fra', disabled: false }
+])
+
+// 翻译方式To参数的选项(过滤掉“自动检测”)
+const translateToOptions = computed(() => {
+  return translateFromOptions.value.filter(i => i.value !== 'auto')
 })
 
-// 翻译Api的选项
+// 翻译Api的Radio选项
 const translateApiOptions = [
   { label: '百度翻译', value: 'baidu' },
   { label: '腾讯翻译', value: 'tencent' },
@@ -149,11 +151,32 @@ watch(
     startTranslation()
   }, 200)
 )
+watchEffect(() => {
+  // Boolean:当前翻译api不是百度
+  const currentNotBaidu = currentTranslation.value !== 'baidu'
 
-// 分发翻译请求，并开始翻译
-function startTranslation() {
+  // 文言文选项的disabled属性跟着上面的变量随之变化
+  translateFromOptions.value.forEach(i => {
+    if (i.value === 'wyw') {
+      i.disabled = currentNotBaidu
+    }
+  })
+
+  // Boolean:当前翻译参数是否带有文言文
+  const paramsHasWyw =
+    translateFrom.value === 'wyw' || translateTo.value === 'wyw'
+
+  // 如果api不是百度，并且翻译参数中带有文言文，则重置翻译参数
+  if (currentNotBaidu && paramsHasWyw) {
+    translateFrom.value = 'auto'
+    translateTo.value = 'zh'
+  }
+})
+
+// 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
+function startTranslation(val = currentTranslation.value) {
   pageLoading.value = true
-  switch (radioValue.value) {
+  switch (val) {
     case 'baidu':
       baiduTranslate()
       break

@@ -7,7 +7,12 @@
       @cancel="handleCancel"
     >
       <template #title> 设置 </template>
-      <div>还没写</div>
+      <div>
+        <div class="flex">
+          <div>1</div>
+          <div>2</div>
+        </div>
+      </div>
     </a-modal>
   </div>
 </template>
