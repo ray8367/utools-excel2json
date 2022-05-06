@@ -1,5 +1,10 @@
 <template>
-  <div class="flex justify-center h-screen pt-18px pb-24px">
+  <div class="flex justify-center h-screen pt-18px pb-24px relative">
+    <div
+      class="setting_icon absolute right-8px bottom-8px text-22px text-[#666] cursor-pointer"
+    >
+      <icon-settings />
+    </div>
     <div class="p-20px flex flex-col h-full w-11/12 shadow-xl rounded-8px">
       <div class="text_wrapper flex flex-1">
         <a-textarea
@@ -77,7 +82,7 @@
 
 <script setup>
 import { debounce, dropWhile } from 'lodash-es'
-import { IconSwap } from '@arco-design/web-vue/es/icon'
+import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
 import translation from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
@@ -174,6 +179,12 @@ async function aliTranslate() {}
 </script>
 
 <style lang="scss" scoped>
+.setting_icon {
+  transition: all 0.4s ease;
+  &:hover {
+    transform: rotate(60deg);
+  }
+}
 .text_wrapper {
   ::v-deep(.arco-textarea) {
     resize: none;
