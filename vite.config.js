@@ -13,6 +13,19 @@ export default defineConfig({
     // 去除vue的options api
     __VUE_OPTIONS_API__: false
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/styles/variable.scss";`
+      },
+      less: {
+        modifyVars: {
+          'arcoblue-6': '#18a058'
+        },
+        javascriptEnabled: true
+      }
+    }
+  },
   plugins: [
     vue(),
     WindiCSS(),

@@ -260,7 +260,7 @@ async function aliTranslate() {}
     border-color: #e9e9e9;
   }
   ::v-deep(.arco-textarea-focus) {
-    border-color: #165dff;
+    border-color: $primary-color;
   }
 }
 .text_readonly {
