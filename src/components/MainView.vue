@@ -99,7 +99,8 @@ import { debounce } from 'lodash-es'
 import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
 
 import SettingModal from './SettingModal.vue'
-import translation from '@/apis/translation'
+// import translation from '@/apis/translation'
+import { translationCommon } from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
@@ -178,24 +179,33 @@ watchEffect(() => {
 })
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
-function startTranslation(val = currentTranslation.value) {
+async function startTranslation(val = currentTranslation.value) {
   pageLoading.value = true
-  switch (val) {
-    case 'baidu':
-      baiduTranslate()
-      break
-    case 'tencent':
-      tencentTranslate()
-      break
-    case 'google':
-      googleTranslate()
-      break
-    case 'ali':
-      aliTranslate()
-      break
-    default:
-      break
+  const obj = {
+    q: userInput.value,
+    from: translateFrom.value,
+    to: translateTo.value
   }
+  const { text } = await translationCommon(val, obj)
+  resultText.value = text
+  pageLoading.value = false
+
+  // switch (val) {
+  //   case 'baidu':
+  //     baiduTranslate()
+  //     break
+  //   case 'tencent':
+  //     tencentTranslate()
+  //     break
+  //   case 'google':
+  //     googleTranslate()
+  //     break
+  //   case 'ali':
+  //     aliTranslate()
+  //     break
+  //   default:
+  //     break
+  // }
 }
 
 // 切换翻译方式
@@ -203,44 +213,44 @@ function changeTranslateType() {
   startTranslation()
 }
 
-// 百度翻译
-async function baiduTranslate() {
-  const obj = {
-    q: userInput.value,
-    from: translateFrom.value,
-    to: translateTo.value
-  }
-  const { text } = await translation.baidu(obj)
-  resultText.value = text
-  pageLoading.value = false
-}
+// // 百度翻译
+// async function baiduTranslate() {
+//   const obj = {
+//     q: userInput.value,
+//     from: translateFrom.value,
+//     to: translateTo.value
+//   }
+//   const { text } = await translation.baidu(obj)
+//   resultText.value = text
+//   pageLoading.value = false
+// }
 
-// 腾讯翻译
-async function tencentTranslate() {
-  const obj = {
-    q: userInput.value,
-    from: translateFrom.value,
-    to: translateTo.value
-  }
-  const { text } = await translation.tencent(obj)
-  resultText.value = text
-  pageLoading.value = false
-}
+// // 腾讯翻译
+// async function tencentTranslate() {
+//   const obj = {
+//     q: userInput.value,
+//     from: translateFrom.value,
+//     to: translateTo.value
+//   }
+//   const { text } = await translation.tencent(obj)
+//   resultText.value = text
+//   pageLoading.value = false
+// }
 
-// 谷歌翻译
-async function googleTranslate() {
-  const obj = {
-    q: userInput.value,
-    from: translateFrom.value,
-    to: translateTo.value
-  }
-  const { text } = await translation.google(obj)
-  resultText.value = text
-  pageLoading.value = false
-}
+// // 谷歌翻译
+// async function googleTranslate() {
+//   const obj = {
+//     q: userInput.value,
+//     from: translateFrom.value,
+//     to: translateTo.value
+//   }
+//   const { text } = await translation.google(obj)
+//   resultText.value = text
+//   pageLoading.value = false
+// }
 
-// 阿里云翻译
-async function aliTranslate() {}
+// // 阿里云翻译
+// async function aliTranslate() {}
 </script>
 
 <style lang="scss" scoped>

@@ -28,10 +28,11 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   if (window.servers) {
+    console.log('window.servers:', window.servers)
     return window.servers
       .googleTextTranslate(options)
       .then(res => {
-        console.log(res)
+        console.log('res:', res)
         const result = {
           code: 200,
           text: res.text
@@ -40,6 +41,8 @@ export default function (options) {
         return result
       })
       .catch(err => {
+        console.log('err:', err)
+
         const result = {
           code: 199,
           text: '翻译失败：' + err

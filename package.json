@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --port 6789 --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preload": "webpack --config ./public/preload/webpack.config.js"
   },
   "dependencies": {
     "@vitalets/google-translate-api": "^8.0.0",
@@ -31,6 +32,8 @@
     "vite": "^2.9.6",
     "vite-plugin-chunk-split": "^0.2.2",
     "vite-plugin-windicss": "^1.8.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
     "windicss": "^3.5.1"
   }
 }
