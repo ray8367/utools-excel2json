@@ -95,9 +95,9 @@
 </template>
 
 <script setup>
-import { debounce } from 'lodash-es'
+import { debounce, cloneDeep } from 'lodash-es'
 import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
-
+import { apiOptions } from '@/assets/translateApiOption.js'
 import SettingModal from './SettingModal.vue'
 // import translation from '@/apis/translation'
 import { translationCommon } from '@/apis/translation'
@@ -142,12 +142,9 @@ const translateToOptions = computed(() => {
 })
 
 // 翻译Api的Radio选项
-const translateApiOptions = [
-  { label: '百度翻译', value: 'baidu' },
-  { label: '腾讯翻译', value: 'tencent' },
-  { label: '谷歌翻译', value: 'google' },
-  { label: '阿里云', value: 'ali' }
-]
+const translateApiOptions = computed(() => {
+  return cloneDeep(apiOptions).filter(i => i.homeShow)
+})
 
 // 监听用户输入，防抖1200ms
 watch(

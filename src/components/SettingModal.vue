@@ -3,23 +3,165 @@
     <a-modal
       :visible="modalVis"
       fullscreen
+      title-align="start"
       @ok="handleOk"
       @cancel="handleCancel"
     >
       <template #title> 设置 </template>
       <div>
-        <div class="flex">
-          <div>1</div>
-          <div>2</div>
-        </div>
+        <p>
+          插件的功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
+        </p>
+        <p>
+          你说如何免费申请吗？？好问题！
+          <a-link>猛戳这里了解如何白嫖~</a-link>
+        </p>
+
+        <a-form auto-label-width :model="formData">
+          <a-row>
+            <a-divider orientation="left">基本设置</a-divider>
+            <a-col :span="18">
+              <a-form-item label="首页翻译方式">
+                <a-checkbox-group v-model="formData.homeHasApi">
+                  <a-checkbox
+                    v-for="item in translateApiOptions"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-checkbox>
+                </a-checkbox-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="默认翻译方式">
+                <a-select
+                  v-model="formData.defaultApi"
+                  placeholder="想要一打开插件就用什么翻译呢？"
+                >
+                  <a-option
+                    v-for="item in translateApiOptions"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-divider orientation="left">百度翻译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="appid">
+                <a-input
+                  v-model.trim="formData.appid"
+                  placeholder="请输入百度翻译appid"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="token">
+                <a-input
+                  v-model.trim="formData.token"
+                  placeholder="请输入百度翻译token"
+                />
+              </a-form-item>
+            </a-col>
+
+            <a-divider orientation="left">腾讯云机器翻译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="Secret Id">
+                <a-input
+                  v-model.trim="formData.secretId"
+                  placeholder="请输入腾讯翻译Secret Id"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="Secret Key">
+                <a-input
+                  v-model.trim="formData.secretKey"
+                  placeholder="请输入腾讯翻译Secret Key"
+                />
+              </a-form-item>
+            </a-col>
+
+            <a-divider orientation="left">阿里云机器翻译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="Secret Id">
+                <a-input
+                  v-model.trim="formData.accessKeyId"
+                  placeholder="请输入阿里云Access Key ID"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="Secret Key">
+                <a-input
+                  v-model.trim="formData.accessKeySecret"
+                  placeholder="请输入阿里云Access Key Secret"
+                />
+              </a-form-item>
+            </a-col>
+            <a-divider orientation="left">有道翻译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="Secret Id">
+                <a-input
+                  v-model.trim="formData.youdaoId"
+                  placeholder="请输入有道智云应用ID"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="Secret Key">
+                <a-input
+                  v-model.trim="formData.youdaoSecret"
+                  placeholder="请输入有道智云应用密钥"
+                />
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-form>
       </div>
     </a-modal>
   </div>
 </template>
 
 <script setup>
-const modalVis = ref(false)
+import { Message } from '@arco-design/web-vue'
+import { apiOptions } from '@/assets/translateApiOption.js'
+const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
+const formData = reactive({
+  homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
+  defaultApi: undefined, // 默认翻译方式
+  appid: undefined, // 百度
+  token: undefined, // 百度
+  secretId: undefined, // 腾讯
+  secretKey: undefined, // 腾讯
+  accessKeyId: undefined, // 阿里
+  accessKeySecret: undefined, // 阿里
+  youdaoId: undefined, // 有道
+  youdaoSecret: undefined // 有道
+})
+
+const translateApiOptions = ref(apiOptions) // 翻译方式选项
+const currentHomeHas = ref([])
+
+// 监听首页翻译方式的长度
+watchEffect(() => {
+  if (formData.homeHasApi?.length > 4) {
+    formData.homeHasApi = currentHomeHas.value
+    Message.warning('最多只能选择4个翻译方式')
+    return
+  }
+  if (formData.homeHasApi?.length < 1) {
+    formData.homeHasApi = currentHomeHas.value
+    Message.warning('最少保留1个翻译方式')
+    return
+  }
+  currentHomeHas.value = formData.homeHasApi
+})
+
 // 点击弹框确定
 function handleOk() {
   emit('ok', 'ok要传的')
