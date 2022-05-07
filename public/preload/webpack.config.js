@@ -10,7 +10,7 @@ module.exports = {
   },
 
   resolve: {
-    // 1.不需要node polyfilss
+    // 不需要node polyfilss
     alias: {
       crypto: false
     }
