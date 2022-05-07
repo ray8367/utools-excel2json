@@ -1,12 +1,16 @@
 <template>
-  <div class="flex justify-center h-screen pt-18px pb-24px relative">
+  <div
+    class="main_wrapper flex justify-center h-screen pt-18px pb-24px relative dark:(bg-dark-300 text-white)"
+  >
     <div
       class="setting_icon absolute right-8px bottom-8px text-22px text-[#666] cursor-pointer"
       @click="openSettingModal"
     >
       <icon-settings />
     </div>
-    <div class="p-20px flex flex-col h-full w-11/12 shadow-xl rounded-8px">
+    <div
+      class="p-20px flex flex-col h-full w-11/12 shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
+    >
       <div class="text_wrapper flex flex-1">
         <a-textarea
           v-model="userInput"
@@ -29,7 +33,7 @@
           </a-radio>
         </a-radio-group>
         <div
-          class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px"
+          class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px dark:border-[#3d3d3d]"
         >
           <!-- 翻译From的select -->
           <a-select
@@ -68,7 +72,7 @@
       <div class="flex flex-1">
         <Loading
           v-if="pageLoading"
-          class="w-full rounded-b-8px border-solid border-[#e9e9e9] border-width-1px"
+          class="w-full rounded-b-8px border-solid border-[#e9e9e9] border-width-1px dark:(border-transparent bg-[#29292c])"
         />
         <div v-else class="text_wrapper text_readonly flex flex-1">
           <a-textarea
@@ -240,13 +244,20 @@ async function aliTranslate() {}
 </script>
 
 <style lang="scss" scoped>
+.main_wrapper {
+  ::v-deep(.arco-radio-checked) {
+    background-color: $primary-color;
+    color: #fff;
+  }
+}
 .setting_icon {
-  transition: all 0.3s ease;
+  transition: all 250ms ease;
   &:hover {
     transform: rotate(60deg);
   }
   &:active {
     transform: scale(0.8) rotate(60deg);
+    color: $primary-color;
   }
 }
 .text_wrapper {
@@ -255,17 +266,34 @@ async function aliTranslate() {}
     height: 100%;
     font-size: 16px;
   }
+
   ::v-deep(.arco-textarea-wrapper) {
     background-color: #fff;
     border-color: #e9e9e9;
   }
+
   ::v-deep(.arco-textarea-focus) {
     border-color: $primary-color;
+  }
+  // 深色模式
+  @media (prefers-color-scheme: dark) {
+    ::v-deep(.arco-textarea-wrapper) {
+      background-color: #29292c;
+      border-color: #00000000;
+    }
+    ::v-deep(.arco-textarea-focus) {
+      border-color: #666;
+    }
   }
 }
 .text_readonly {
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
+  }
+  @media (prefers-color-scheme: dark) {
+    ::v-deep(.arco-textarea-focus) {
+      border-color: transparent;
+    }
   }
 }
 </style>
