@@ -153,6 +153,8 @@ watch(
     startTranslation()
   }, 200)
 )
+
+// 监听文言文选项相关
 watchEffect(() => {
   // Boolean:当前翻译api不是百度
   const currentNotBaidu = currentTranslation.value !== 'baidu'
@@ -186,68 +188,12 @@ async function startTranslation(val = currentTranslation.value) {
   const { text } = await translationCommon(val, obj)
   resultText.value = text
   pageLoading.value = false
-
-  // switch (val) {
-  //   case 'baidu':
-  //     baiduTranslate()
-  //     break
-  //   case 'tencent':
-  //     tencentTranslate()
-  //     break
-  //   case 'google':
-  //     googleTranslate()
-  //     break
-  //   case 'ali':
-  //     aliTranslate()
-  //     break
-  //   default:
-  //     break
-  // }
 }
 
 // 切换翻译方式
 function changeTranslateType() {
   startTranslation()
 }
-
-// // 百度翻译
-// async function baiduTranslate() {
-//   const obj = {
-//     q: userInput.value,
-//     from: translateFrom.value,
-//     to: translateTo.value
-//   }
-//   const { text } = await translation.baidu(obj)
-//   resultText.value = text
-//   pageLoading.value = false
-// }
-
-// // 腾讯翻译
-// async function tencentTranslate() {
-//   const obj = {
-//     q: userInput.value,
-//     from: translateFrom.value,
-//     to: translateTo.value
-//   }
-//   const { text } = await translation.tencent(obj)
-//   resultText.value = text
-//   pageLoading.value = false
-// }
-
-// // 谷歌翻译
-// async function googleTranslate() {
-//   const obj = {
-//     q: userInput.value,
-//     from: translateFrom.value,
-//     to: translateTo.value
-//   }
-//   const { text } = await translation.google(obj)
-//   resultText.value = text
-//   pageLoading.value = false
-// }
-
-// // 阿里云翻译
-// async function aliTranslate() {}
 </script>
 
 <style lang="scss" scoped>
