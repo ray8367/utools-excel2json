@@ -99,7 +99,6 @@ import { debounce, cloneDeep } from 'lodash-es'
 import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import SettingModal from './SettingModal.vue'
-// import translation from '@/apis/translation'
 import { translationCommon } from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
