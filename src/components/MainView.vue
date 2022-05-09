@@ -150,10 +150,12 @@ function copyResult(val) {
 // 翻译方式From参数的选项
 const translateFromOptions = ref([
   { label: '自动检测', value: 'auto', disabled: false },
-  { label: '中文', value: 'zh', disabled: false },
+  { label: '中文-简体', value: 'zh', disabled: false },
+  { label: '中文-繁体', value: 'cht', disabled: false },
   { label: '文言文-百度', value: 'wyw', disabled: false },
   { label: '英语', value: 'en', disabled: false },
   { label: '日语', value: 'jp', disabled: false },
+  { label: '韩语', value: 'kor', disabled: false },
   { label: '俄语', value: 'ru', disabled: false },
   { label: '德语', value: 'de', disabled: false },
   { label: '法语', value: 'fra', disabled: false }
