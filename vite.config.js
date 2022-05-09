@@ -20,7 +20,7 @@ export default defineConfig({
       },
       less: {
         modifyVars: {
-          'arcoblue-6': '#4070ff'
+          'arcoblue-6': '#165dff'
         },
         javascriptEnabled: true
       }
