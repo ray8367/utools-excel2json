@@ -6,9 +6,10 @@
     "dev": "vite --port 6789 --open",
     "build": "vite build",
     "preview": "vite preview",
-    "preload": "webpack --config ./public/preload/webpack.config.js"
+    "p:build": "webpack --config ./public/preload/webpack.config.js"
   },
   "dependencies": {
+    "@alicloud/pop-core": "^1.7.10",
     "@vitalets/google-translate-api": "^8.0.0",
     "@vueuse/core": "^8.4.2",
     "axios": "^0.27.2",
