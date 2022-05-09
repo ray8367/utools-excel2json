@@ -83,6 +83,7 @@
               v-model="resultText"
               class="rounded-b-8px"
               placeholder="翻译结果"
+              readonly
             />
             <transition name="component-fade" mode="out-in">
               <div
@@ -202,7 +203,7 @@ watchEffect(() => {
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
 async function startTranslation(val = currentTranslation.value) {
   // 如果没输入内容，则不翻译
-  if ([undefined, ''].includes(userInput.value)) {
+  if ([undefined, null, ''].includes(userInput.value)) {
     resultText.value = ''
     return
   }
@@ -218,19 +219,13 @@ async function startTranslation(val = currentTranslation.value) {
   pageLoading.value = false
 }
 
-// 切换翻译方式
+// 切换翻译的From和To
 function changeTranslateType() {
   startTranslation()
 }
 </script>
 
 <style lang="scss" scoped>
-.main_wrapper {
-  // ::v-deep(.arco-radio-checked) {
-  //   background-color: $primary-color;
-  //   color: #fff;
-  // }
-}
 .setting_icon {
   transition: all 250ms ease;
   &:hover {
@@ -269,7 +264,7 @@ function changeTranslateType() {
 }
 .text_readonly {
   ::v-deep(.arco-textarea) {
-    padding-bottom: 70px;
+    padding-bottom: 40px;
   }
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
