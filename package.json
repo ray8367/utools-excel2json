@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vitalets/google-translate-api": "^8.0.0",
-    "@vueuse/core": "^8.4.1",
+    "@vueuse/core": "^8.4.2",
     "axios": "^0.27.2",
     "lodash-es": "^4.17.21",
     "md5": "^2.3.0",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.26.0",
-    "@vitejs/plugin-vue": "^2.3.1",
+    "@vitejs/plugin-vue": "^2.3.2",
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -29,7 +29,7 @@
     "sass": "^1.51.0",
     "unplugin-auto-import": "^0.7.1",
     "unplugin-vue-components": "^0.19.3",
-    "vite": "^2.9.6",
+    "vite": "^2.9.8",
     "vite-plugin-chunk-split": "^0.2.2",
     "vite-plugin-windicss": "^1.8.4",
     "webpack": "^5.72.0",
