@@ -80,3 +80,13 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #b6b7b9;
 }
+
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.component-fade-enter-from,
+.component-fade-leave-to {
+  opacity: 0;
+}

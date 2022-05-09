@@ -69,19 +69,34 @@
         </div>
       </section>
 
-      <div class="flex flex-1">
-        <Loading
-          v-if="pageLoading"
-          class="w-full rounded-b-8px border-solid border-[#e9e9e9] border-width-1px dark:(border-transparent bg-[#29292c])"
-        />
-        <div v-else class="text_wrapper text_readonly flex flex-1">
-          <a-textarea
-            v-model="resultText"
-            class="rounded-b-8px"
-            placeholder="翻译结果"
-            readonly
+      <div class="flex flex-1 relative">
+        <transition name="component-fade">
+          <Loading
+            v-if="pageLoading"
+            class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#29292c])"
           />
-        </div>
+          <div
+            v-else
+            class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
+          >
+            <a-textarea
+              v-model="resultText"
+              class="rounded-b-8px"
+              placeholder="翻译结果"
+            />
+            <transition name="component-fade" mode="out-in">
+              <div
+                v-if="resultText?.trim()"
+                class="absolute bottom-10px left-1/2 transform -translate-x-1/2 transition-all shadow-md hover:shadow-lg"
+              >
+                <a-button type="primary" @click="copyResult(resultText)">
+                  <template #icon> <icon-copy /> </template>
+                  <span>复制结果</span>
+                </a-button>
+              </div>
+            </transition>
+          </div>
+        </transition>
       </div>
     </div>
 
@@ -96,7 +111,9 @@
 
 <script setup>
 import { debounce, cloneDeep } from 'lodash-es'
-import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
+import { useClipboard } from '@vueuse/core'
+import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
+import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import SettingModal from './SettingModal.vue'
 import { translationCommon } from '@/apis/translation'
@@ -104,16 +121,18 @@ import { translationCommon } from '@/apis/translation'
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
+const { copy } = useClipboard({ resultText })
 const currentTranslation = ref('baidu') // 翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 
-// 设置弹框点击了确定
+// 设置弹框点击了确定(不一定用到)
 function settingOk(data) {
   console.log('data: ', data)
 }
-// 设置弹框点击了取消
+
+// 设置弹框点击了取消(不一定用到)
 function settingCancel(data) {
   console.log('data: ', data)
 }
@@ -121,6 +140,10 @@ function settingCancel(data) {
 // 打开设置模态框
 function openSettingModal() {
   settingModalRef.value.openSettingModal()
+}
+function copyResult(val) {
+  copy(val)
+  Message.success('复制成功')
 }
 
 // 翻译方式From参数的选项
@@ -178,6 +201,12 @@ watchEffect(() => {
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
 async function startTranslation(val = currentTranslation.value) {
+  // 如果没输入内容，则不翻译
+  if ([undefined, ''].includes(userInput.value)) {
+    resultText.value = ''
+    return
+  }
+
   pageLoading.value = true
   const obj = {
     q: userInput.value,
@@ -197,10 +226,10 @@ function changeTranslateType() {
 
 <style lang="scss" scoped>
 .main_wrapper {
-  ::v-deep(.arco-radio-checked) {
-    background-color: $primary-color;
-    color: #fff;
-  }
+  // ::v-deep(.arco-radio-checked) {
+  //   background-color: $primary-color;
+  //   color: #fff;
+  // }
 }
 .setting_icon {
   transition: all 250ms ease;
@@ -239,6 +268,9 @@ function changeTranslateType() {
   }
 }
 .text_readonly {
+  ::v-deep(.arco-textarea) {
+    padding-bottom: 70px;
+  }
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
