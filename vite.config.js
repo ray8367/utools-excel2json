@@ -79,6 +79,12 @@ export default defineConfig({
         target: 'https://tmt.tencentcloudapi.com',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/tencentApi/, '')
+      },
+      // 有道翻译
+      '/youdaoApi': {
+        target: 'http://openapi.youdao.com/api',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/youdaoApi/, '')
       }
     }
   }

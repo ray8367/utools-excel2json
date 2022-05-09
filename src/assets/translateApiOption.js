@@ -22,6 +22,6 @@ export const apiOptions = [
   {
     label: '有道翻译',
     value: 'youdao',
-    homeShow: false
+    homeShow: true
   }
 ]

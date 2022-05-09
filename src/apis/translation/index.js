@@ -2,11 +2,13 @@
 import baidu from './baidu'
 import tencent from './tencent'
 import google from './google'
+import youdao from './youdao'
 
 export default {
   baidu,
   tencent,
-  google
+  google,
+  youdao
 }
 
 /**
@@ -18,7 +20,8 @@ export function translationCommon(tag, params) {
   const applys = {
     baidu,
     tencent,
-    google
+    google,
+    youdao
   }
   function defaultFun() {
     return {

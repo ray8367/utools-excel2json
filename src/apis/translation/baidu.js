@@ -2,7 +2,8 @@
  * 百度翻译接口
  * https://fanyi-api.baidu.com/doc/21
  *  */
-import md5 from 'md5'
+// import md5 from 'crypto-js/md5'
+import md5 from 'crypto-js/md5'
 import axios from 'axios'
 const TYPE_NAEM = 'baidu'
 import { getKey } from '../keyStorage'
@@ -54,7 +55,7 @@ export default function (options) {
   // 	随机数:可为字母或数字的字符串
   const salt = new Date().getTime()
   // 签名:(appid+q+salt+密钥)的MD5值
-  const sign = md5(appid + q + salt + token)
+  const sign = md5(appid + q + salt + token).toString()
 
   const params = {
     q: q,
@@ -69,21 +70,27 @@ export default function (options) {
     .get(url, { params })
     .then(res => {
       const { error_code, error_msg, trans_result } = res.data
+      let result
       if (error_code) {
-        return errors[error_code] || '翻译失败：' + error_msg
+        // 翻译失败
+        result = {
+          code: 199,
+          text:
+            error_code + '：' + errors[error_code] || '翻译失败：' + error_msg
+        }
       } else {
+        // 翻译成功
         let text = ''
         trans_result.map(item => {
           text += item.dst + '\n'
         })
-
-        const result = {
+        result = {
           code: 200,
           text: text
         }
-        last.result = result
-        return result
       }
+      last.result = result
+      return result
     })
     .catch(err => {
       const result = {

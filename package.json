@@ -12,6 +12,7 @@
     "@vitalets/google-translate-api": "^8.0.0",
     "@vueuse/core": "^8.4.2",
     "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
     "md5": "^2.3.0",
     "tencentcloud-sdk-nodejs": "^4.0.333",
