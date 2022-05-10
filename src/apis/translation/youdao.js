@@ -6,8 +6,8 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
-const TYPE_NAEM = 'youdao'
-import { getKey } from '../keyStorage'
+const TAG_NAME = 'youdao'
+import { keyStorage } from '@/utils/storage'
 import { languageCorrection } from '@/utils/language'
 
 const errors = {
@@ -171,7 +171,9 @@ export default function (options) {
     jp: 'ja',
     ru: 'ru',
     de: 'de',
-    fra: 'fr'
+    fra: 'fr',
+    cht: 'zh-CHT',
+    kor: 'ko'
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
@@ -181,8 +183,17 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   const url = import.meta.env.VITE_YOUDAO_BASEURL
-  const { appid, appkey } = getKey(TYPE_NAEM)
+  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  if (!keyConfig) {
+    const result = {
+      code: 199,
+      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
+    }
+    last.result = result
+    return result
+  }
 
+  const { appid, appkey } = keyConfig
   // 签名
   const { sign, salt, curtime } = toSign(appid, appkey, q)
 

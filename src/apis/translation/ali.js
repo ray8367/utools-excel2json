@@ -3,8 +3,8 @@
  * https://help.aliyun.com/document_detail/97592.html
  *  */
 
-const TYPE_NAEM = 'ali'
-import { getKey } from '../keyStorage'
+const TAG_NAME = 'ali'
+import { keyStorage } from '@/utils/storage'
 import google from './google'
 import { languageCorrection } from '@/utils/language'
 
@@ -40,11 +40,21 @@ export default function (options) {
     jp: 'ja',
     ru: 'ru',
     de: 'de',
-    fra: 'fr'
+    fra: 'fr',
+    cht: 'zh-tw',
+    kor: 'ko'
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
-  const credential = getKey(TYPE_NAEM)
+  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  if (!keyConfig) {
+    const result = {
+      code: 199,
+      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
+    }
+    last.result = result
+    return result
+  }
   var params = {
     SourceText: q,
     SourceLanguage: from,
@@ -55,7 +65,7 @@ export default function (options) {
 
   if (window.servers) {
     return window.servers
-      .aliTextTranslate(credential, params)
+      .aliTextTranslate(keyConfig, params)
       .then(res => {
         const { Data } = res
         let result = {

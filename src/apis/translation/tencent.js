@@ -3,8 +3,9 @@
  * https://cloud.tencent.com/document/api/551/15619
  *  */
 
-const TYPE_NAEM = 'tencent'
-import { getKey } from '../keyStorage'
+const TAG_NAME = 'tencent'
+import { keyStorage } from '@/utils/storage'
+
 import google from './google'
 import { languageCorrection } from '@/utils/language'
 
@@ -40,11 +41,21 @@ export default function (options) {
     jp: 'ja',
     ru: 'ru',
     de: 'de',
-    fra: 'fr'
+    fra: 'fr',
+    cht: 'zh-TW',
+    kor: 'ko'
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
-  const credential = getKey(TYPE_NAEM)
+  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  if (!keyConfig) {
+    const result = {
+      code: 199,
+      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
+    }
+    last.result = result
+    return result
+  }
   const params = {
     SourceText: q,
     Source: from,
@@ -54,7 +65,7 @@ export default function (options) {
 
   if (window.servers) {
     return window.servers
-      .tencentTextTranslate(credential, params)
+      .tencentTextTranslate(keyConfig, params)
       .then(res => {
         const result = {
           code: 200,

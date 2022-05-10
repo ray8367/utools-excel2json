@@ -133,6 +133,8 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
+import { getSetting } from '@/apis/setting'
+import { onMounted } from 'vue'
 const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
@@ -187,6 +189,10 @@ function openSettingModal() {
 function closeSettingModal() {
   modalVis.value = false
 }
+
+onMounted(() => {
+  getSetting()
+})
 
 // 暴露打开弹窗的函数，供父组件调用
 defineExpose({

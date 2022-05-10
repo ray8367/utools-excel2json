@@ -5,8 +5,8 @@
 // import md5 from 'crypto-js/md5'
 import md5 from 'crypto-js/md5'
 import axios from 'axios'
-const TYPE_NAEM = 'baidu'
-import { getKey } from '../keyStorage'
+const TAG_NAME = 'baidu'
+import { keyStorage } from '@/utils/storage'
 
 const errors = {
   52001: '请求超时，请重试',
@@ -51,7 +51,17 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   const url = import.meta.env.VITE_BAIDU_BASEURL
-  const { appid, token } = getKey(TYPE_NAEM)
+  // const { appid, token } = getKey(TAG_NAME)
+  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  if (!keyConfig) {
+    const result = {
+      code: 199,
+      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
+    }
+    last.result = result
+    return result
+  }
+  const { appid, token } = keyConfig
   // 	随机数:可为字母或数字的字符串
   const salt = new Date().getTime()
   // 签名:(appid+q+salt+密钥)的MD5值

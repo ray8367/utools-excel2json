@@ -36,7 +36,9 @@ export default function (options) {
     jp: 'ja',
     ru: 'ru',
     de: 'de',
-    fra: 'fr'
+    fra: 'fr',
+    cht: 'zh-TW',
+    kor: 'ko'
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
