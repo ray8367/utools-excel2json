@@ -12,3 +12,8 @@ export const youdao = {
   appid: '30990f23a6937c8b',
   appkey: 'C3mghAaw8FoUCKkGSBJMF5jm7prKZQfS'
 }
+
+export const ali = {
+  accessKeyId: 'LTAI5tQPT1B6nfGYCZ1oN3xD',
+  accessKeySecret: '31KbiyH05LkrTxjgw8El6KBDDe8fD5'
+}

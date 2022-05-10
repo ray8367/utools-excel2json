@@ -8,6 +8,7 @@ import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
 const TYPE_NAEM = 'youdao'
 import { getKey } from '../keyStorage'
+import { languageCorrection } from '@/utils/language'
 
 const errors = {
   101: '缺少必填的参数,首先确保必填参数齐全，然后确认参数书写是否正确。',
@@ -164,7 +165,15 @@ export default function (options) {
   const optionsStr = JSON.stringify(options)
 
   // 语言修正
-  let { from, to } = languageCorrection(options)
+  const languageOpt = {
+    zh: 'zh-CHS',
+    en: 'en',
+    jp: 'ja',
+    ru: 'ru',
+    de: 'de',
+    fra: 'fr'
+  }
+  let { from, to } = languageCorrection(languageOpt, options)
 
   if (optionsStr === last.optionsStr) {
     return last.result
@@ -221,21 +230,6 @@ export default function (options) {
       last.result = result
       return result
     })
-}
-
-/**语言修正 */
-function languageCorrection({ from, to }) {
-  return {
-    from: fn(from),
-    to: fn(to)
-  }
-
-  function fn(target) {
-    const options = {
-      zh: 'zh-CHS'
-    }
-    return options[target] || target
-  }
 }
 
 /**签名 */

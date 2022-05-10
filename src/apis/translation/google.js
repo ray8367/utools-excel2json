@@ -2,6 +2,7 @@
  * 谷歌翻译接口
  * https://github.com/vitalets/google-translate-api
  *  */
+import { languageCorrection } from '@/utils/language'
 
 const last = {
   optionsStr: '',
@@ -16,7 +17,8 @@ const last = {
  */
 export default function (options) {
   // 空值优化
-  if (!options.q) {
+  const { q } = options
+  if (!q) {
     return ''
   }
 
@@ -27,12 +29,25 @@ export default function (options) {
   }
   last.optionsStr = optionsStr
 
+  // 语言修正
+  const languageOpt = {
+    zh: 'zh-CN',
+    en: 'en',
+    jp: 'ja',
+    ru: 'ru',
+    de: 'de',
+    fra: 'fr'
+  }
+  let { from, to } = languageCorrection(languageOpt, options)
+
   if (window.servers) {
-    console.log('window.servers:', window.servers)
     return window.servers
-      .googleTextTranslate(options)
+      .googleTextTranslate({
+        q,
+        from,
+        to
+      })
       .then(res => {
-        console.log('res:', res)
         const result = {
           code: 200,
           text: res.text

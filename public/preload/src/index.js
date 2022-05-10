@@ -2,6 +2,7 @@
 
 const tencent = require('./tencentcloudApi')
 const google = require('./googleTranslateApi')
+const ali = require('./alicloudApi')
 
 const _setImmediate = setImmediate
 const _clearImmediate = clearImmediate
@@ -19,8 +20,13 @@ window.servers = {
 
   // 谷歌翻译
   googleTextTranslate: params => {
-    console.log('params:', params)
+    // console.log('params:', params)
     const { q, from, to } = params
     return google.textTranslate(q, { from, to })
+  },
+
+  // 阿里翻译
+  aliTextTranslate: (credential, params) => {
+    return ali.textTranslate(credential, params)
   }
 }
