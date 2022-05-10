@@ -227,7 +227,7 @@ function changeTranslateType() {
 
 <style lang="scss" scoped>
 .setting_icon {
-  transition: all 250ms ease;
+  transition: transform 250ms ease;
   &:hover {
     transform: rotate(60deg);
   }

@@ -13,7 +13,7 @@
           插件的功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
         </p>
         <p>
-          <a-link>猛戳这里了解如何白嫖~</a-link>
+          <a-link>猛戳这里了解如何申请~</a-link>
         </p>
 
         <a-form auto-label-width :model="formData">
