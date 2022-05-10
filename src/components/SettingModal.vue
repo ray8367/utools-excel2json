@@ -13,7 +13,12 @@
           插件的功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
         </p>
         <p>
-          <a-link>猛戳这里了解如何申请~</a-link>
+          <a-link
+            target="_blank"
+            href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
+          >
+            猛戳这里了解如何申请~
+          </a-link>
         </p>
 
         <a-form auto-label-width :model="formData">
@@ -50,18 +55,18 @@
             </a-col>
             <a-divider orientation="left">百度翻译</a-divider>
             <a-col :span="18">
-              <a-form-item label="appid">
+              <a-form-item label="APP ID">
                 <a-input
                   v-model.trim="formData.appid"
-                  placeholder="请输入百度翻译appid"
+                  placeholder="请输入百度翻译的APP ID"
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="token">
+              <a-form-item label="密钥">
                 <a-input
                   v-model.trim="formData.token"
-                  placeholder="请输入百度翻译token"
+                  placeholder="请输入百度翻译的密钥"
                 />
               </a-form-item>
             </a-col>
