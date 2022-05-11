@@ -9,11 +9,11 @@ export const apiOptions = [
     value: 'tencent',
     homeShow: true
   },
-  {
-    label: '谷歌翻译',
-    value: 'google',
-    homeShow: false
-  },
+  // {
+  //   label: '谷歌翻译',
+  //   value: 'google',
+  //   homeShow: false
+  // },
   {
     label: '阿里云',
     value: 'ali',
