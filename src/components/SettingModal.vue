@@ -143,7 +143,7 @@ const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
   homeHasApi: settingStore.homeOption, // 首页展示的翻译方式
   defaultApi: settingStore.defaultApi, // 默认翻译方式
-  appid: keyConfig.baidu.appid, // 百度
+  appid: keyConfig.baidu?.appid, // 百度
   token: keyConfig.baidu?.token, // 百度
   secretId: keyConfig.tencent?.secretId, // 腾讯
   secretKey: keyConfig.tencent?.secretKey, // 腾讯
