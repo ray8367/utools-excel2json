@@ -152,9 +152,10 @@ const last = {
  * @param {String} options.q 请求翻译query(UTF-8编码)
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言 (可设置为auto)
+ * @param {Boolean} options.isRefresh 强制刷新
  */
 export default function (options) {
-  let { q } = options
+  let { q, isRefresh } = options
 
   // 空值优化
   if (!q) {
@@ -177,14 +178,14 @@ export default function (options) {
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
-  if (optionsStr === last.optionsStr) {
+  if (!isRefresh && optionsStr === last.optionsStr) {
     return last.result
   }
   last.optionsStr = optionsStr
 
   const url = import.meta.env.VITE_YOUDAO_BASEURL
   const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
-  if (!keyConfig) {
+  if (!keyConfig || !keyConfig.appid || !keyConfig.appkey) {
     const result = {
       code: 199,
       text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'

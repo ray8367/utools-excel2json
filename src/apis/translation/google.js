@@ -14,17 +14,18 @@ const last = {
  * @param {String} options.q 请求翻译query
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言(不可设置为auto)
+ * @param {Boolean} options.isRefresh 强制刷新
  */
 export default function (options) {
   // 空值优化
-  const { q } = options
+  const { q, isRefresh } = options
   if (!q) {
     return ''
   }
 
   // 重复值优化
   const optionsStr = JSON.stringify(options)
-  if (optionsStr === last.optionsStr) {
+  if (!isRefresh && optionsStr === last.optionsStr) {
     return last.result
   }
   last.optionsStr = optionsStr

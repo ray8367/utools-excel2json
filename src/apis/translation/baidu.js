@@ -35,9 +35,10 @@ const last = {
  * @param {String} options.q 请求翻译query(UTF-8编码)
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言(不可设置为auto)
+ * @param {Boolean} options.isRefresh 强制刷新
  */
 export default function (options) {
-  const { q, from, to } = options
+  const { q, from, to, isRefresh } = options
   // 空值优化
   if (!q) {
     return ''
@@ -45,7 +46,7 @@ export default function (options) {
 
   // 重复值优化
   const optionsStr = JSON.stringify(options)
-  if (optionsStr === last.optionsStr) {
+  if (!isRefresh && optionsStr === last.optionsStr) {
     return last.result
   }
   last.optionsStr = optionsStr
@@ -53,7 +54,7 @@ export default function (options) {
   const url = import.meta.env.VITE_BAIDU_BASEURL
   // const { appid, token } = getKey(TAG_NAME)
   const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
-  if (!keyConfig) {
+  if (!keyConfig || !keyConfig.appid || !keyConfig.token) {
     const result = {
       code: 199,
       text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
