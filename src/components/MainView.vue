@@ -87,7 +87,7 @@
             />
             <transition name="component-fade" mode="out-in">
               <div
-                v-if="resultText?.trim()"
+                v-if="resultText?.trim() && resultCode == 200"
                 class="absolute bottom-10px left-1/2 transform -translate-x-1/2 transition-all shadow-md hover:shadow-lg"
               >
                 <a-button type="primary" @click="copyResult(resultText)">
@@ -117,20 +117,29 @@ import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
+import { storeToRefs } from 'pinia'
 import SettingModal from './SettingModal.vue'
+import { userSettingStore } from '@/store/userSetting'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
+const resultCode = ref() // 翻译结果状态(code = 200 为成功)
 const { copy } = useClipboard({ resultText })
-const currentTranslation = ref('baidu') // 当前翻译api
+// const currentTranslation = ref('baidu') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 
+// 首页设置
+const { homeOption, defaultApi: currentTranslation } = storeToRefs(
+  userSettingStore()
+)
+
 // 设置弹框点击了确定(不一定用到)
-function settingOk(data) {
-  console.log('data: ', data)
+function settingOk() {
+  // 设置成功，刷新上一次翻译
+  startTranslation(currentTranslation.value, true)
 }
 
 // 设置弹框点击了取消(不一定用到)
@@ -170,7 +179,9 @@ const translateToOptions = computed(() => {
 
 // 翻译Api的Radio选项
 const translateApiOptions = computed(() => {
-  return cloneDeep(apiOptions).filter(i => i.homeShow)
+  return cloneDeep(apiOptions).filter(
+    i => homeOption.value.indexOf(i.value) != -1
+  )
 })
 
 // 监听用户输入，防抖1200ms
@@ -216,7 +227,7 @@ watchEffect(() => {
 })
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
-async function startTranslation(val = currentTranslation.value) {
+async function startTranslation(val = currentTranslation.value, isRefresh) {
   // 如果没输入内容，则不翻译
   if ([undefined, null, ''].includes(userInput.value)) {
     resultText.value = ''
@@ -227,10 +238,12 @@ async function startTranslation(val = currentTranslation.value) {
   const obj = {
     q: userInput.value,
     from: translateFrom.value,
-    to: translateTo.value
+    to: translateTo.value,
+    isRefresh
   }
-  const { text } = await translationCommon(val, obj)
+  const { text, code } = await translationCommon(val, obj)
   resultText.value = text
+  resultCode.value = code
   pageLoading.value = false
 }
 
