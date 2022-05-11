@@ -173,7 +173,7 @@ watchEffect(() => {
 
 // 点击弹框确定
 function handleOk() {
-  emit('ok', 'ok要传的')
+  emit('ok', 'ok要传的 ')
   closeSettingModal()
 }
 
