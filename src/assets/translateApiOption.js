@@ -12,7 +12,7 @@ export const apiOptions = [
   {
     label: '谷歌翻译',
     value: 'google',
-    homeShow: true
+    homeShow: false
   },
   {
     label: '阿里云',

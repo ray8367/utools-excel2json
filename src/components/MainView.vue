@@ -116,14 +116,14 @@ import { useClipboard } from '@vueuse/core'
 import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
+import { translationCommon } from '@/apis/translation/index.js'
 import SettingModal from './SettingModal.vue'
-import { translationCommon } from '@/apis/translation'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
 const { copy } = useClipboard({ resultText })
-const currentTranslation = ref('baidu') // 翻译api
+const currentTranslation = ref('baidu') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
@@ -142,6 +142,8 @@ function settingCancel(data) {
 function openSettingModal() {
   settingModalRef.value.openSettingModal()
 }
+
+// 复制结果
 function copyResult(val) {
   copy(val)
   Message.success('复制成功')
@@ -176,27 +178,38 @@ watch(
   userInput,
   debounce(function () {
     startTranslation()
-  }, 200)
+  }, 1200)
 )
 
-// 监听文言文选项相关
-watchEffect(() => {
-  // Boolean:当前翻译api不是百度
-  const currentNotBaidu = currentTranslation.value !== 'baidu'
+// api不支持的语言value声明
+const apiNotSupport = {
+  baidu: [],
+  tencent: ['wyw'],
+  google: ['wyw'],
+  ali: ['wyw'],
+  youdao: ['wyw']
+}
 
-  // 文言文选项的disabled属性跟着上面的变量随之变化
+// 根据api动态变更选项的disabled属性
+watchEffect(() => {
+  // 当前翻译api的名字
+  const apiName = currentTranslation.value
+
+  // 当前翻译api不支持的语种value数组
+  const currentApiDisabledArr = apiNotSupport[apiName] || []
+
+  // 根据不支持语种数组，动态设置选项中的disabled，禁用掉不支持的选项
   translateFromOptions.value.forEach(i => {
-    if (i.value === 'wyw') {
-      i.disabled = currentNotBaidu
-    }
+    i.disabled = currentApiDisabledArr.includes(i.value)
   })
 
-  // Boolean:当前翻译参数是否带有文言文
-  const paramsHasWyw =
-    translateFrom.value === 'wyw' || translateTo.value === 'wyw'
+  // Boolean: From或To是否现在的值，是否是当前翻译api不支持的翻译语种
+  const paramsHasNoSupport =
+    currentApiDisabledArr.includes(translateFrom.value) ||
+    currentApiDisabledArr.includes(translateTo.value)
 
-  // 如果api不是百度，并且翻译参数中带有文言文，则重置翻译参数
-  if (currentNotBaidu && paramsHasWyw) {
+  // 如果包含不支持的，则重置为自动 —— 中文-简体
+  if (paramsHasNoSupport) {
     translateFrom.value = 'auto'
     translateTo.value = 'zh'
   }
