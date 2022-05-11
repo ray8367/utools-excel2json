@@ -1,7 +1,7 @@
 {
   "name": "utools-easy-translation",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite --port 6789 --open",
     "build": "vite build",
@@ -30,12 +30,12 @@
     "prettier": "^2.6.2",
     "sass": "^1.51.0",
     "unplugin-auto-import": "^0.7.1",
-    "unplugin-vue-components": "^0.19.3",
+    "unplugin-vue-components": "^0.19.5",
     "vite": "^2.9.8",
     "vite-plugin-chunk-split": "^0.2.2",
     "vite-plugin-windicss": "^1.8.4",
-    "webpack": "^5.72.0",
+    "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
-    "windicss": "^3.5.1"
+    "windicss": "^3.5.2"
   }
 }
