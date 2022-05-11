@@ -4,5 +4,6 @@ import '@arco-design/web-vue/dist/arco.less'
 import '@arco-design/web-vue/es/message/style/css.js'
 import 'virtual:windi.css'
 import '@/styles/global.scss'
+import { createPinia } from 'pinia'
 
-createApp(App).mount('#app')
+createApp(App).use(createPinia()).mount('#app')

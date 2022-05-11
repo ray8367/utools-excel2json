@@ -134,6 +134,7 @@
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { getSetting } from '@/apis/setting'
+import { useSettingStore } from '@/store/userSetting.js'
 const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
@@ -148,6 +149,9 @@ const formData = reactive({
   youdaoId: undefined, // 有道
   youdaoSecret: undefined // 有道
 })
+
+const store = useSettingStore()
+console.log('pinia的值', store.name)
 
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
 const currentHomeHas = ref([])
