@@ -108,7 +108,7 @@
             </a-col>
             <a-divider orientation="left">有道翻译</a-divider>
             <a-col :span="18">
-              <a-form-item label="Secret Id">
+              <a-form-item label="应用ID">
                 <a-input
                   v-model.trim="formData.youdaoId"
                   placeholder="请输入有道智云应用ID"
@@ -116,7 +116,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="Secret Key">
+              <a-form-item label="应用密钥">
                 <a-input
                   v-model.trim="formData.youdaoSecret"
                   placeholder="请输入有道智云应用密钥"
@@ -134,7 +134,6 @@
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { getSetting } from '@/apis/setting'
-import { onMounted } from 'vue'
 const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
@@ -191,7 +190,7 @@ function closeSettingModal() {
 }
 
 onMounted(() => {
-  getSetting()
+  window?.utools && getSetting()
 })
 
 // 暴露打开弹窗的函数，供父组件调用
