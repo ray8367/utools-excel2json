@@ -45,7 +45,7 @@
                   placeholder="想要一打开插件就用什么翻译呢？"
                 >
                   <a-option
-                    v-for="item in translateApiOptions"
+                    v-for="item in defaultOptions"
                     :key="item.value"
                     :value="item.value"
                   >
@@ -155,9 +155,17 @@ const formData = reactive({
 })
 
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
-const currentHomeHas = ref([])
 
-// 监听首页翻译方式的长度
+// 默认翻译方式的下拉选项
+const defaultOptions = computed(() => {
+  return translateApiOptions.value.filter(i =>
+    currentHomeHas.value.includes(i.value)
+  )
+})
+
+const currentHomeHas = ref([]) // 当前首页展示的翻译方式
+
+// 监听首页翻译方式的checkbox勾选数量
 watchEffect(() => {
   if (formData.homeHasApi?.length > 4) {
     formData.homeHasApi = currentHomeHas.value
@@ -170,6 +178,14 @@ watchEffect(() => {
     return
   }
   currentHomeHas.value = formData.homeHasApi
+})
+
+// 监听默认翻译方式的下拉选项
+// 如果选择了"默认翻译方式"为"首页翻译方式"不准在的，则把可用的翻译方式第一个赋值给默认
+watchEffect(() => {
+  if (!currentHomeHas.value.includes(formData.defaultApi)) {
+    formData.defaultApi = defaultOptions.value[0].value
+  }
 })
 
 // 点击弹框确定
