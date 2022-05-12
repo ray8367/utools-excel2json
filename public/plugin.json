@@ -9,13 +9,18 @@
     {
       "code": "keyword",
       "label": "易翻",
-      "explain": "易翻：可能是utools上第2好用的翻译插件，支持多种语言互翻",
+      "explain": "可能是utools上第2好用的翻译插件，支持多种语言互翻",
+      "cmds": ["易翻", "翻译", "ef"]
+    },
+    {
+      "code": "anyword",
+      "label": "易翻",
+      "explain": "可能是utools上第2好用的翻译插件，支持多种语言互翻",
       "cmds": [
-        "易翻",
-        "翻译",
-        "fanyi",
-        "ef",
-        "1f"
+        {
+          "type": "over",
+          "label": "易翻：翻译当前文本"
+        }
       ]
     }
   ]

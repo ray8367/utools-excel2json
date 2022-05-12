@@ -253,6 +253,22 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
 function changeTranslateType() {
   startTranslation()
 }
+
+onMounted(() => {
+  if (!window?.utools) return
+  utoolsInit()
+})
+
+const utoolsInit = () => {
+  window.utools.onPluginEnter(action => {
+    if (action.code == 'anyword') {
+      userInput.value = action.payload
+    } else {
+      userInput.value = ''
+    }
+  })
+  window.utools.subInputBlur()
+}
 </script>
 
 <style lang="scss" scoped>
