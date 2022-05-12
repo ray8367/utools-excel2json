@@ -137,21 +137,20 @@ import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 // 从pinia读取设置
 const settingStore = userSettingStore()
-const { keyConfig } = settingStore
 
 const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
-  homeHasApi: settingStore.homeOption, // 首页展示的翻译方式
-  defaultApi: settingStore.defaultApi, // 默认翻译方式
-  appid: keyConfig.baidu?.appid, // 百度
-  token: keyConfig.baidu?.token, // 百度
-  secretId: keyConfig.tencent?.secretId, // 腾讯
-  secretKey: keyConfig.tencent?.secretKey, // 腾讯
-  accessKeyId: keyConfig.ali?.accessKeyId, // 阿里
-  accessKeySecret: keyConfig.ali?.accessKeySecret, // 阿里
-  youdaoId: keyConfig.youdao?.appid, // 有道
-  youdaoSecret: keyConfig.youdao?.appkey // 有道
+  homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
+  defaultApi: undefined, // 默认翻译方式
+  appid: undefined, // 百度
+  token: undefined, // 百度
+  secretId: undefined, // 腾讯
+  secretKey: undefined, // 腾讯
+  accessKeyId: undefined, // 阿里
+  accessKeySecret: undefined, // 阿里
+  youdaoId: undefined, // 有道
+  youdaoSecret: undefined // 有道
 })
 
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
@@ -221,13 +220,15 @@ function handleOk() {
 
 // 点击弹框取消
 function handleCancel() {
-  emit('cancel', 'cancel要传的')
   closeSettingModal()
 }
 
 // 打开弹窗
 function openSettingModal() {
   modalVis.value = true
+  Object.keys(formData).forEach(key => {
+    formData[key] = settingStore.getSetingFormData[key]
+  })
 }
 
 // 关闭弹窗
@@ -236,7 +237,6 @@ function closeSettingModal() {
 }
 
 function openWebUrl(e) {
-  // console.log('e:', e.target.getAttribute('href'))
   if (window.utools) {
     window.utools.shellOpenExternal(e.target.getAttribute('href'))
   }

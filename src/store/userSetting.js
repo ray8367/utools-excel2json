@@ -12,6 +12,24 @@ export const userSettingStore = defineStore('settings', {
   },
 
   getters: {},
+  getters: {
+    /**获取设置表单 */
+    getSetingFormData: state => {
+      const { homeOption, defaultApi, keyConfig } = state
+      return {
+        homeHasApi: homeOption, // 首页展示的翻译方式
+        defaultApi: defaultApi, // 默认翻译方式
+        appid: keyConfig.baidu?.appid, // 百度
+        token: keyConfig.baidu?.token, // 百度
+        secretId: keyConfig.tencent?.secretId, // 腾讯
+        secretKey: keyConfig.tencent?.secretKey, // 腾讯
+        accessKeyId: keyConfig.ali?.accessKeyId, // 阿里
+        accessKeySecret: keyConfig.ali?.accessKeySecret, // 阿里
+        youdaoId: keyConfig.youdao?.appid, // 有道
+        youdaoSecret: keyConfig.youdao?.appkey // 有道
+      }
+    }
+  },
 
   actions: {
     /**设置首页可见翻译 */
