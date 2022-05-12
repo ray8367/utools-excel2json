@@ -86,7 +86,7 @@ export default function (options) {
 
         const result = {
           code: 199,
-          text: gCode === 200 ? gText : errQ
+          text: gCode === 200 && gText ? gText : errQ
         }
         last.result = result
         return result
