@@ -16,6 +16,7 @@
           <a-link
             target="_blank"
             href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
+            @click="openWebUrl"
           >
             猛戳这里了解如何申请~
           </a-link>
@@ -216,6 +217,13 @@ function openSettingModal() {
 // 关闭弹窗
 function closeSettingModal() {
   modalVis.value = false
+}
+
+function openWebUrl(e) {
+  // console.log('e:', e.target.getAttribute('href'))
+  if (window.utools) {
+    window.utools.shellOpenExternal(e.target.getAttribute('href'))
+  }
 }
 
 // 暴露打开弹窗的函数，供父组件调用

@@ -1,15 +1,15 @@
 <template>
   <div
-    class="main_wrapper flex justify-center h-screen pt-18px pb-24px relative dark:(bg-dark-300 text-white)"
+    class="main_wrapper flex justify-center h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
     <div
-      class="setting_icon absolute right-8px bottom-8px text-22px text-[#666] cursor-pointer"
+      class="setting_icon absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover:text-[#666]"
       @click="openSettingModal"
     >
       <icon-settings />
     </div>
     <div
-      class="p-20px flex flex-col h-full w-11/12 shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
+      class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1">
         <a-textarea
