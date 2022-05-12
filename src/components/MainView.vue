@@ -139,7 +139,9 @@ const { homeOption, defaultApi: currentTranslation } = storeToRefs(
 // 设置弹框点击了确定(不一定用到)
 function settingOk() {
   // 设置成功，刷新上一次翻译
-  startTranslation(currentTranslation.value, true)
+  nextTick(() => {
+    startTranslation(currentTranslation.value, true)
+  })
 }
 
 // 设置弹框点击了取消(不一定用到)

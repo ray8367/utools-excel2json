@@ -3,12 +3,12 @@
  * https://cloud.tencent.com/document/api/551/15619
  *  */
 
-const TAG_NAME = 'tencent'
-import { keyStorage } from '@/utils/storage'
-
+// import { keyStorage } from '@/utils/storage'
+import { getKeyByTag } from '@/store/userSetting'
 import google from './google'
 import { languageCorrection } from '@/utils/language'
 
+const TAG_NAME = 'tencent'
 const last = {
   optionsStr: '',
   result: ''
@@ -48,7 +48,7 @@ export default function (options) {
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
-  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.secretId || !keyConfig.secretKey) {
     const result = {
       code: 199,

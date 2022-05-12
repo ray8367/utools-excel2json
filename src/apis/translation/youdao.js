@@ -6,9 +6,11 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
-const TAG_NAME = 'youdao'
-import { keyStorage } from '@/utils/storage'
+// import { keyStorage } from '@/utils/storage'
+import { getKeyByTag } from '@/store/userSetting'
 import { languageCorrection } from '@/utils/language'
+
+const TAG_NAME = 'youdao'
 
 const errors = {
   101: '缺少必填的参数,首先确保必填参数齐全，然后确认参数书写是否正确。',
@@ -184,7 +186,7 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   const url = import.meta.env.VITE_YOUDAO_BASEURL
-  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.appid || !keyConfig.appkey) {
     const result = {
       code: 199,

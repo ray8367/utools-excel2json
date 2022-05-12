@@ -11,7 +11,6 @@ export const userSettingStore = defineStore('settings', {
     }
   },
 
-  getters: {},
   getters: {
     /**获取设置表单 */
     getSetingFormData: state => {
@@ -48,6 +47,20 @@ export const userSettingStore = defineStore('settings', {
     setKeyConfig(data) {
       this.keyConfig = data
       keyStorage.set(data)
+    },
+
+    /**
+     * 获取指定密钥
+     * @param {String} tag 第三方api标识
+     */
+    getKeyByTag(tag) {
+      return this.keyConfig[tag] || {}
     }
   }
 })
+
+export function getKeyByTag(tag) {
+  const settingStore = userSettingStore()
+  const { keyConfig } = settingStore
+  return keyConfig[tag] || {}
+}

@@ -6,8 +6,6 @@ const tencentcloud = require('tencentcloud-sdk-nodejs/tencentcloud/services/tmt'
 // 导入对应产品模块的client models。
 const TmtClient = tencentcloud.tmt.v20180321.Client
 
-let client = null
-
 function initClient({ secretId, secretKey }) {
   const clientConfig = {
     // 腾讯云认证信息
@@ -32,9 +30,7 @@ function initClient({ secretId, secretKey }) {
 
 module.exports = {
   textTranslate: function (credential, params) {
-    if (!client) {
-      client = initClient(credential)
-    }
+    let client = initClient(credential)
     return client.TextTranslate(params)
   }
 }

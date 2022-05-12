@@ -5,8 +5,10 @@
 // import md5 from 'crypto-js/md5'
 import md5 from 'crypto-js/md5'
 import axios from 'axios'
+// import { keyStorage } from '@/utils/storage'
+import { getKeyByTag } from '@/store/userSetting'
+
 const TAG_NAME = 'baidu'
-import { keyStorage } from '@/utils/storage'
 
 const errors = {
   52001: '请求超时，请重试',
@@ -52,8 +54,7 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   const url = import.meta.env.VITE_BAIDU_BASEURL
-  // const { appid, token } = getKey(TAG_NAME)
-  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.appid || !keyConfig.token) {
     const result = {
       code: 199,

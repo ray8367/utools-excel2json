@@ -3,8 +3,6 @@
  */
 const Core = require('@alicloud/pop-core')
 
-let client = null
-
 function initClient({ accessKeyId, accessKeySecret }) {
   return new Core({
     accessKeyId: accessKeyId,
@@ -17,9 +15,7 @@ function initClient({ accessKeyId, accessKeySecret }) {
 
 module.exports = {
   textTranslate: function (credential, params) {
-    if (!client) {
-      client = initClient(credential)
-    }
+    let client = initClient(credential)
 
     const requestOption = {
       method: 'POST',

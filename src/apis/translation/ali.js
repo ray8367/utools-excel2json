@@ -3,10 +3,11 @@
  * https://help.aliyun.com/document_detail/97592.html
  *  */
 
-const TAG_NAME = 'ali'
-import { keyStorage } from '@/utils/storage'
+// import { keyStorage } from '@/utils/storage'
 import google from './google'
 import { languageCorrection } from '@/utils/language'
+import { getKeyByTag } from '@/store/userSetting'
+const TAG_NAME = 'ali'
 
 const last = {
   optionsStr: '',
@@ -47,7 +48,7 @@ export default function (options) {
   }
   let { from, to } = languageCorrection(languageOpt, options)
 
-  const keyConfig = keyStorage.getKeyByTag(TAG_NAME)
+  const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.accessKeyId || !keyConfig.accessKeySecret) {
     const result = {
       code: 199,
@@ -56,7 +57,6 @@ export default function (options) {
     last.result = result
     return result
   }
-  console.log('22?')
   var params = {
     SourceText: q,
     SourceLanguage: from,
