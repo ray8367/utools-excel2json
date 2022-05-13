@@ -245,7 +245,8 @@ function openWebUrl(e) {
 
 // 暴露打开弹窗的函数，供父组件调用
 defineExpose({
-  openSettingModal
+  openSettingModal,
+  closeSettingModal
 })
 </script>
 

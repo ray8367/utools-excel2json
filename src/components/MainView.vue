@@ -261,6 +261,7 @@ onMounted(() => {
 
 const utoolsInit = () => {
   window.utools.onPluginEnter(action => {
+    settingModalRef.value.closeSettingModal()
     if (action.code == 'anyword') {
       userInput.value = action.payload
     } else {
