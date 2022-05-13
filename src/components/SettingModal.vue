@@ -168,12 +168,12 @@ const currentHomeHas = ref([]) // 当前首页展示的翻译方式
 watchEffect(() => {
   if (formData.homeHasApi?.length > 4) {
     formData.homeHasApi = currentHomeHas.value
-    Message.warning('最多只能选择4个翻译方式')
+    Message.warning({ content: '最多只能选择4个翻译方式', duration: 1000 })
     return
   }
   if (formData.homeHasApi?.length < 1) {
     formData.homeHasApi = currentHomeHas.value
-    Message.warning('最少保留1个翻译方式')
+    Message.warning({ content: '最少保留1个翻译方式', duration: 1000 })
     return
   }
   currentHomeHas.value = formData.homeHasApi
@@ -215,6 +215,7 @@ function handleOk() {
   settingStore.setHomeOption(formData.homeHasApi)
   settingStore.setDefaultStorage(formData.defaultApi)
   settingStore.setKeyConfig(keyDatas)
+  Message.success({ content: '设置成功', duration: 1000 })
   closeSettingModal()
 }
 
