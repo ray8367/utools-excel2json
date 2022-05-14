@@ -6,7 +6,7 @@
 // import { keyStorage } from '@/utils/storage'
 import { getKeyByTag } from '@/store/userSetting'
 import google from './google'
-import { languageCorrection } from '@/utils/language'
+import { languageCorrectionByTag } from '@/utils/language'
 
 const TAG_NAME = 'tencent'
 const last = {
@@ -36,17 +36,7 @@ export default function (options) {
   last.optionsStr = optionsStr
 
   // 语言修正
-  const languageOpt = {
-    zh: 'zh',
-    en: 'en',
-    jp: 'ja',
-    ru: 'ru',
-    de: 'de',
-    fra: 'fr',
-    cht: 'zh-TW',
-    kor: 'ko'
-  }
-  let { from, to } = languageCorrection(languageOpt, options)
+  let { from, to } = languageCorrectionByTag(TAG_NAME, options)
 
   const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.secretId || !keyConfig.secretKey) {

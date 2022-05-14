@@ -5,7 +5,7 @@
 
 // import { keyStorage } from '@/utils/storage'
 import google from './google'
-import { languageCorrection } from '@/utils/language'
+import { languageCorrectionByTag } from '@/utils/language'
 import { getKeyByTag } from '@/store/userSetting'
 const TAG_NAME = 'ali'
 
@@ -35,18 +35,7 @@ export default function (options) {
   }
   last.optionsStr = optionsStr
 
-  // 语言修正
-  const languageOpt = {
-    zh: 'zh',
-    en: 'en',
-    jp: 'ja',
-    ru: 'ru',
-    de: 'de',
-    fra: 'fr',
-    cht: 'zh-tw',
-    kor: 'ko'
-  }
-  let { from, to } = languageCorrection(languageOpt, options)
+  let { from, to } = languageCorrectionByTag(TAG_NAME, options)
 
   const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.accessKeyId || !keyConfig.accessKeySecret) {

@@ -8,7 +8,7 @@ import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
 // import { keyStorage } from '@/utils/storage'
 import { getKeyByTag } from '@/store/userSetting'
-import { languageCorrection } from '@/utils/language'
+import { languageCorrectionByTag } from '@/utils/language'
 
 const TAG_NAME = 'youdao'
 
@@ -168,17 +168,7 @@ export default function (options) {
   const optionsStr = JSON.stringify(options)
 
   // 语言修正
-  const languageOpt = {
-    zh: 'zh-CHS',
-    en: 'en',
-    jp: 'ja',
-    ru: 'ru',
-    de: 'de',
-    fra: 'fr',
-    cht: 'zh-CHT',
-    kor: 'ko'
-  }
-  let { from, to } = languageCorrection(languageOpt, options)
+  let { from, to } = languageCorrectionByTag(TAG_NAME, options)
 
   if (!isRefresh && optionsStr === last.optionsStr) {
     return last.result
