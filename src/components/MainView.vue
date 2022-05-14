@@ -126,15 +126,13 @@ const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
 const resultCode = ref() // 翻译结果状态(code = 200 为成功)
 const { copy } = useClipboard({ resultText })
-// const currentTranslation = ref('baidu') // 当前翻译api
+const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 
 // 首页设置
-const { homeOption, defaultApi: currentTranslation } = storeToRefs(
-  userSettingStore()
-)
+const { homeOption } = storeToRefs(userSettingStore())
 
 // 设置弹框点击了确定(不一定用到)
 function settingOk() {
@@ -255,6 +253,9 @@ function changeTranslateType() {
 }
 
 onMounted(() => {
+  //  首次加载设置当前选中为设置的默认翻译
+  currentTranslation.value = userSettingStore().defaultApi
+  // 初始化init
   if (!window?.utools) return
   utoolsInit()
 })
