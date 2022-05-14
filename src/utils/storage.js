@@ -1,10 +1,12 @@
 /**密钥存取(临时) */
-// import * as keyDatas from '@/config'
+import { apiOptions } from '@/assets/translateApiOption'
+
 const utools = window.utools
 const KEY_SETTING = 'keyConfig'
 const HOME_OPTION = 'homeOption'
 const DEFAULT_API = 'defaultApi'
 
+/**数据存储某一项 */
 function getDbStorageItem(key) {
   if (utools) {
     return utools.dbStorage.getItem(key)
@@ -13,12 +15,18 @@ function getDbStorageItem(key) {
   }
 }
 
+/**数据读取某一项 */
 function setDbStorageItem(key, value) {
   if (utools) {
     return utools.dbStorage.setItem(key, value)
   } else {
     return window.localStorage.setItem(key, value)
   }
+}
+
+/**获取默认的首页api */
+function getDefaultHomeApi() {
+  return apiOptions.map(i => i.value)
 }
 
 // 密钥存储
@@ -36,39 +44,21 @@ export const keyStorage = {
   /**存储密钥配置信息 */
   set(data) {
     setDbStorageItem(KEY_SETTING, JSON.stringify(data))
-  },
-
-  /**
-   * 获取指定密钥
-   * @param {String} tag 第三方api标识
-   */
-  getKeyByTag(tag) {
-    const keyConfig = this.get()
-    return keyConfig[tag]
-  },
-
-  /**存储指定密钥 */
-  setKeyByTag(tag, data) {
-    const keyConfig = this.get()
-    keyConfig[tag] = data
-    this.set(keyConfig)
   }
 }
 
-// 首页选项
+// 首页可使用翻译选项
 export const homeOptionStorage = {
   get() {
-    const defaultOptions = ['baidu', 'tencent', 'youdao', 'ali']
     const strData = getDbStorageItem(HOME_OPTION)
-    // return strData ? JSON.parse(strData) : defaultOptions
     if (strData) {
       try {
         return JSON.parse(strData)
       } catch (error) {
-        return defaultOptions
+        return getDefaultHomeApi()
       }
     } else {
-      return defaultOptions
+      return getDefaultHomeApi()
     }
   },
 
@@ -80,7 +70,7 @@ export const homeOptionStorage = {
 // 首选翻译
 export const defaultStorage = {
   get() {
-    return getDbStorageItem(DEFAULT_API) || 'baidu'
+    return getDbStorageItem(DEFAULT_API) || getDefaultHomeApi()[0]
   },
 
   set(data) {
