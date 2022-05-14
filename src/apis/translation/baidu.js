@@ -2,10 +2,8 @@
  * 百度翻译接口
  * https://fanyi-api.baidu.com/doc/21
  *  */
-// import md5 from 'crypto-js/md5'
 import md5 from 'crypto-js/md5'
 import axios from 'axios'
-// import { keyStorage } from '@/utils/storage'
 import { getKeyByTag } from '@/store/userSetting'
 
 const TAG_NAME = 'baidu'

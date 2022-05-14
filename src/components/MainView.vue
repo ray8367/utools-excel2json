@@ -117,7 +117,6 @@ import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
-import { storeToRefs } from 'pinia'
 import SettingModal from './SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
 
@@ -132,12 +131,15 @@ const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 
 // 首页设置
-const { homeOption } = storeToRefs(userSettingStore())
+// const { homeOption } = storeToRefs(userSettingStore())
+const homeOption = ref([])
 
 // 设置弹框点击了确定(不一定用到)
 function settingOk() {
-  // 设置成功，刷新上一次翻译
   nextTick(() => {
+    // 重新读取设置
+    readSetting()
+    // 设置成功，刷新上一次翻译
     startTranslation(currentTranslation.value, true)
   })
 }
@@ -252,9 +254,22 @@ function changeTranslateType() {
   startTranslation()
 }
 
+/**读取配置 */
+function readSetting() {
+  console.log('readSetting()')
+  // 首页设置
+  const store = userSettingStore()
+  homeOption.value = store.homeOption
+  // 当前选中翻译
+  if (homeOption.value.indexOf(currentTranslation.value) === -1) {
+    currentTranslation.value = store.defaultApi
+  }
+}
+
 onMounted(() => {
   //  首次加载设置当前选中为设置的默认翻译
-  currentTranslation.value = userSettingStore().defaultApi
+  // currentTranslation.value = userSettingStore().defaultApi
+  readSetting()
   // 初始化init
   if (!window?.utools) return
   utoolsInit()

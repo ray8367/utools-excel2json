@@ -2,11 +2,9 @@
  * 有道翻译接口
  * https://ai.youdao.com/DOCSIRMA/html/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%BF%BB%E8%AF%91/API%E6%96%87%E6%A1%A3/%E6%96%87%E6%9C%AC%E7%BF%BB%E8%AF%91%E6%9C%8D%E5%8A%A1/%E6%96%87%E6%9C%AC%E7%BF%BB%E8%AF%91%E6%9C%8D%E5%8A%A1-API%E6%96%87%E6%A1%A3.html
  *  */
-// import md5 from 'crypto-js/md5'
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
-// import { keyStorage } from '@/utils/storage'
 import { getKeyByTag } from '@/store/userSetting'
 import { languageCorrectionByTag } from '@/utils/language'
 
