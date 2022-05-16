@@ -87,12 +87,11 @@
             />
             <transition name="component-fade" mode="out-in">
               <div
-                v-if="resultText?.trim() && resultCode == 200"
-                class="absolute bottom-10px left-1/2 transform -translate-x-1/2 transition-all shadow-lg hover:shadow-md active:shadow-sm"
+                class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
               >
-                <ColorfulBtn @click="copyResult(resultText)">
-                  复制结果
-                </ColorfulBtn>
+                <ColorfulBtnC @click="copyResult(resultText)">
+                  <icon-copy /> 复制结果
+                </ColorfulBtnC>
               </div>
             </transition>
           </div>
@@ -112,7 +111,7 @@
 <script setup>
 import { debounce, cloneDeep } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
-import { IconSwap, IconSettings } from '@arco-design/web-vue/es/icon'
+import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
