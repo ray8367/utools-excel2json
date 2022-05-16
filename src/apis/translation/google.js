@@ -50,8 +50,6 @@ export default function (options) {
         return result
       })
       .catch(err => {
-        console.log('err:', err)
-
         const result = {
           code: 199,
           text: '翻译失败：' + err

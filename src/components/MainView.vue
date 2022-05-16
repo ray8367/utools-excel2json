@@ -134,7 +134,7 @@ const settingModalRef = ref() // 设置弹窗的ref
 // const { homeOption } = storeToRefs(userSettingStore())
 const homeOption = ref([])
 
-// 设置弹框点击了确定(不一定用到)
+// 设置弹框点击了确定
 function settingOk() {
   nextTick(() => {
     // 重新读取设置
@@ -144,7 +144,7 @@ function settingOk() {
   })
 }
 
-// 设置弹框点击了取消(不一定用到)
+// 设置弹框点击了取消
 function settingCancel(data) {
   console.log('data: ', data)
 }
@@ -256,7 +256,6 @@ function changeTranslateType() {
 
 /**读取配置 */
 function readSetting() {
-  console.log('readSetting()')
   // 首页设置
   const store = userSettingStore()
   homeOption.value = store.homeOption
