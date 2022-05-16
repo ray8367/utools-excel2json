@@ -118,7 +118,6 @@ import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
 import SettingModal from './SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
-import ColorfulBtn from './colorfulBtn.vue'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
