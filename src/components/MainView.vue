@@ -199,7 +199,8 @@ const apiNotSupport = {
   tencent: ['wyw'],
   google: ['wyw'],
   ali: ['wyw'],
-  youdao: ['wyw']
+  youdao: ['wyw'],
+  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor']
 }
 
 // 根据api动态变更选项的disabled属性

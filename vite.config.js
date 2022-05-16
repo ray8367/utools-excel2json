@@ -85,6 +85,12 @@ export default defineConfig({
         target: 'http://openapi.youdao.com/api',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/youdaoApi/, '')
+      },
+      // 彩云小译
+      '/caiyunApi': {
+        target: 'http://api.interpreter.caiyunai.com/v1/translator',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/caiyunApi/, '')
       }
     }
   }

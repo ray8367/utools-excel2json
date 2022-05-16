@@ -107,6 +107,7 @@
                 />
               </a-form-item>
             </a-col>
+
             <a-divider orientation="left">有道翻译</a-divider>
             <a-col :span="18">
               <a-form-item label="应用ID">
@@ -121,6 +122,16 @@
                 <a-input
                   v-model.trim="formData.youdaoSecret"
                   placeholder="请输入有道智云应用密钥"
+                />
+              </a-form-item>
+            </a-col>
+
+            <a-divider orientation="left">彩云小译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="Token">
+                <a-input
+                  v-model.trim="formData.caiyunToken"
+                  placeholder="请输入彩云小译Token"
                 />
               </a-form-item>
             </a-col>
@@ -150,7 +161,8 @@ const formData = reactive({
   accessKeyId: undefined, // 阿里
   accessKeySecret: undefined, // 阿里
   youdaoId: undefined, // 有道
-  youdaoSecret: undefined // 有道
+  youdaoSecret: undefined, // 有道
+  caiyunToken: undefined // 彩云
 })
 
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
@@ -210,6 +222,10 @@ function handleOk() {
     ali: {
       accessKeyId: formData.accessKeyId,
       accessKeySecret: formData.accessKeySecret
+    },
+
+    caiyun: {
+      token: formData.caiyunToken
     }
   }
   settingStore.setHomeOption(formData.homeHasApi)

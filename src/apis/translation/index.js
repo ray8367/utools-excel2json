@@ -4,14 +4,7 @@ import tencent from './tencent'
 import google from './google'
 import youdao from './youdao'
 import ali from './ali'
-
-export default {
-  baidu,
-  tencent,
-  google,
-  youdao,
-  ali
-}
+import caiyun from './caiyun'
 
 /**
  * 翻译
@@ -24,7 +17,8 @@ export function translationCommon(tag, params) {
     tencent,
     google,
     youdao,
-    ali
+    ali,
+    caiyun
   }
   function defaultFun() {
     return {

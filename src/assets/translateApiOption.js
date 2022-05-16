@@ -23,5 +23,10 @@ export const apiOptions = [
     label: '有道翻译',
     value: 'youdao',
     homeShow: true
+  },
+  {
+    label: '彩云小译',
+    value: 'caiyun',
+    homeShow: true
   }
 ]

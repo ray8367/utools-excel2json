@@ -39,6 +39,11 @@ export const optionsData = {
     fra: 'fr',
     cht: 'zh-TW',
     kor: 'ko'
+  },
+  caiyun: {
+    zh: 'zh',
+    en: 'en',
+    jp: 'ja'
   }
 }
 
