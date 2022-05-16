@@ -38,7 +38,7 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <!-- <a-col :span="18">
               <a-form-item label="默认翻译方式">
                 <a-select
                   v-model="formData.defaultApi"
@@ -53,7 +53,7 @@
                   </a-option>
                 </a-select>
               </a-form-item>
-            </a-col>
+            </a-col> -->
             <a-divider orientation="left">百度翻译</a-divider>
             <a-col :span="18">
               <a-form-item label="APP ID">

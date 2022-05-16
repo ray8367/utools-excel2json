@@ -22,7 +22,7 @@
         <a-radio-group
           v-model="currentTranslation"
           type="button"
-          @change="startTranslation"
+          @change="changeRadioHandler"
         >
           <a-radio
             v-for="item in translateApiOptions"
@@ -87,6 +87,7 @@
             />
             <transition name="component-fade" mode="out-in">
               <div
+                v-if="resultText?.trim() && resultCode == 200"
                 class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
               >
                 <ColorfulBtnC @click="copyResult(resultText)">
@@ -225,6 +226,13 @@ watchEffect(() => {
     translateTo.value = 'zh'
   }
 })
+
+/**修改选中翻译 保存当前选中并翻译 */
+function changeRadioHandler() {
+  const store = userSettingStore()
+  store.setDefaultStorage(currentTranslation.value)
+  startTranslation()
+}
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
 async function startTranslation(val = currentTranslation.value, isRefresh) {
