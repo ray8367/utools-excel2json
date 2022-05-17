@@ -174,9 +174,9 @@ const translateFromOptions = ref([
 ])
 
 // 翻译方式To参数的选项(过滤掉“自动检测”)
-const translateToOptions = computed(() => {
-  return translateFromOptions.value.filter(i => i.value !== 'auto')
-})
+const translateToOptions = ref(
+  cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
+)
 
 // 翻译Api的Radio选项
 const translateApiOptions = computed(() => {
@@ -216,6 +216,13 @@ watchEffect(() => {
     i.disabled = currentApiDisabledArr.includes(i.value)
   })
 
+  // 彩云的选项单独处理，这里除开彩云
+  if (apiName !== 'caiyun') {
+    translateToOptions.value.forEach(i => {
+      i.disabled = currentApiDisabledArr.includes(i.value)
+    })
+  }
+
   // Boolean: From或To是否现在的值，是否是当前翻译api不支持的翻译语种
   const paramsHasNoSupport =
     currentApiDisabledArr.includes(translateFrom.value) ||
@@ -225,6 +232,39 @@ watchEffect(() => {
   if (paramsHasNoSupport) {
     translateFrom.value = 'auto'
     translateTo.value = 'zh'
+  }
+})
+
+watchEffect(() => {
+  // 如果不是彩云，直接return
+  if (currentTranslation.value !== 'caiyun') return
+  const fromIsAuto = translateFrom.value === 'auto' // From是否是自动
+  const fromIsZh = translateFrom.value === 'zh' // From是否是中文
+  const toIsZh = translateTo.value === 'zh' // To是否是中文
+
+  // 彩云不支持的语种value数组
+  const caiyunDisabledArr = apiNotSupport.caiyun
+
+  // 循环To的数组
+  translateToOptions.value.forEach(i => {
+    // 先禁用彩云不支持的
+    i.disabled = caiyunDisabledArr.includes(i.value)
+
+    // 如果From是中文，则禁用To选项的中文
+    if (fromIsZh && i.value === 'zh') {
+      i.disabled = true
+    }
+
+    // 如果From不是中文也不是自动（那就是外语），则禁用To选项中除了中文以外的，并自动设置为中文
+    if (!fromIsZh && !fromIsAuto) {
+      i.disabled = i.value !== 'zh'
+      translateTo.value = 'zh'
+    }
+  })
+
+  // 如果两边都是中文，则把后面的改成英文
+  if (fromIsZh && toIsZh) {
+    translateTo.value = 'en'
   }
 })
 
