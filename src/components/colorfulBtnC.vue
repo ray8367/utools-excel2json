@@ -2,7 +2,7 @@
   <button
     ref="btnRef"
     ripple="ripple"
-    class="btn_main transition-all flex items-center justify-center w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm"
+    class="btn_main transition-all flex items-center justify-center w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800)"
     @mousedown="showRipple($event)"
     @mouseup="clearRipple"
   >
@@ -76,6 +76,26 @@ function cleanFirst() {
       #0000ff80
     );
     animation: ripple 1200ms ease;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .ripple_wrapper {
+    span[dynamic='true'] {
+      background: linear-gradient(
+        45deg,
+        #1900ff77,
+        #0066ff77,
+        #5e4dff77,
+        #a200ff77
+      );
+    }
+  }
+  .btn_main {
+    border: 1px solid #444;
+
+    &:hover {
+      text-shadow: 0px 2px 12px #ffffff6e;
+    }
   }
 }
 @keyframes ripple {

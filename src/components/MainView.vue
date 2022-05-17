@@ -11,8 +11,18 @@
     <div
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
-      <div class="text_wrapper flex flex-1">
+      <div class="text_wrapper flex flex-1 relative">
+        <transition name="component-fade">
+          <div
+            v-if="!['', undefined, null].includes(userInput)"
+            class="absolute transition-all right-0 top-0 bottom-0 w-18px z-2 flex items-center justify-center rounded-tr-8px bg-[#eeeeee40] cursor-pointer dark:(bg-[#66666640] hover:bg-[#ffffff1f]) hover:bg-[#dddddd40]"
+            @click="clearInput"
+          >
+            <icon-close class="text-slate-400" />
+          </div>
+        </transition>
         <a-textarea
+          ref="inputRef"
           v-model="userInput"
           class="rounded-t-8px"
           placeholder="请输入要翻译的内容"
@@ -95,7 +105,6 @@
               />
               <transition name="component-fade" mode="out-in">
                 <div
-                  v-if="resultText?.trim() && resultCode == 200"
                   class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
                 >
                   <ColorfulBtnC @click="copyResult(resultText)">
@@ -121,7 +130,12 @@
 <script setup>
 import { debounce, cloneDeep } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
-import { IconSwap, IconSettings, IconCopy } from '@arco-design/web-vue/es/icon'
+import {
+  IconSwap,
+  IconSettings,
+  IconCopy,
+  IconClose
+} from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
@@ -141,6 +155,13 @@ const settingModalRef = ref() // 设置弹窗的ref
 // 首页设置
 // const { homeOption } = storeToRefs(userSettingStore())
 const homeOption = ref([])
+
+// 输入textarea的dom
+const inputRef = ref()
+
+function clearInput() {
+  userInput.value = undefined
+}
 
 // 设置弹框点击了确定
 function settingOk() {
@@ -165,7 +186,7 @@ function openSettingModal() {
 // 复制结果
 function copyResult(val) {
   copy(val)
-  Message.success('复制成功')
+  Message.success({ content: '复制成功', duration: 1000 })
 }
 
 // 翻译方式From参数的选项
@@ -359,6 +380,7 @@ const utoolsInit = () => {
     resize: none;
     height: 100%;
     font-size: 16px;
+    padding-right: 24px;
   }
 
   ::v-deep(.arco-textarea-wrapper) {
