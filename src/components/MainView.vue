@@ -220,7 +220,7 @@ watch(
   userInput,
   debounce(function () {
     startTranslation()
-  }, 200)
+  }, 500)
 )
 
 // api不支持的语言value声明
@@ -328,7 +328,9 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
 
 // 切换翻译的From和To
 function changeTranslateType() {
-  startTranslation()
+  setTimeout(() => {
+    startTranslation()
+  }, 0)
 }
 
 /**读取配置 */
