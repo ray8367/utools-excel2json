@@ -11,7 +11,7 @@
   "dependencies": {
     "@alicloud/pop-core": "^1.7.10",
     "@vitalets/google-translate-api": "^8.0.0",
-    "@vueuse/core": "^8.4.2",
+    "@vueuse/core": "^8.5.0",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
@@ -21,7 +21,7 @@
     "vue": "^3.2.33"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.27.0",
+    "@arco-design/web-vue": "^2.27.1",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "clean-webpack-plugin": "^4.0.0",

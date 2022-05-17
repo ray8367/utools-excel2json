@@ -69,35 +69,44 @@
         </div>
       </section>
 
-      <div class="flex flex-1 relative">
-        <transition name="component-fade">
-          <Loading
-            v-if="pageLoading"
-            class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#29292c])"
-          />
-          <div
-            v-else
-            class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
-          >
-            <a-textarea
-              v-model="resultText"
-              class="rounded-b-8px"
-              placeholder="翻译结果"
-              readonly
+      <a-resize-box
+        :directions="['top']"
+        :style="{
+          minHeight: '200px',
+          maxHeight: '78%',
+          height: 'calc(50% - 21.5px)'
+        }"
+      >
+        <div class="flex h-full relative">
+          <transition name="component-fade">
+            <Loading
+              v-if="pageLoading"
+              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#29292c])"
             />
-            <transition name="component-fade" mode="out-in">
-              <div
-                v-if="resultText?.trim() && resultCode == 200"
-                class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
-              >
-                <ColorfulBtnC @click="copyResult(resultText)">
-                  <icon-copy /> 复制结果
-                </ColorfulBtnC>
-              </div>
-            </transition>
-          </div>
-        </transition>
-      </div>
+            <div
+              v-else
+              class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
+            >
+              <a-textarea
+                v-model="resultText"
+                class="rounded-b-8px"
+                placeholder="翻译结果"
+                readonly
+              />
+              <transition name="component-fade" mode="out-in">
+                <div
+                  v-if="resultText?.trim() && resultCode == 200"
+                  class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
+                >
+                  <ColorfulBtnC @click="copyResult(resultText)">
+                    <icon-copy /> 复制结果
+                  </ColorfulBtnC>
+                </div>
+              </transition>
+            </div>
+          </transition>
+        </div>
+      </a-resize-box>
     </div>
 
     <!-- 设置弹窗 -->
