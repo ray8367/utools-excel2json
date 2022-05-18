@@ -389,49 +389,60 @@ const utoolsInit = () => {
 <style lang="scss" scoped>
 .setting_icon {
   transition: transform 250ms ease;
+
   &:hover {
     transform: rotate(60deg);
   }
+
   &:active {
-    transform: scale(0.8) rotate(60deg);
     color: $primary-color;
+    transform: scale(0.8) rotate(60deg);
   }
 }
+
 .text_wrapper {
+
   ::v-deep(.arco-textarea) {
-    resize: none;
     height: 100%;
-    font-size: 16px;
     padding-right: 24px;
+    font-size: 16px;
+    resize: none;
   }
 
   ::v-deep(.arco-textarea-wrapper) {
-    background-color: #fff;
+    background-color: #ffffff;
     border-color: #e9e9e9;
   }
 
   ::v-deep(.arco-textarea-focus) {
     border-color: $primary-color;
   }
+
   // 深色模式
   @media (prefers-color-scheme: dark) {
+
     ::v-deep(.arco-textarea-wrapper) {
       background-color: #29292c;
       border-color: #00000000;
     }
+
     ::v-deep(.arco-textarea-focus) {
-      border-color: #666;
+      border-color: #666666;
     }
   }
 }
+
 .text_readonly {
+
   ::v-deep(.arco-textarea) {
     padding-bottom: 40px;
   }
+
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
   @media (prefers-color-scheme: dark) {
+
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
     }

@@ -62,12 +62,14 @@ function cleanFirst() {
 
 <style lang="scss" scoped>
 .btn_main {
-  border: 1px solid #eee;
+  border: 1px solid #eeeeee;
 }
 
 .ripple_wrapper {
+
   span[dynamic='true'] {
     @apply transform scale-0 rounded-full absolute;
+
     background: linear-gradient(
       45deg,
       #ff000080,
@@ -79,7 +81,9 @@ function cleanFirst() {
   }
 }
 @media (prefers-color-scheme: dark) {
+
   .ripple_wrapper {
+
     span[dynamic='true'] {
       background: linear-gradient(
         45deg,
@@ -90,19 +94,22 @@ function cleanFirst() {
       );
     }
   }
+
   .btn_main {
-    border: 1px solid #444;
+    border: 1px solid #444444;
 
     &:hover {
-      text-shadow: 0px 2px 12px #ffffff6e;
+      text-shadow: 0 2px 12px #ffffff6e;
     }
   }
 }
 @keyframes ripple {
+
   from {
     opacity: 0.5;
     transform: scale(0);
   }
+
   to {
     opacity: 0;
     transform: scale(2.5);
