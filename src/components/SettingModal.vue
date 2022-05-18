@@ -9,7 +9,7 @@
     >
       <template #title> 设置 </template>
       <div>
-        <p>
+        <p class="indent-4px">
           插件的功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
         </p>
         <p>
@@ -18,7 +18,7 @@
             href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
             @click="openWebUrl"
           >
-            猛戳这里了解如何申请~
+            大力点击这里，了解如何申请~
           </a-link>
         </p>
 
@@ -128,10 +128,10 @@
 
             <a-divider orientation="left">彩云小译</a-divider>
             <a-col :span="18">
-              <a-form-item label="Token">
+              <a-form-item label="令牌">
                 <a-input
                   v-model.trim="formData.caiyunToken"
-                  placeholder="请输入彩云小译Token"
+                  placeholder="请输入彩云小译令牌"
                 />
               </a-form-item>
             </a-col>
@@ -254,9 +254,8 @@ function closeSettingModal() {
 }
 
 function openWebUrl(e) {
-  if (window.utools) {
-    window.utools.shellOpenExternal(e.target.getAttribute('href'))
-  }
+  if (!window.utools) return
+  window.utools.shellOpenExternal(e.target.getAttribute('href'))
 }
 
 // 暴露打开弹窗的函数，供父组件调用

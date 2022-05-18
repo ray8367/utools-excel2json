@@ -4,6 +4,9 @@ export default defineConfig({
   preflight: {
     blocklist: 'img'
   },
+  shortcuts: {
+    'flex-c': 'flex justify-center items-center'
+  },
   theme: {
     screens: {
       sm: '768px',

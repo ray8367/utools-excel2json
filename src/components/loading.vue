@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <div class="flex-c flex-col">
     <svg
       class="ap"
       viewBox="0 0 128 256"

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="main_wrapper flex justify-center h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
+    class="main_wrapper flex-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
     <div
       class="setting_icon absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover:text-[#666]"
@@ -15,7 +15,7 @@
         <transition name="component-fade">
           <div
             v-if="!['', undefined, null].includes(userInput)"
-            class="absolute transition-all right-0 top-0 bottom-0 w-18px z-2 flex items-center justify-center rounded-tr-8px bg-[#eeeeee40] cursor-pointer dark:(bg-[#66666640] hover:bg-[#ffffff1f]) hover:bg-[#dddddd40]"
+            class="absolute transition-all right-0 top-0 bottom-0 w-18px z-2 flex-c rounded-tr-8px bg-[#eeeeee40] cursor-pointer dark:(bg-[#66666640] hover:bg-[#ffffff1f]) hover:bg-[#dddddd40]"
             @click="clearInput"
           >
             <icon-close class="text-slate-400" />
@@ -28,7 +28,7 @@
           placeholder="请输入要翻译的内容"
         />
       </div>
-      <section class="flex my-8px">
+      <section class="tools_wrapper flex my-8px">
         <a-radio-group
           v-model="currentTranslation"
           type="button"
@@ -60,7 +60,9 @@
               {{ item.label }}
             </a-option>
           </a-select>
-          <icon-swap stroke-linejoin="round" stroke-linecap="square" />
+
+          <icon-arrow-right />
+
           <!-- 翻译To的select -->
           <a-select
             v-model="translateTo"
@@ -131,7 +133,7 @@
 import { debounce, cloneDeep } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
 import {
-  IconSwap,
+  IconArrowRight,
   IconSettings,
   IconCopy,
   IconClose
@@ -139,7 +141,7 @@ import {
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
-import SettingModal from './SettingModal.vue'
+import SettingModal from '@/components/SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
 
 const pageLoading = ref(false) // 是否正在翻译
@@ -194,14 +196,14 @@ function copyResult(val) {
 const translateFromOptions = ref([
   { label: '自动检测', value: 'auto', disabled: false },
   { label: '中文-简体', value: 'zh', disabled: false },
-  { label: '中文-繁体', value: 'cht', disabled: false },
-  { label: '文言文-百度', value: 'wyw', disabled: false },
   { label: '英语', value: 'en', disabled: false },
   { label: '日语', value: 'jp', disabled: false },
-  { label: '韩语', value: 'kor', disabled: false },
   { label: '俄语', value: 'ru', disabled: false },
+  { label: '韩语', value: 'kor', disabled: false },
   { label: '德语', value: 'de', disabled: false },
-  { label: '法语', value: 'fra', disabled: false }
+  { label: '法语', value: 'fra', disabled: false },
+  { label: '中文-繁体', value: 'cht', disabled: false },
+  { label: '文言文-百度', value: 'wyw', disabled: false }
 ])
 
 // 翻译方式To参数的选项(过滤掉“自动检测”)
@@ -415,6 +417,15 @@ const utoolsInit = () => {
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
+    }
+  }
+}
+.tools_wrapper {
+  @media (prefers-color-scheme: dark) {
+    ::v-deep(.arco-radio-checked) {
+      background-color: #222 !important;
+      color: #fff;
+      text-shadow: 0px 3px 15px #ffffffb8;
     }
   }
 }

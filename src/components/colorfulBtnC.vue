@@ -2,7 +2,7 @@
   <button
     ref="btnRef"
     ripple="ripple"
-    class="btn_main transition-all flex items-center justify-center w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800)"
+    class="btn_main transition-all flex-c w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800)"
     @mousedown="showRipple($event)"
     @mouseup="clearRipple"
   >
