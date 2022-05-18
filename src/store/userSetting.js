@@ -25,7 +25,8 @@ export const userSettingStore = defineStore('settings', {
         accessKeyId: keyConfig.ali?.accessKeyId, // 阿里
         accessKeySecret: keyConfig.ali?.accessKeySecret, // 阿里
         youdaoId: keyConfig.youdao?.appid, // 有道
-        youdaoSecret: keyConfig.youdao?.appkey // 有道
+        youdaoSecret: keyConfig.youdao?.appkey, // 有道
+        caiyunToken: keyConfig.caiyun?.token // 彩云
       }
     }
   },
