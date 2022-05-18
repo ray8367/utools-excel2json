@@ -28,5 +28,9 @@ module.exports = {
         extractComments: false //不将注释提取到单独的文件中
       })
     ]
+  },
+
+  module: {
+    unknownContextCritical: false
   }
 }
