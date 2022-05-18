@@ -204,7 +204,7 @@ export default function (options) {
     .then(res => {
       const { translation, errorCode } = res.data
       let result
-      if (errorCode == '0') {
+      if (errorCode === '0') {
         // 翻译成功
         let text = ''
         translation.map(item => {
