@@ -1,19 +1,19 @@
 module.exports = {
   plugins: ['stylelint-prettier'],
   extends: [
-    'stylelint-config-standard',
     'stylelint-config-standard-scss',
     'stylelint-config-recess-order',
-    'stylelint-config-prettier',
-    'stylelint-prettier/recommended',
     'stylelint-config-html/vue',
     'stylelint-config-recommended-vue',
-    'stylelint-config-recommended-scss'
+    'stylelint-config-recommended-scss',
+    'stylelint-config-prettier'
   ],
-
+  // 不加下面这行，就可以格式化单独的scss文件，加了就可以格式化vue文件里的scss
   customSyntax: 'postcss-html',
-  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', '**/*.json'],
+  ignoreFiles: ["dist/**/*"],
+  // 配置 rules
   rules: {
+    'prettier/prettier': true,
     indentation: 2, // 缩进2空格
     'string-quotes': 'single', // 单引号
     // 禁止未知的伪类选择器。
@@ -32,7 +32,7 @@ module.exports = {
     'unit-case': 'lower', // 单位大小写。指定为小写
     'color-hex-case': 'lower', // 颜色十六进制大小写。指定为小写
     'color-hex-length': 'long', // 颜色十六进制长度。指定为使用长的那一种
-    'rule-empty-line-before': 'always-multi-line', // 多个规则之间必须有空行
+    'rule-empty-line-before': null, // 多个规则之间必须有空行
     'font-family-no-missing-generic-family-keyword': null, // 禁止在字体族名称列表中缺少通用族。关闭
     'selector-type-no-unknown': null, // 禁止未知的选择器类型。关闭
     'block-opening-brace-space-before': 'always', // 大括号前面空一格
@@ -44,4 +44,4 @@ module.exports = {
     'keyframes-name-pattern': null, // 指定关键帧名称模式。关闭
     'function-no-unknown': null // 禁止未知的函数。关闭
   }
-}
+};
