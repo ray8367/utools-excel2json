@@ -20,9 +20,12 @@ window.servers = {
 
   // 谷歌翻译
   googleTextTranslate: params => {
-    // console.log('params:', params)
-    const { q, from, to } = params
-    return google.textTranslate(q, { from, to })
+    try {
+      const { q, from, to } = params
+      return google.textTranslate(q, { from, to })
+    } catch (error) {
+      return error
+    }
   },
 
   // 阿里翻译

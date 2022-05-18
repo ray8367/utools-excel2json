@@ -1,10 +1,7 @@
 {
   "main": "./index.html",
   "logo": "logo.png",
-  "preload": "./preload/src/index.js",
-  "development": {
-    "main": "http://127.0.0.1:6789"
-  },
+  "preload": "./preload/dist/index.js",
   "features": [
     {
       "code": "keyword",
