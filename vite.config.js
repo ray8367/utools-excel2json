@@ -11,7 +11,8 @@ export default defineConfig({
   base: './',
   define: {
     // 去除vue的options api
-    __VUE_OPTIONS_API__: false
+    // 不能去除，不能保证组件库完全为Composition API，去掉可能导致组件库功能丢失
+    // __VUE_OPTIONS_API__: false
   },
   css: {
     preprocessorOptions: {

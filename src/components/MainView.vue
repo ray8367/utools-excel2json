@@ -161,6 +161,7 @@ const inputRef = ref()
 
 function clearInput() {
   userInput.value = undefined
+  inputRef.value.focus()
 }
 
 // 设置弹框点击了确定

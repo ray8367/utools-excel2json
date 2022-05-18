@@ -17,7 +17,7 @@
     "lodash-es": "^4.17.21",
     "md5": "^2.3.0",
     "pinia": "^2.0.14",
-    "tencentcloud-sdk-nodejs": "^4.0.333",
+    "tencentcloud-sdk-nodejs": "^4.0.342",
     "vue": "^3.2.33"
   },
   "devDependencies": {

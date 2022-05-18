@@ -2632,10 +2632,10 @@ tapable@^2.1.1, tapable@^2.2.0:
   resolved "https://registry.npmmirror.com/tapable/-/tapable-2.2.1.tgz#1967a73ef4060a82f12ab96af86d52fdb76eeca0"
   integrity sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==
 
-tencentcloud-sdk-nodejs@^4.0.333:
-  version "4.0.333"
-  resolved "https://registry.npmmirror.com/tencentcloud-sdk-nodejs/-/tencentcloud-sdk-nodejs-4.0.333.tgz#2a87a51d2ca2e2e09a8a1718c189572e2ed0a720"
-  integrity sha512-hasLBjuM4ao8bEoYh75sYFKYBvsI0fZGy9jjkGHnB9NTA9m3g0o4PYNmc7fDtY3fJCKeeYH9vfgqtadQEmRrQw==
+tencentcloud-sdk-nodejs@^4.0.342:
+  version "4.0.342"
+  resolved "https://registry.npmmirror.com/tencentcloud-sdk-nodejs/-/tencentcloud-sdk-nodejs-4.0.342.tgz#8f28b1c0c841d91a453fcf73dd74adfe0e838eca"
+  integrity sha512-4mI/WaGt5AyoLYwK6Jkz5Fv0z7FfTPekl4l+KUoIVXQX+8iWmcu6+7eU9SIKxIkVTegMMFChHMDyp5JJO3pNUg==
   dependencies:
     form-data "^3.0.0"
     get-stream "^6.0.0"
