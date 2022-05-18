@@ -84,7 +84,7 @@
       <a-resize-box
         :directions="['top']"
         :style="{
-          minHeight: '200px',
+          minHeight: '22%',
           maxHeight: '78%',
           height: 'calc(50% - 21.5px)'
         }"
@@ -384,7 +384,6 @@ const utoolsInit = () => {
 }
 
 .text_wrapper {
-
   ::v-deep(.arco-textarea) {
     height: 100%;
     padding-right: 24px;
@@ -403,7 +402,6 @@ const utoolsInit = () => {
 
   // 深色模式
   @media (prefers-color-scheme: dark) {
-
     ::v-deep(.arco-textarea-wrapper) {
       background-color: #29292c;
       border-color: #00000000;
@@ -416,7 +414,6 @@ const utoolsInit = () => {
 }
 
 .text_readonly {
-
   ::v-deep(.arco-textarea) {
     padding-bottom: 40px;
   }
@@ -425,7 +422,6 @@ const utoolsInit = () => {
     border-color: #e9e9e9;
   }
   @media (prefers-color-scheme: dark) {
-
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
     }
@@ -434,7 +430,6 @@ const utoolsInit = () => {
 
 .tools_wrapper {
   @media (prefers-color-scheme: dark) {
-
     ::v-deep(.arco-radio-checked) {
       color: #ffffff;
       text-shadow: 0 3px 15px #ffffffb8;
