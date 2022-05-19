@@ -60,14 +60,16 @@
                 <a-input
                   v-model.trim="formData.appid"
                   placeholder="请输入百度翻译的APP ID"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
               <a-form-item label="密钥">
-                <a-input
+                <a-input-password
                   v-model.trim="formData.token"
                   placeholder="请输入百度翻译的密钥"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -78,14 +80,16 @@
                 <a-input
                   v-model.trim="formData.secretId"
                   placeholder="请输入腾讯翻译Secret Id"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
               <a-form-item label="Secret Key">
-                <a-input
+                <a-input-password
                   v-model.trim="formData.secretKey"
                   placeholder="请输入腾讯翻译Secret Key"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -96,14 +100,16 @@
                 <a-input
                   v-model.trim="formData.accessKeyId"
                   placeholder="请输入阿里云Access Key ID"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
               <a-form-item label="Secret Key">
-                <a-input
+                <a-input-password
                   v-model.trim="formData.accessKeySecret"
                   placeholder="请输入阿里云Access Key Secret"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -114,14 +120,16 @@
                 <a-input
                   v-model.trim="formData.youdaoId"
                   placeholder="请输入有道智云应用ID"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
               <a-form-item label="应用密钥">
-                <a-input
+                <a-input-password
                   v-model.trim="formData.youdaoSecret"
                   placeholder="请输入有道智云应用密钥"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -129,9 +137,10 @@
             <a-divider orientation="left">彩云小译</a-divider>
             <a-col :span="18">
               <a-form-item label="令牌">
-                <a-input
+                <a-input-password
                   v-model.trim="formData.caiyunToken"
                   placeholder="请输入彩云小译令牌"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>

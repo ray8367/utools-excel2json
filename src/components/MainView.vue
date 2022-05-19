@@ -131,7 +131,7 @@
 </template>
 
 <script setup>
-import { debounce, cloneDeep } from 'lodash-es'
+import { debounce, throttle, cloneDeep } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
 import {
   IconArrowRight,
@@ -188,10 +188,10 @@ function openSettingModal() {
 }
 
 // 复制结果
-function copyResult(val) {
+const copyResult = throttle(val => {
   copy(val)
-  Message.success({ content: '复制成功', duration: 1000 })
-}
+  Message.success('复制成功')
+}, 300)
 
 // 翻译方式From参数的选项
 const translateFromOptions = ref([
