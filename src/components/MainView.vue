@@ -12,15 +12,14 @@
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1 relative">
-        <transition name="component-fade">
-          <div
-            v-if="!['', undefined, null].includes(userInput)"
-            class="absolute transition-all right-0 top-0 bottom-0 w-18px z-2 flex-c rounded-tr-8px bg-[#eeeeee40] cursor-pointer dark:(bg-[#66666640] hover:bg-[#ffffff1f]) hover:bg-[#dddddd40]"
-            @click="clearInput"
-          >
-            <icon-close class="text-slate-400" />
-          </div>
+        <!-- 清除按钮 -->
+        <transition name="component-scale">
+          <template v-if="!['', undefined, null].includes(userInput)">
+            <ClearBtn @click="clearInput" />
+          </template>
         </transition>
+
+        <!-- 上方文本域 -->
         <a-textarea
           ref="inputRef"
           v-model="userInput"
@@ -29,6 +28,7 @@
         />
       </div>
       <section class="tools_wrapper flex my-8px">
+        <!-- 中间翻译Api选项 -->
         <a-radio-group
           v-model="currentTranslation"
           type="button"
@@ -107,11 +107,12 @@
               />
               <transition name="component-fade" mode="out-in">
                 <div
+                  v-show="resultText?.trim() && resultCode === 200"
                   class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
                 >
-                  <ColorfulBtnC @click="copyResult(resultText)">
+                  <ColorfulBtn @click="copyResult(resultText)">
                     <icon-copy /> 复制结果
-                  </ColorfulBtnC>
+                  </ColorfulBtn>
                 </div>
               </transition>
             </div>
@@ -135,14 +136,14 @@ import { useClipboard } from '@vueuse/core'
 import {
   IconArrowRight,
   IconSettings,
-  IconCopy,
-  IconClose
+  IconCopy
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { translationCommon } from '@/apis/translation/index.js'
 import SettingModal from '@/components/SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
+import ClearBtn from './clearBtn.vue'
 
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
@@ -372,17 +373,16 @@ const utoolsInit = () => {
 <style lang="scss" scoped>
 .setting_icon {
   transition: transform 250ms ease;
-
   &:hover {
     transform: rotate(60deg);
   }
-
   &:active {
     color: $primary-color;
     transform: scale(0.8) rotate(60deg);
   }
 }
 
+// 文本域公用样式
 .text_wrapper {
   ::v-deep(.arco-textarea) {
     height: 100%;
@@ -390,12 +390,10 @@ const utoolsInit = () => {
     font-size: 16px;
     resize: none;
   }
-
   ::v-deep(.arco-textarea-wrapper) {
-    background-color: #ffffff;
+    background-color: #fff;
     border-color: #e9e9e9;
   }
-
   ::v-deep(.arco-textarea-focus) {
     border-color: $primary-color;
   }
@@ -406,21 +404,34 @@ const utoolsInit = () => {
       background-color: #29292c;
       border-color: #00000000;
     }
-
     ::v-deep(.arco-textarea-focus) {
       border-color: #666666;
     }
   }
 }
 
+// 上面的文本域样式
+.top_text {
+  ::v-deep(.arco-textarea) {
+    &::after {
+      display: block;
+      width: 100px;
+      height: 100px;
+      content: '123';
+      background-color: #336600;
+    }
+  }
+}
+
+// 下面的文本域样式
 .text_readonly {
   ::v-deep(.arco-textarea) {
     padding-bottom: 40px;
   }
-
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
+
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
@@ -431,9 +442,9 @@ const utoolsInit = () => {
 .tools_wrapper {
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-radio-checked) {
-      color: #ffffff;
+      color: #fff;
       text-shadow: 0 3px 15px #ffffffb8;
-      background-color: #222222 !important;
+      background-color: #222 !important;
     }
   }
 }

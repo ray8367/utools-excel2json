@@ -44,6 +44,16 @@ body {
   opacity: 0;
 }
 
+.component-scale-enter-active,
+.component-scale-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.component-scale-enter-from,
+.component-scale-leave-to {
+  transform: scale(0);
+}
+
 .arco-modal {
   border-radius: 0;
 }

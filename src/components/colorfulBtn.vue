@@ -2,7 +2,7 @@
   <button
     ref="btnRef"
     ripple="ripple"
-    class="btn_main transition-all flex-c w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800)"
+    class="btn_main"
     @mousedown="showRipple($event)"
     @mouseup="clearRipple"
   >
@@ -63,10 +63,10 @@ function cleanFirst() {
 <style lang="scss" scoped>
 .btn_main {
   border: 1px solid #eeeeee;
+  @apply transition-all flex-c w-120px h-36px relative overflow-hidden rounded-4px shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800);
 }
 
 .ripple_wrapper {
-
   span[dynamic='true'] {
     @apply transform scale-0 rounded-full absolute;
 
@@ -81,9 +81,7 @@ function cleanFirst() {
   }
 }
 @media (prefers-color-scheme: dark) {
-
   .ripple_wrapper {
-
     span[dynamic='true'] {
       background: linear-gradient(
         45deg,
@@ -104,7 +102,6 @@ function cleanFirst() {
   }
 }
 @keyframes ripple {
-
   from {
     opacity: 0.5;
     transform: scale(0);
