@@ -48,7 +48,7 @@ export const optionsData = {
 }
 
 /**
- * 语言标识修正 —— 根据tag自动确认options
+ * 语言标识修正 —— 根据tag自动确认options 
  * 注：因为各家的语言标识不完全相同，为保持前端传入参数的一致性，将所有的语言标识以百度翻译为标准，再由各翻译模块修正
  * @param {*} tag 修正选项 例：tencent
  * @param {*} param {form,to}
