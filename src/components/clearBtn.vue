@@ -30,7 +30,7 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
   );
   box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
   transition: 300ms --houdini-colorA, 300ms --houdini-colorB, 200ms transform,
-    200ms box-shadow;
+    250ms box-shadow;
   &:hover {
     --houdini-colorA: #eeeeee;
     --houdini-colorB: #fff;
@@ -38,6 +38,7 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
   &:active {
     box-shadow: 2px 2px 7px -2px #888, -5px -5px 12px #fff;
   }
+
   @media (prefers-color-scheme: dark) {
     --houdini-colorA: #333;
     --houdini-colorB: #333;
