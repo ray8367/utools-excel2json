@@ -386,7 +386,8 @@ const utoolsInit = () => {
 .text_wrapper {
   ::v-deep(.arco-textarea) {
     height: 100%;
-    padding-right: 24px;
+    padding-right: 26px;
+    padding-bottom: 40px;
     font-size: 16px;
     resize: none;
   }
@@ -425,9 +426,6 @@ const utoolsInit = () => {
 
 // 下面的文本域样式
 .text_readonly {
-  ::v-deep(.arco-textarea) {
-    padding-bottom: 40px;
-  }
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
