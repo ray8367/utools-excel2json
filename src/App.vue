@@ -3,8 +3,8 @@
 </template>
 
 <script setup>
+import MainView from '@/views/MainView.vue'
 import '@/utils/setTheme.js'
-import MainView from '@/components/MainView.vue'
 </script>
 
 <style></style>
