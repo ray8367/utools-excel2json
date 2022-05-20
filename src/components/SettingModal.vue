@@ -252,6 +252,7 @@ function handleOk() {
   settingStore.setHomeOption(formData.homeHasApi)
   settingStore.setDefaultStorage(formData.defaultApi)
   settingStore.setKeyConfig(keyDatas)
+  settingStore.setFontSize(formData.textFont)
   Message.success({ content: '设置成功', duration: 1000 })
   closeSettingModal()
 }

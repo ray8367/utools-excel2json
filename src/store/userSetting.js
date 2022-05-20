@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia'
-import { homeOptionStorage, defaultStorage, keyStorage } from '@/utils/storage'
+import {
+  homeOptionStorage,
+  defaultStorage,
+  keyStorage,
+  fontSizeStorage
+} from '@/utils/storage'
 
 export const userSettingStore = defineStore('settings', {
   state: () => {
@@ -7,17 +12,19 @@ export const userSettingStore = defineStore('settings', {
       // 首页显示的翻译接口
       homeOption: homeOptionStorage.get(),
       defaultApi: defaultStorage.get(),
-      keyConfig: keyStorage.get()
+      keyConfig: keyStorage.get(),
+      fontSize: fontSizeStorage.get()
     }
   },
 
   getters: {
-    /**获取设置表单 */
+    /** 获取设置表单 */
     getSetingFormData: state => {
-      const { homeOption, defaultApi, keyConfig } = state
+      const { homeOption, defaultApi, keyConfig, fontSize } = state
       return {
         homeHasApi: homeOption, // 首页展示的翻译方式
         defaultApi: defaultApi, // 默认翻译方式
+        textFont: fontSize, // 文本框字号
         appid: keyConfig.baidu?.appid, // 百度
         token: keyConfig.baidu?.token, // 百度
         secretId: keyConfig.tencent?.secretId, // 腾讯
@@ -32,7 +39,7 @@ export const userSettingStore = defineStore('settings', {
   },
 
   actions: {
-    /**设置首页可见翻译 */
+    /** 设置首页可见翻译 */
     setHomeOption(data) {
       this.homeOption = data
       homeOptionStorage.set(data)
@@ -48,6 +55,12 @@ export const userSettingStore = defineStore('settings', {
     setKeyConfig(data) {
       this.keyConfig = data
       keyStorage.set(data)
+    },
+
+    /** 设置字体大小 */
+    setFontSize(data) {
+      this.fontSize = data
+      fontSizeStorage.set(data)
     },
 
     /**

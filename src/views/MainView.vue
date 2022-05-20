@@ -157,6 +157,8 @@ const settingModalRef = ref() // 设置弹窗的ref
 // 首页设置
 // const { homeOption } = storeToRefs(userSettingStore())
 const homeOption = ref([])
+// 字体大小
+const textFont = ref('')
 
 // 输入textarea的dom
 const inputRef = ref()
@@ -341,6 +343,7 @@ function readSetting() {
   // 首页设置
   const store = userSettingStore()
   homeOption.value = store.homeOption
+  textFont.value = store.fontSize + 'px'
   // 当前选中翻译
   if (homeOption.value.indexOf(currentTranslation.value) === -1) {
     currentTranslation.value = store.defaultApi
@@ -367,9 +370,6 @@ const utoolsInit = () => {
   })
   window.utools.subInputBlur()
 }
-const textFont = computed(() => {
-  return 16 + 'px'
-})
 </script>
 
 <style lang="scss" scoped>
