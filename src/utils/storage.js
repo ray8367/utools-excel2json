@@ -25,8 +25,10 @@ function setDbStorageItem(key, value) {
 }
 
 /**获取默认的首页api */
+/** 获取默认的首页api */
 function getDefaultHomeApi() {
   return apiOptions.map(i => i.value)
+  return apiOptions.slice(0, 4).map(i => i.value)
 }
 
 // 密钥存储
