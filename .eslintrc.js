@@ -26,7 +26,7 @@ module.exports = {
         arrowParens: 'avoid'
       }
     ],
-    eqeqeq: 'error',
+    eqeqeq: ['error', 'always'],
     'spaced-comment': [
       'error',
       'always',
