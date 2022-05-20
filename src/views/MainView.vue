@@ -386,7 +386,7 @@ const utoolsInit = () => {
   ::v-deep(.arco-textarea) {
     height: 100%;
     padding-right: 26px;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
     font-size: 16px;
     resize: none;
   }
