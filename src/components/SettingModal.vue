@@ -40,7 +40,13 @@
             </a-col>
             <a-col :span="18">
               <a-form-item label="文本框字号">
-                <a-input-number placeholder="请输入文本框字号" mode="button" />
+                <a-input-number
+                  v-model="formData.textFont"
+                  :min="14"
+                  :max="20"
+                  placeholder="请输入文本框字号（14 ~ 20）"
+                  mode="button"
+                />
               </a-form-item>
             </a-col>
             <!-- <a-col :span="18">
@@ -167,6 +173,7 @@ const modalVis = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
+  textFont: 16, // 文本框字号
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
   token: undefined, // 百度
