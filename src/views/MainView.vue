@@ -153,12 +153,15 @@ const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
+const store = userSettingStore() // 这个挪到外面了
 
 // 首页设置
-// const { homeOption } = storeToRefs(userSettingStore())
-const homeOption = ref([])
-// 字体大小
-const textFont = ref('')
+// 这里变了
+const homeOption = store.homeOption
+// 字体大小，这里变了
+const textFont = computed(() => {
+  return `${store.fontSize || 16}px`
+})
 
 // 输入textarea的dom
 const inputRef = ref()
@@ -305,7 +308,6 @@ watchEffect(() => {
 
 /** 修改选中翻译 保存当前选中并翻译 */
 function changeRadioHandler() {
-  const store = userSettingStore()
   store.setDefaultStorage(currentTranslation.value)
   startTranslation()
 }
@@ -340,10 +342,7 @@ function changeTranslateType() {
 
 /** 读取配置 */
 function readSetting() {
-  // 首页设置
-  const store = userSettingStore()
-  homeOption.value = store.homeOption
-  textFont.value = store.fontSize + 'px'
+  // 这里变了
   // 当前选中翻译
   if (homeOption.value.indexOf(currentTranslation.value) === -1) {
     currentTranslation.value = store.defaultApi
@@ -352,7 +351,6 @@ function readSetting() {
 
 onMounted(() => {
   //  首次加载设置当前选中为设置的默认翻译
-  // currentTranslation.value = userSettingStore().defaultApi
   readSetting()
   // 初始化init
   if (!window?.utools) return
