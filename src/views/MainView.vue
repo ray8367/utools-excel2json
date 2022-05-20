@@ -122,11 +122,7 @@
     </div>
 
     <!-- 设置弹窗 -->
-    <SettingModal
-      ref="settingModalRef"
-      @ok="settingOk"
-      @cancel="settingCancel"
-    />
+    <SettingModal ref="settingModalRef" @ok="settingOk" />
   </div>
 </template>
 
@@ -144,59 +140,17 @@ import { translationCommon } from '@/apis/translation/index.js'
 import SettingModal from '@/components/SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
 
+const store = userSettingStore()
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
 const resultCode = ref() // 翻译结果状态(code = 200 为成功)
-const { copy } = useClipboard({ resultText })
+const { copy } = useClipboard({ resultText }) // 复制结果功能
 const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
-const store = userSettingStore() // 这个挪到外面了
-
-// 首页设置
-// 这里变了
-const homeOption = store.homeOption
-// 字体大小，这里变了
-const textFont = computed(() => {
-  return `${store.fontSize || 16}px`
-})
-
-// 输入textarea的dom
-const inputRef = ref()
-
-function clearInput() {
-  userInput.value = undefined
-  inputRef.value.focus()
-}
-
-// 设置弹框点击了确定
-function settingOk() {
-  nextTick(() => {
-    // 重新读取设置
-    readSetting()
-    // 设置成功，刷新上一次翻译
-    startTranslation(currentTranslation.value, true)
-  })
-}
-
-// 设置弹框点击了取消
-function settingCancel(data) {
-  console.log('data: ', data)
-}
-
-// 打开设置模态框
-function openSettingModal() {
-  settingModalRef.value.openSettingModal()
-}
-
-// 复制结果
-const copyResult = throttle(val => {
-  copy(val)
-  Message.success('复制成功')
-}, 300)
-
+const inputRef = ref() // 输入textarea的dom
 // 翻译方式From参数的选项
 const translateFromOptions = ref([
   { label: '自动检测', value: 'auto', disabled: false },
@@ -210,11 +164,17 @@ const translateFromOptions = ref([
   { label: '中文-繁体', value: 'cht', disabled: false },
   { label: '文言文-百度', value: 'wyw', disabled: false }
 ])
-
 // 翻译方式To参数的选项(过滤掉“自动检测”)
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
+
+const homeOption = computed(() => store.homeOption)
+
+// 文本框字体大小
+const textFont = computed(() => {
+  return `${store.fontSize || 16}px`
+})
 
 // 翻译Api的Radio选项
 const translateApiOptions = computed(() => {
@@ -223,90 +183,28 @@ const translateApiOptions = computed(() => {
   )
 })
 
-// 监听用户输入，防抖1200ms
-watch(
-  userInput,
-  debounce(function () {
-    startTranslation()
-  }, 500)
-)
-
-// api不支持的语言value声明
-const apiNotSupport = {
-  baidu: [],
-  tencent: ['wyw'],
-  google: ['wyw'],
-  ali: ['wyw'],
-  youdao: ['wyw'],
-  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor']
+// 清空输入框
+function clearInput() {
+  userInput.value = ''
+  inputRef.value.focus()
 }
 
-// 根据api动态变更选项的disabled属性
-watchEffect(() => {
-  // 当前翻译api的名字
-  const apiName = currentTranslation.value
-
-  // 当前翻译api不支持的语种value数组
-  const currentApiDisabledArr = apiNotSupport[apiName] || []
-
-  // 根据不支持语种数组，动态设置选项中的disabled，禁用掉不支持的选项
-  translateFromOptions.value.forEach(i => {
-    i.disabled = currentApiDisabledArr.includes(i.value)
+// 设置弹框点击了确定
+function settingOk() {
+  nextTick(() => {
+    // 重新读取设置
+    readSetting()
+    // 设置成功，刷新上一次翻译
+    startTranslation(currentTranslation.value, true)
   })
+}
 
-  // 彩云的选项单独处理，这里除开彩云
-  if (apiName !== 'caiyun') {
-    translateToOptions.value.forEach(i => {
-      i.disabled = currentApiDisabledArr.includes(i.value)
-    })
-  }
+// 打开设置模态框
+function openSettingModal() {
+  settingModalRef.value.openSettingModal()
+}
 
-  // Boolean: From或To是否现在的值，是否是当前翻译api不支持的翻译语种
-  const paramsHasNoSupport =
-    currentApiDisabledArr.includes(translateFrom.value) ||
-    currentApiDisabledArr.includes(translateTo.value)
-
-  // 如果包含不支持的，则重置为自动 —— 中文-简体
-  if (paramsHasNoSupport) {
-    translateFrom.value = 'auto'
-    translateTo.value = 'zh'
-  }
-})
-
-watchEffect(() => {
-  // 如果不是彩云，直接return
-  if (currentTranslation.value !== 'caiyun') return
-  const fromIsAuto = translateFrom.value === 'auto' // From是否是自动
-  const fromIsZh = translateFrom.value === 'zh' // From是否是中文
-  const toIsZh = translateTo.value === 'zh' // To是否是中文
-
-  // 彩云不支持的语种value数组
-  const caiyunDisabledArr = apiNotSupport.caiyun
-
-  // 循环To的数组
-  translateToOptions.value.forEach(i => {
-    // 先禁用彩云不支持的
-    i.disabled = caiyunDisabledArr.includes(i.value)
-
-    // 如果From是中文，则禁用To选项的中文
-    if (fromIsZh && i.value === 'zh') {
-      i.disabled = true
-    }
-
-    // 如果From不是中文也不是自动（那就是外语），则禁用To选项中除了中文以外的，并自动设置为中文
-    if (!fromIsZh && !fromIsAuto) {
-      i.disabled = i.value !== 'zh'
-      translateTo.value = 'zh'
-    }
-  })
-
-  // 如果两边都是中文，则把后面的改成英文
-  if (fromIsZh && toIsZh) {
-    translateTo.value = 'en'
-  }
-})
-
-/** 修改选中翻译 保存当前选中并翻译 */
+// 修改选中翻译 保存当前选中并翻译
 function changeRadioHandler() {
   store.setDefaultStorage(currentTranslation.value)
   startTranslation()
@@ -340,34 +238,106 @@ function changeTranslateType() {
   }, 0)
 }
 
-/** 读取配置 */
+// 读取配置
 function readSetting() {
-  // 这里变了
-  // 当前选中翻译
-  if (homeOption.value.indexOf(currentTranslation.value) === -1) {
+  //  首次加载设置当前选中为设置的默认翻译
+  if (!homeOption.value.includes(currentTranslation.value)) {
     currentTranslation.value = store.defaultApi
   }
 }
 
-onMounted(() => {
-  //  首次加载设置当前选中为设置的默认翻译
-  readSetting()
-  // 初始化init
-  if (!window?.utools) return
-  utoolsInit()
-})
-
-const utoolsInit = () => {
-  window.utools.onPluginEnter(action => {
+// 初始化utools
+function utoolsInit() {
+  window.utools.onPluginEnter(({ code, payload }) => {
     settingModalRef.value.closeSettingModal()
-    if (action.code === 'anyword') {
-      userInput.value = action.payload
-    } else {
-      userInput.value = ''
-    }
+    userInput.value = code === 'anyword' ? payload : ''
   })
   window.utools.subInputBlur()
 }
+
+// 复制结果
+const copyResult = throttle(val => {
+  copy(val)
+  Message.success('复制成功')
+}, 300)
+
+onMounted(() => {
+  readSetting()
+  window?.utools && utoolsInit()
+})
+
+// 监听用户输入，防抖翻译
+watch(
+  userInput,
+  debounce(function () {
+    startTranslation()
+  }, 500)
+)
+
+// api不支持的语言value声明
+const apiNotSupport = {
+  baidu: [],
+  tencent: ['wyw'],
+  google: ['wyw'],
+  ali: ['wyw'],
+  youdao: ['wyw'],
+  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor']
+}
+
+// 根据api动态变更选项的disabled属性
+watchEffect(() => {
+  // 当前翻译api的名字
+  const apiName = currentTranslation.value
+  // 当前翻译api不支持的语种value数组
+  const currentApiDisabledArr = apiNotSupport[apiName] || []
+  // 根据不支持语种数组，动态设置选项中的disabled，禁用掉不支持的选项
+  translateFromOptions.value.forEach(i => {
+    i.disabled = currentApiDisabledArr.includes(i.value)
+  })
+  // 彩云的选项单独处理，这里除开彩云
+  if (apiName !== 'caiyun') {
+    translateToOptions.value.forEach(i => {
+      i.disabled = currentApiDisabledArr.includes(i.value)
+    })
+  }
+  // Boolean: From或To是否现在的值，是否是当前翻译api不支持的翻译语种
+  const paramsHasNoSupport =
+    currentApiDisabledArr.includes(translateFrom.value) ||
+    currentApiDisabledArr.includes(translateTo.value)
+  // 如果包含不支持的，则重置为自动 —— 中文-简体
+  if (paramsHasNoSupport) {
+    translateFrom.value = 'auto'
+    translateTo.value = 'zh'
+  }
+})
+
+watchEffect(() => {
+  // 如果不是彩云，直接return
+  if (currentTranslation.value !== 'caiyun') return
+  const fromIsAuto = translateFrom.value === 'auto' // From是否是自动
+  const fromIsZh = translateFrom.value === 'zh' // From是否是中文
+  const toIsZh = translateTo.value === 'zh' // To是否是中文
+  // 彩云不支持的语种value数组
+  const caiyunDisabledArr = apiNotSupport.caiyun
+  // 循环To的数组
+  translateToOptions.value.forEach(i => {
+    // 先禁用彩云不支持的
+    i.disabled = caiyunDisabledArr.includes(i.value)
+    // 如果From是中文，则禁用To选项的中文
+    if (fromIsZh && i.value === 'zh') {
+      i.disabled = true
+    }
+    // 如果From不是中文也不是自动（那就是外语），则禁用To选项中除了中文以外的，并自动设置为中文
+    if (!fromIsZh && !fromIsAuto) {
+      i.disabled = i.value !== 'zh'
+      translateTo.value = 'zh'
+    }
+  })
+  // 如果两边都是中文，则把后面的改成英文
+  if (fromIsZh && toIsZh) {
+    translateTo.value = 'en'
+  }
+})
 </script>
 
 <style lang="scss" scoped>

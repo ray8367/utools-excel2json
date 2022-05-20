@@ -170,7 +170,7 @@ import { userSettingStore } from '@/store/userSetting'
 const settingStore = userSettingStore()
 
 const modalVis = ref(false) // 弹框的显隐
-const emit = defineEmits(['ok', 'cancel'])
+const emit = defineEmits(['ok'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
@@ -222,7 +222,7 @@ watchEffect(() => {
 
 // 点击弹框确定
 function handleOk() {
-  emit('ok', 'ok要传的 ')
+  emit('ok')
   // 密钥格式转换
   const keyDatas = {
     baidu: {
