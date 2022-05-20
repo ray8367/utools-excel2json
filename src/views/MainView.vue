@@ -35,7 +35,7 @@
           @change="changeRadioHandler"
         >
           <a-radio
-            v-for="item in translateApiOptions"
+            v-for="item in (translateApiOptions || []).slice(0, 4)"
             :key="item.item"
             :value="item.value"
           >
