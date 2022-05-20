@@ -38,6 +38,11 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
+            <a-col :span="18">
+              <a-form-item label="文本框字号">
+                <a-input-number placeholder="请输入文本框字号" mode="button" />
+              </a-form-item>
+            </a-col>
             <!-- <a-col :span="18">
               <a-form-item label="默认翻译方式">
                 <a-select

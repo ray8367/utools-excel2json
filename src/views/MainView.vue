@@ -367,6 +367,9 @@ const utoolsInit = () => {
   })
   window.utools.subInputBlur()
 }
+const textFont = computed(() => {
+  return 16 + 'px'
+})
 </script>
 
 <style lang="scss" scoped>
@@ -387,7 +390,7 @@ const utoolsInit = () => {
     height: 100%;
     padding-right: 26px;
     padding-bottom: 50px;
-    font-size: 16px;
+    font-size: v-bind(textFont);
     resize: none;
   }
   ::v-deep(.arco-textarea-wrapper) {
