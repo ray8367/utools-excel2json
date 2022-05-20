@@ -214,7 +214,7 @@ const translateToOptions = ref(
 // 翻译Api的Radio选项
 const translateApiOptions = computed(() => {
   return cloneDeep(apiOptions).filter(
-    i => homeOption.value.indexOf(i.value) != -1
+    i => homeOption.value.indexOf(i.value) !== -1
   )
 })
 
@@ -301,7 +301,7 @@ watchEffect(() => {
   }
 })
 
-/**修改选中翻译 保存当前选中并翻译 */
+/** 修改选中翻译 保存当前选中并翻译 */
 function changeRadioHandler() {
   const store = userSettingStore()
   store.setDefaultStorage(currentTranslation.value)
@@ -336,7 +336,7 @@ function changeTranslateType() {
   }, 0)
 }
 
-/**读取配置 */
+/** 读取配置 */
 function readSetting() {
   // 首页设置
   const store = userSettingStore()

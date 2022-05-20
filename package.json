@@ -17,8 +17,8 @@
     "got": "11",
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.14",
-    "tencentcloud-sdk-nodejs": "^4.0.342",
-    "vue": "^3.2.33"
+    "tencentcloud-sdk-nodejs": "^4.0.344",
+    "vue": "^3.2.34"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.27.1",
@@ -27,17 +27,17 @@
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^9.0.0",
+    "eslint-plugin-vue": "^9.0.1",
     "less": "^4.1.2",
     "prettier": "^2.6.2",
-    "sass": "^1.51.0",
-    "unplugin-auto-import": "^0.7.1",
+    "sass": "^1.52.0",
+    "unplugin-auto-import": "^0.7.2",
     "unplugin-vue-components": "^0.19.5",
     "vite": "^2.9.9",
     "vite-plugin-chunk-split": "^0.2.2",
     "vite-plugin-windicss": "^1.8.4",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
-    "windicss": "^3.5.3"
+    "windicss": "^3.5.4"
   }
 }

@@ -25,6 +25,22 @@ module.exports = {
         trailingComma: 'none',
         arrowParens: 'avoid'
       }
+    ],
+    eqeqeq: 'error',
+    'spaced-comment': [
+      'error',
+      'always',
+      {
+        line: {
+          markers: ['/'],
+          exceptions: ['-', '+']
+        },
+        block: {
+          markers: ['!'],
+          exceptions: ['*'],
+          balanced: true
+        }
+      }
     ]
   }
 }
