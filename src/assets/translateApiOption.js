@@ -15,7 +15,7 @@ export const apiOptions = [
     homeShow: false
   },
   {
-    label: '阿里云',
+    label: '阿里翻译',
     value: 'ali',
     homeShow: true
   },

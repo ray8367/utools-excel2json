@@ -85,7 +85,7 @@
               </a-form-item>
             </a-col>
 
-            <a-divider orientation="left">腾讯云机器翻译</a-divider>
+            <a-divider orientation="left">腾讯翻译</a-divider>
             <a-col :span="18">
               <a-form-item label="Secret Id">
                 <a-input
@@ -105,7 +105,7 @@
               </a-form-item>
             </a-col>
 
-            <a-divider orientation="left">阿里云机器翻译</a-divider>
+            <a-divider orientation="left">阿里翻译</a-divider>
             <a-col :span="18">
               <a-form-item label="Secret Id">
                 <a-input
