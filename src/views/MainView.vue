@@ -129,6 +129,7 @@
 <script setup>
 import { debounce, throttle, cloneDeep } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
+import { nanoid } from 'nanoid'
 import {
   IconArrowRight,
   IconSettings,
@@ -150,6 +151,7 @@ const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
 const resultCode = ref() // 翻译结果状态(code = 200 为成功)
+const resultId = ref(nanoid())
 const { copy } = useClipboard({ resultText }) // 复制结果功能
 const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
@@ -219,6 +221,7 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
   const { text, code } = await translationCommon(val, obj)
   resultText.value = text
   resultCode.value = code
+  resultId.value = nanoid()
   pageLoading.value = false
 }
 
