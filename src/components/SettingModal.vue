@@ -265,8 +265,9 @@ function handleCancel() {
 // 打开弹窗
 function openSettingModal() {
   modalVis.value = true
+  const tempFormData = settingStore.getSetingFormData
   Object.keys(formData).forEach(key => {
-    formData[key] = settingStore.getSetingFormData[key]
+    formData[key] = tempFormData[key]
   })
 }
 

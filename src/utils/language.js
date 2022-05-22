@@ -1,4 +1,4 @@
-/**整合的语言修正options */
+/** 整合的语言修正options */
 export const optionsData = {
   tencent: {
     zh: 'zh',
