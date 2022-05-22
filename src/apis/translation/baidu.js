@@ -30,14 +30,67 @@ const last = {
   result: ''
 }
 
+async function baiduTranslator({ q, from, to, appid, token }) {
+  // 	随机数:可为字母或数字的字符串
+  const salt = new Date().getTime()
+  // 签名:(appid+q+salt+密钥)的MD5值
+  const sign = md5(appid + q + salt + token).toString()
+  const url = import.meta.env.VITE_BAIDU_BASEURL
+  const params = {
+    q: q,
+    from,
+    to,
+    appid,
+    salt,
+    sign
+  }
+
+  try {
+    const res = await axios.get(url, { params })
+    const { error_code, error_msg, trans_result } = res.data
+    let result
+    if (error_code) {
+      // 翻译失败
+      result = {
+        code: 199,
+        error_code: error_code,
+        text: error_code + '：' + errors[error_code] || '翻译失败：' + error_msg
+      }
+      if (error_code === '54003') {
+        // 访问频率受限，再次发起翻译
+        result.code = 110
+      }
+    } else {
+      // 翻译成功
+      let text = ''
+      trans_result.map(item => {
+        text += item.dst + '\n'
+      })
+      result = {
+        code: 200,
+        text: text
+      }
+    }
+    last.result = result
+    return result
+  } catch (err) {
+    const result = {
+      code: 199,
+      text: '翻译失败：' + err.message
+    }
+    last.result = result
+    return result
+  }
+}
+
 /**
- * 通用翻译
+ * 通用翻译TODO: 近期考虑统一各翻译的通用设置
  * @param {String} options.q 请求翻译query(UTF-8编码)
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言(不可设置为auto)
  * @param {Boolean} options.isRefresh 强制刷新
  */
-export default function (options) {
+export default async function (options) {
   const { q, from, to, isRefresh } = options
   // 空值优化
   if (!q) {
@@ -51,63 +104,21 @@ export default function (options) {
   }
   last.optionsStr = optionsStr
 
-  const url = import.meta.env.VITE_BAIDU_BASEURL
   const keyConfig = getKeyByTag(TAG_NAME)
   if (!keyConfig || !keyConfig.appid || !keyConfig.token) {
     const result = {
       code: 199,
-      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
     }
     last.result = result
     return result
   }
   const { appid, token } = keyConfig
-  // 	随机数:可为字母或数字的字符串
-  const salt = new Date().getTime()
-  // 签名:(appid+q+salt+密钥)的MD5值
-  const sign = md5(appid + q + salt + token).toString()
 
-  const params = {
-    q: q,
-    from,
-    to,
-    appid,
-    salt,
-    sign
+  let res = await baiduTranslator({ q, from, to, appid, token })
+  console.log('res:', res)
+  if (res.code === 110) {
+    // 访问频率受限，再次发起翻译
+    res = await baiduTranslator({ q, from, to, appid, token })
   }
-
-  return axios
-    .get(url, { params })
-    .then(res => {
-      const { error_code, error_msg, trans_result } = res.data
-      let result
-      if (error_code) {
-        // 翻译失败
-        result = {
-          code: 199,
-          text:
-            error_code + '：' + errors[error_code] || '翻译失败：' + error_msg
-        }
-      } else {
-        // 翻译成功
-        let text = ''
-        trans_result.map(item => {
-          text += item.dst + '\n'
-        })
-        result = {
-          code: 200,
-          text: text
-        }
-      }
-      last.result = result
-      return result
-    })
-    .catch(err => {
-      const result = {
-        code: 199,
-        text: '翻译失败：' + err.message
-      }
-      last.result = result
-      return result
-    })
+  return res
 }

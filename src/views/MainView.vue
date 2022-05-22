@@ -265,7 +265,7 @@ watch(
   userInput,
   debounce(function () {
     !pageLoading.value && startTranslation()
-  }, 500)
+  }, 300)
 )
 
 // api不支持的语言value声明
