@@ -135,12 +135,17 @@ import {
   IconCopy
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
-import { apiOptions } from '@/assets/translateApiOption.js'
+import { storeToRefs } from 'pinia'
 import { translationCommon } from '@/apis/translation/index.js'
 import SettingModal from '@/components/SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
 
 const store = userSettingStore()
+const {
+  homeOption,
+  getHomeApiOptions: translateApiOptions,
+  getHomeFontSize: textFont
+} = storeToRefs(store)
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultText = ref('') // 翻译结果
@@ -168,20 +173,6 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
-
-const homeOption = computed(() => store.homeOption)
-
-// 文本框字体大小
-const textFont = computed(() => {
-  return `${store.fontSize || 16}px`
-})
-
-// 翻译Api的Radio选项
-const translateApiOptions = computed(() => {
-  return cloneDeep(apiOptions).filter(
-    i => homeOption.value.indexOf(i.value) !== -1
-  )
-})
 
 // 清空输入框
 function clearInput() {
