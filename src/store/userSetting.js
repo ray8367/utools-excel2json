@@ -1,26 +1,77 @@
+/** 用户设置信息 */
 import { defineStore } from 'pinia'
-import {
-  homeOptionStorage,
-  defaultStorage,
-  keyStorage,
-  fontSizeStorage
-} from '@/utils/storage'
+import { cloneDeep } from 'lodash-es'
+
+import { getDbStorageItem, setDbStorageItem } from '@/utils/storage'
+import { apiOptions } from '@/assets/translateApiOption'
+
+const KEY_SETTING = 'keyConfig'
+const HOME_OPTION = 'homeOption'
+const DEFAULT_API = 'defaultApi'
+const FONT_SIZE = 'fontSize'
 
 export const userSettingStore = defineStore('settings', {
   state: () => {
+    /** 获取默认的首页api */
+    function getDefaultHomeApi() {
+      return apiOptions.slice(0, 4).map(i => i.value)
+    }
+
+    function initHomeOptionState() {
+      const strData = getDbStorageItem(HOME_OPTION)
+      if (strData) {
+        try {
+          return JSON.parse(strData)
+        } catch (error) {
+          return getDefaultHomeApi()
+        }
+      } else {
+        return getDefaultHomeApi()
+      }
+    }
+
+    function initDefaultApiState() {
+      return getDbStorageItem(DEFAULT_API) || getDefaultHomeApi()[0]
+    }
+
+    function initKeyConfigState() {
+      const strData = getDbStorageItem(KEY_SETTING) || '{}'
+      try {
+        return JSON.parse(strData)
+      } catch (error) {
+        return {}
+      }
+    }
+
+    function initFontSizeState() {
+      const fontSize = getDbStorageItem(FONT_SIZE) || 16
+      return Number.parseInt(fontSize)
+    }
+
     return {
-      // 首页显示的翻译接口
-      homeOption: homeOptionStorage.get(),
-      defaultApi: defaultStorage.get(),
-      keyConfig: keyStorage.get(),
-      fontSize: fontSizeStorage.get()
+      homeOption: initHomeOptionState(),
+      defaultApi: initDefaultApiState(),
+      keyConfig: initKeyConfigState(),
+      fontSize: initFontSizeState()
     }
   },
 
   getters: {
-    /** 获取设置表单 */
+    /** 获取首页api选择 */
+    getHomeApiOptions: state => {
+      return cloneDeep(apiOptions).filter(
+        i => state.homeOption.indexOf(i.value) !== -1
+      )
+    },
+
+    getHomeFontSize: state => {
+      return `${state.fontSize}px`
+    },
+
+    /** 获取设置页表单 */
     getSetingFormData: state => {
       const { homeOption, defaultApi, keyConfig, fontSize } = state
+
       return {
         homeHasApi: homeOption, // 首页展示的翻译方式
         defaultApi: defaultApi, // 默认翻译方式
@@ -42,25 +93,25 @@ export const userSettingStore = defineStore('settings', {
     /** 设置首页可见翻译 */
     setHomeOption(data) {
       this.homeOption = data
-      homeOptionStorage.set(data)
+      setDbStorageItem(HOME_OPTION, JSON.stringify(data))
     },
 
     /** 设置默认翻译 */
     setDefaultStorage(data) {
       this.defaultApi = data
-      defaultStorage.set(data)
+      setDbStorageItem(DEFAULT_API, data)
     },
 
     /** 设置密钥 */
     setKeyConfig(data) {
       this.keyConfig = data
-      keyStorage.set(data)
+      setDbStorageItem(KEY_SETTING, JSON.stringify(data))
     },
 
     /** 设置字体大小 */
     setFontSize(data) {
       this.fontSize = data
-      fontSizeStorage.set(data)
+      setDbStorageItem(FONT_SIZE, data)
     },
 
     /**
