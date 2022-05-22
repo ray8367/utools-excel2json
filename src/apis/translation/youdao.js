@@ -178,7 +178,9 @@ export default function (options) {
   if (!keyConfig || !keyConfig.appid || !keyConfig.appkey) {
     const result = {
       code: 199,
-      text: '翻译失败：' + '没有配置服务哦，请前往设置页面配置后再使用'
+      text:
+        '翻译失败：' +
+        '🚨没有配置服务哦，我猜你大概率是没有填有道翻译的信息，现在，你应该马不停蹄的点击右下角的设置按钮，去填写相关信息🚧'
     }
     last.result = result
     return result
@@ -234,7 +236,7 @@ export default function (options) {
     })
 }
 
-/**签名 */
+/** 签名 */
 function toSign(appid, appkey, query) {
   const salt = new Date().getTime()
   const curtime = Math.round(new Date().getTime() / 1000)
