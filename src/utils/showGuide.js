@@ -4,13 +4,12 @@ import { getDbStorageItem, setDbStorageItem } from '@/utils/storage.js'
 const driver = new Driver({
   padding: 1,
   closeBtnText: '关闭',
-  animate: true,
+  animate: false,
   onReset: closeGuide
 })
 
 // 关闭引导层
 function closeGuide(params) {
-  console.log('params: ', params.node.id)
   const isMainGuide = params.node.id.includes('setting-wrapper') // 是否为主页引导
   const isSettingGuide = params.node.id.includes('guide-link') // 是否为设置页引导
   // abcd:这里改成从utools取值
@@ -28,10 +27,10 @@ function closeGuide(params) {
   }
 }
 // 设置是否需要动画
-function setAnimate(hasAnimate) {
-  const animate = Boolean(hasAnimate)
-  driver.options.animate = animate
-}
+// function setAnimate(hasAnimate) {
+//   const animate = Boolean(hasAnimate)
+//   driver.options.animate = animate
+// }
 
 // 清除引导
 export function clearGuide(clearImmediately = false) {
@@ -43,7 +42,7 @@ export function clearGuide(clearImmediately = false) {
 // 显示引导
 export function showGuide(params = {}, hasAnimate = true) {
   // 显示引导前先设置一下动画
-  setAnimate(hasAnimate)
+  // setAnimate(hasAnimate)
   const option = {
     element: params?.element,
     popover: {
