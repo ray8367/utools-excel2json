@@ -280,10 +280,12 @@ const copyResult = throttle((val = resultObj.data.resultText) => {
 }, 300)
 
 onMounted(() => {
-  readSetting()
-  // abcd:这里改成从utools取值
-  !getDbStorageItem('firstUseMain') && firstGuide()
   window?.utools && utoolsInit()
+  readSetting()
+  setTimeout(() => {
+    // abcd:这里改成从utools取值
+    !getDbStorageItem('firstUseMain') && firstGuide()
+  }, 1)
 })
 
 // 监听用户输入，防抖翻译
