@@ -5,11 +5,7 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
-import { getKeyByTag } from '@/store/userSetting'
-import { languageCorrectionByTag } from '@/utils/language'
-
-const TAG_NAME = 'youdao'
-
+import { toResultData } from '../common'
 const errors = {
   101: '缺少必填的参数,首先确保必填参数齐全，然后确认参数书写是否正确。',
   102: '不支持的语言类型',
@@ -152,40 +148,10 @@ const last = {
  * @param {String} options.q 请求翻译query(UTF-8编码)
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言 (可设置为auto)
- * @param {Boolean} options.isRefresh 强制刷新
+ * @param {Object} options.keyConfig key配置
  */
-export default function (options) {
-  let { q, isRefresh } = options
-
-  // 空值优化
-  if (!q) {
-    return ''
-  }
-
-  // 重复值优化
-  const optionsStr = JSON.stringify(options)
-
-  // 语言修正
-  let { from, to } = languageCorrectionByTag(TAG_NAME, options)
-
-  if (!isRefresh && optionsStr === last.optionsStr) {
-    return last.result
-  }
-  last.optionsStr = optionsStr
-
+export default function ({ q, from, to, keyConfig }) {
   const url = import.meta.env.VITE_YOUDAO_BASEURL
-  const keyConfig = getKeyByTag(TAG_NAME)
-  if (!keyConfig || !keyConfig.appid || !keyConfig.appkey) {
-    const result = {
-      code: 199,
-      text:
-        '翻译失败：' +
-        '没有配置服务哦🚨，我猜你大概率是没有填有道翻译的信息，现在，你应该马不停蹄的点击右下角的设置按钮，去填写相关信息🖊️'
-    }
-    last.result = result
-    return result
-  }
-
   const { appid, appkey } = keyConfig
   // 签名
   const { sign, salt, curtime } = toSign(appid, appkey, q)
@@ -212,27 +178,19 @@ export default function (options) {
         translation.map(item => {
           text += item + '\n'
         })
-        result = {
-          code: 200,
-          text: text
-        }
+        result = toResultData(200, { text })
       } else {
         // 翻译失败
-        result = {
-          code: 199,
-          text: errorCode + '：' + errors[errorCode] || '翻译失败'
+        result = toResultData(500, null, errors[errorCode])
+        if (errorCode === '411') {
+          result = toResultData(503)
         }
       }
       last.result = result
       return result
     })
     .catch(err => {
-      const result = {
-        code: 199,
-        text: '翻译失败：' + err.message
-      }
-      last.result = result
-      return result
+      return toResultData(500, null, err)
     })
 }
 

@@ -298,17 +298,18 @@ watch(
 watch(
   () => resultObj.data.resultId,
   () => {
-    if (!resultObj.data.resultCode === 199) return
-    const option = {
-      element: '#setting-wrapper',
-      popover: {
-        className: 'setting_popover',
-        title: '未配置服务',
-        description: '你应该点击这里去配置一下服务哦~',
-        position: 'left'
+    if (resultObj.data.resultCode === 401) {
+      const option = {
+        element: '#setting-wrapper',
+        popover: {
+          className: 'setting_popover',
+          title: '未配置服务',
+          description: '你应该点击这里去配置一下服务哦~',
+          position: 'left'
+        }
       }
+      showGuide(option)
     }
-    showGuide(option)
   }
 )
 

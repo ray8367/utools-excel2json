@@ -3,50 +3,17 @@
  * https://help.aliyun.com/document_detail/97592.html
  *  */
 
-import google from './google'
-import { languageCorrectionByTag } from '@/utils/language'
-import { getKeyByTag } from '@/store/userSetting'
-const TAG_NAME = 'ali'
-
-const last = {
-  optionsStr: '',
-  result: ''
-}
+import google from '../serve/google'
+import { toResultData } from '../common'
 
 /**
  * 机器翻译
  * @param {String} options.q 请求翻译query(UTF-8编码)
  * @param {String} options.from 翻译源语言(可设置为auto)
  * @param {String} options.to 翻译目标语言(不可设置为auto)
- * @param {Boolean} options.isRefresh 强制刷新
+ * @param {Object} options.keyConfig key配置
  */
-export default function (options) {
-  const { q, isRefresh } = options
-  // 空值优化
-  if (!q) {
-    return ''
-  }
-
-  // 重复值优化
-  const optionsStr = JSON.stringify(options)
-  if (!isRefresh && optionsStr === last.optionsStr) {
-    return last.result
-  }
-  last.optionsStr = optionsStr
-
-  let { from, to } = languageCorrectionByTag(TAG_NAME, options)
-
-  const keyConfig = getKeyByTag(TAG_NAME)
-  if (!keyConfig || !keyConfig.accessKeyId || !keyConfig.accessKeySecret) {
-    const result = {
-      code: 199,
-      text:
-        '翻译失败：' +
-        '没有配置服务哦🚨，我猜你大概率是没有填阿里翻译的信息，现在，你应该马不停蹄的点击右下角的设置按钮，去填写相关信息🖊️'
-    }
-    last.result = result
-    return result
-  }
+export default function ({ q, from, to, keyConfig }) {
   var params = {
     SourceText: q,
     SourceLanguage: from,
@@ -60,12 +27,7 @@ export default function (options) {
       .aliTextTranslate(keyConfig, params)
       .then(res => {
         const { Data } = res
-        let result = {
-          text: Data.Translated,
-          code: 200
-        }
-        last.result = result
-        return result
+        return toResultData(200, { text: Data.Translated })
       })
       .catch(async err => {
         const errQ = err.toString()
@@ -73,23 +35,12 @@ export default function (options) {
         let { code: gCode, text: gText } = await google({
           q: errQ,
           from: 'auto',
-          to: 'zh'
+          to: 'zh-CN'
         })
-
-        const result = {
-          code: 199,
-          text: gCode === 200 && gText ? gText : errQ
-        }
-        last.result = result
-        return result
+        return toResultData(500, null, gCode === 200 && gText ? gText : errQ)
       })
   } else {
-    const result = {
-      code: 100,
-      text: '请使用utools来调用该接口'
-    }
-    last.result = result
-    return result
+    return toResultData(503)
   }
 }
 
