@@ -16,7 +16,7 @@
         </p>
         <p>
           <a-link
-            id="howToApplyLink"
+            id="guide-link"
             target="_blank"
             href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
             @click="openWebUrl"
@@ -171,13 +171,6 @@ import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 import { clearGuide, showGuide } from '@/utils/showGuide.js'
 
-const props = defineProps({
-  // 是否显示link的引导
-  howToApplyGuide: {
-    type: Boolean,
-    default: false
-  }
-})
 // 从pinia读取设置
 const settingStore = userSettingStore()
 
@@ -279,18 +272,22 @@ function modalCancel() {
 
 // 打开设置弹框回调
 function modalOpen() {
-  if (props.howToApplyGuide) {
-    const option = {
-      element: '#howToApplyLink',
-      popover: {
-        title: '这里有一些提示',
-        description:
-          '这可是我起早贪黑写的，可以帮助你申请到这些免费的服务，如果你已经是个老手了，那就关闭这个对话框吧~',
-        position: 'right'
-      }
+  // abcd:这里改成从utools取值
+  !localStorage.getItem('firstUseSetting') && firstGuide()
+}
+
+// 首次提示链接位置
+function firstGuide() {
+  const option = {
+    element: '#guide-link',
+    popover: {
+      title: '这里有一些提示',
+      description:
+        '这可是我起早贪黑写的，可以帮助你申请到这些免费的服务，如果你已经是个老手了，那就关闭这个对话框吧~',
+      position: 'right'
     }
-    showGuide(option, false)
   }
+  showGuide(option, false)
 }
 
 // 关闭设置弹框回调

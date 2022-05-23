@@ -124,11 +124,7 @@
   </div>
 
   <!-- 设置弹窗 -->
-  <SettingModal
-    ref="settingModalRef"
-    :how-to-apply-guide="true"
-    @ok="settingOk"
-  />
+  <SettingModal ref="settingModalRef" @ok="settingOk" />
 </template>
 
 <script setup>
