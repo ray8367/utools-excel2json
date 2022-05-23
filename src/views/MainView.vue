@@ -2,10 +2,8 @@
   <div
     class="main_wrapper flex-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
-    <div
-      class="setting_icon absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover:text-[#666]"
-      @click="openSettingModal"
-    >
+    <!-- 设置按钮 -->
+    <div id="setting-wrapper" class="setting_icon" @click="openSettingModal">
       <icon-settings />
     </div>
     <div
@@ -100,17 +98,20 @@
               class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
             >
               <a-textarea
-                v-model="resultText"
+                v-model="resultObj.data.resultText"
                 class="rounded-b-8px"
                 placeholder="翻译结果"
                 readonly
               />
               <transition name="component-fade" mode="out-in">
                 <div
-                  v-show="resultText?.trim() && resultCode === 200"
+                  v-show="
+                    resultObj.data.resultText?.trim() &&
+                    resultObj.data.resultCode === 200
+                  "
                   class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
                 >
-                  <ColorfulBtn @click="copyResult(resultText)">
+                  <ColorfulBtn @click="copyResult()">
                     <icon-copy /> 复制结果
                   </ColorfulBtn>
                 </div>
@@ -120,10 +121,14 @@
         </div>
       </a-resize-box>
     </div>
-
-    <!-- 设置弹窗 -->
-    <SettingModal ref="settingModalRef" @ok="settingOk" />
   </div>
+
+  <!-- 设置弹窗 -->
+  <SettingModal
+    ref="settingModalRef"
+    :how-to-apply-guide="true"
+    @ok="settingOk"
+  />
 </template>
 
 <script setup>
@@ -138,8 +143,8 @@ import {
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
 import { translationCommon } from '@/apis/translation/index.js'
-import SettingModal from '@/components/SettingModal.vue'
 import { userSettingStore } from '@/store/userSetting'
+import { clearGuide, showGuide } from '@/utils/showGuide.js'
 
 const store = userSettingStore()
 const {
@@ -149,10 +154,14 @@ const {
 } = storeToRefs(store)
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
-const resultText = ref('') // 翻译结果
-const resultCode = ref() // 翻译结果状态(code = 200 为成功)
-const resultId = ref(nanoid())
-const { copy } = useClipboard({ resultText }) // 复制结果功能
+const resultObj = reactive({
+  data: {
+    resultText: '', // 翻译结果
+    resultCode: 0, // 翻译结果状态(code = 200 为成功)
+    resultId: nanoid()
+  }
+})
+const { copy } = useClipboard() // 复制结果功能
 const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
@@ -194,6 +203,8 @@ function settingOk() {
 
 // 打开设置模态框
 function openSettingModal() {
+  // 如果引导框是打开的，则立即关闭引导
+  clearGuide(true)
   settingModalRef.value.openSettingModal()
 }
 
@@ -207,7 +218,7 @@ function changeRadioHandler() {
 async function startTranslation(val = currentTranslation.value, isRefresh) {
   // 如果没输入内容，则不翻译
   if ([undefined, null, ''].includes(userInput.value)) {
-    resultText.value = ''
+    resultObj.data.resultText = ''
     return
   }
 
@@ -219,9 +230,11 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
     isRefresh
   }
   const { text, code } = await translationCommon(val, obj)
-  resultText.value = text
-  resultCode.value = code
-  resultId.value = nanoid()
+  resultObj.data = {
+    resultText: text,
+    resultCode: code,
+    resultId: nanoid()
+  }
   pageLoading.value = false
 }
 
@@ -230,6 +243,20 @@ function changeTranslateType() {
   setTimeout(() => {
     startTranslation()
   }, 0)
+}
+
+function firstGuide() {
+  const option = {
+    element: '#setting-wrapper',
+    popover: {
+      className: 'setting_popover',
+      title: '初次使用？',
+      description: '你应该点击这里去配置一下服务哦~',
+      position: 'left'
+    }
+  }
+
+  showGuide(option)
 }
 
 // 读取配置
@@ -250,13 +277,15 @@ function utoolsInit() {
 }
 
 // 复制结果
-const copyResult = throttle(val => {
+const copyResult = throttle((val = resultObj.data.resultText) => {
   copy(val)
   Message.success('复制成功')
 }, 300)
 
 onMounted(() => {
   readSetting()
+  // abcd:这里改成从utools取值
+  !localStorage.getItem('firstUseMain') && firstGuide()
   window?.utools && utoolsInit()
 })
 
@@ -266,6 +295,24 @@ watch(
   debounce(function () {
     !pageLoading.value && startTranslation()
   }, 300)
+)
+
+// 监听
+watch(
+  () => resultObj.data.resultId,
+  () => {
+    if (!resultObj.data.resultCode === 199) return
+    const option = {
+      element: '#setting-wrapper',
+      popover: {
+        className: 'setting_popover',
+        title: '未配置服务',
+        description: '你应该点击这里去配置一下服务哦~',
+        position: 'left'
+      }
+    }
+    showGuide(option)
+  }
 )
 
 // api不支持的语言value声明
@@ -336,6 +383,7 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 .setting_icon {
+  @apply absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover:text-[#666];
   transition: transform 250ms ease;
   &:hover {
     transform: rotate(60deg);

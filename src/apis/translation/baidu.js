@@ -110,7 +110,7 @@ export default async function (options) {
       code: 199,
       text:
         '翻译失败：' +
-        '🚨没有配置服务哦，我猜你大概率是没有填百度翻译的信息，现在，你应该马不停蹄的点击右下角的设置按钮，去填写相关信息🚧'
+        '没有配置服务哦🚨，我猜你大概率是没有填百度翻译的信息，现在，你应该马不停蹄的点击右下角的设置按钮，去填写相关信息🖊️'
     }
     last.result = result
     return result
@@ -118,7 +118,7 @@ export default async function (options) {
   const { appid, token } = keyConfig
 
   let res = await baiduTranslator({ q, from, to, appid, token })
-  console.log('res:', res)
+
   if (res.code === 110) {
     // 访问频率受限，再次发起翻译
     res = await baiduTranslator({ q, from, to, appid, token })

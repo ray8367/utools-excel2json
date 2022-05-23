@@ -4,8 +4,10 @@
       :visible="modalVis"
       fullscreen
       title-align="start"
-      @ok="handleOk"
-      @cancel="handleCancel"
+      @ok="modalOk"
+      @cancel="modalCancel"
+      @open="modalOpen"
+      @close="modalClose"
     >
       <template #title> 设置 </template>
       <div>
@@ -14,6 +16,7 @@
         </p>
         <p>
           <a-link
+            id="howToApplyLink"
             target="_blank"
             href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
             @click="openWebUrl"
@@ -166,6 +169,15 @@
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
+import { clearGuide, showGuide } from '@/utils/showGuide.js'
+
+const props = defineProps({
+  // 是否显示link的引导
+  howToApplyGuide: {
+    type: Boolean,
+    default: false
+  }
+})
 // 从pinia读取设置
 const settingStore = userSettingStore()
 
@@ -201,12 +213,15 @@ const currentHomeHas = ref([]) // 当前首页展示的翻译方式
 watchEffect(() => {
   if (formData.homeHasApi?.length > 4) {
     formData.homeHasApi = currentHomeHas.value
-    Message.warning({ content: '最多只能选择4个翻译方式', duration: 1000 })
+    Message.warning({ content: '最多只能选择4个翻译方式哦~', duration: 2500 })
     return
   }
   if (formData.homeHasApi?.length < 1) {
     formData.homeHasApi = currentHomeHas.value
-    Message.warning({ content: '最少保留1个翻译方式', duration: 1000 })
+    Message.warning({
+      content: '还是至少留下1个翻译方式吧！',
+      duration: 2500
+    })
     return
   }
   currentHomeHas.value = formData.homeHasApi
@@ -221,8 +236,7 @@ watchEffect(() => {
 })
 
 // 点击弹框确定
-function handleOk() {
-  emit('ok')
+function modalOk() {
   // 密钥格式转换
   const keyDatas = {
     baidu: {
@@ -254,12 +268,34 @@ function handleOk() {
   settingStore.setKeyConfig(keyDatas)
   settingStore.setFontSize(formData.textFont)
   Message.success({ content: '设置成功', duration: 1000 })
+  emit('ok')
   closeSettingModal()
 }
 
 // 点击弹框取消
-function handleCancel() {
+function modalCancel() {
   closeSettingModal()
+}
+
+// 打开设置弹框回调
+function modalOpen() {
+  if (props.howToApplyGuide) {
+    const option = {
+      element: '#howToApplyLink',
+      popover: {
+        title: '这里有一些提示',
+        description:
+          '这可是我起早贪黑写的，可以帮助你申请到这些免费的服务，如果你已经是个老手了，那就关闭这个对话框吧~',
+        position: 'right'
+      }
+    }
+    showGuide(option, false)
+  }
+}
+
+// 关闭设置弹框回调
+function modalClose() {
+  clearGuide()
 }
 
 // 打开弹窗
@@ -276,7 +312,9 @@ function closeSettingModal() {
   modalVis.value = false
 }
 
+// 打开url
 function openWebUrl(e) {
+  clearGuide()
   if (!window.utools) return
   window.utools.shellOpenExternal(e.target.getAttribute('href'))
 }
