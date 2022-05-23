@@ -18,7 +18,10 @@
 }
 
 html,
-body {
+body,
+.driver-popover-title,
+.driver-popover-description,
+.driver-popover-footer {
   font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', system-ui,
     —apple-system, Segoe UI, Rototo, Emoji, Helvetica, Arial, sans-serif !important;
 }
