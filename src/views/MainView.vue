@@ -141,6 +141,7 @@ import { storeToRefs } from 'pinia'
 import { translationCommon } from '@/apis/translation/index.js'
 import { userSettingStore } from '@/store/userSetting'
 import { clearGuide, showGuide } from '@/utils/showGuide.js'
+import { getDbStorageItem } from '@/utils/storage.js'
 
 const store = userSettingStore()
 const {
@@ -281,7 +282,7 @@ const copyResult = throttle((val = resultObj.data.resultText) => {
 onMounted(() => {
   readSetting()
   // abcd:这里改成从utools取值
-  !localStorage.getItem('firstUseMain') && firstGuide()
+  !getDbStorageItem('firstUseMain') && firstGuide()
   window?.utools && utoolsInit()
 })
 

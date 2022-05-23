@@ -170,6 +170,7 @@ import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 import { clearGuide, showGuide } from '@/utils/showGuide.js'
+import { getDbStorageItem } from '@/utils/storage.js'
 
 // 从pinia读取设置
 const settingStore = userSettingStore()
@@ -273,7 +274,7 @@ function modalCancel() {
 // 打开设置弹框回调
 function modalOpen() {
   // abcd:这里改成从utools取值
-  !localStorage.getItem('firstUseSetting') && firstGuide()
+  !getDbStorageItem('firstUseSetting') && firstGuide()
 }
 
 // 首次提示链接位置
