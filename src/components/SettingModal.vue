@@ -278,17 +278,19 @@ function modalOpen() {
 }
 
 // 首次提示链接位置
+
 function firstGuide() {
   const option = {
-    element: '#guide-link',
-    popover: {
-      title: '这里有一些提示',
-      description:
-        '这可是我起早贪黑写的，可以帮助你申请到这些免费的服务，如果你已经是个老手了，那就关闭这个对话框吧~',
-      position: 'right'
-    }
+    id: 'firstUseSetting',
+    title: '这里有一些提示',
+    text: '这可是我起早贪黑写的，你可以在点击”关闭“按钮后点击链接查看，它可以帮助你申请到这些免费的服务，如果你已经是个老手了，那就关闭这个对话框开始使用吧~',
+    attachTo: {
+      element: '#guide-link',
+      on: 'right'
+    },
+    classes: 'guide_wrapper'
   }
-  showGuide(option, false)
+  showGuide(option, 'firstUseSetting')
 }
 
 // 关闭设置弹框回调
@@ -312,7 +314,6 @@ function closeSettingModal() {
 
 // 打开url
 function openWebUrl(e) {
-  clearGuide()
   if (!window.utools) return
   window.utools.shellOpenExternal(e.target.getAttribute('href'))
 }

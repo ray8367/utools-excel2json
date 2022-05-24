@@ -10,17 +10,17 @@
     "p:build": "webpack --config ./public/preload/webpack.config.js"
   },
   "dependencies": {
-    "@alicloud/pop-core": "^1.7.10",
+    "@alicloud/pop-core": "^1.7.11",
     "@vueuse/core": "^8.5.0",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
-    "driver.js": "^0.9.8",
     "got": "11",
     "lodash-es": "^4.17.21",
     "nanoid": "^3.3.4",
     "pinia": "^2.0.14",
-    "tencentcloud-sdk-nodejs": "^4.0.345",
-    "vue": "^3.2.35"
+    "shepherd.js": "^9.1.0",
+    "tencentcloud-sdk-nodejs": "^4.0.346",
+    "vue": "^3.2.36"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.28.0",
@@ -33,7 +33,7 @@
     "less": "^4.1.2",
     "prettier": "^2.6.2",
     "sass": "^1.52.1",
-    "unplugin-auto-import": "^0.7.2",
+    "unplugin-auto-import": "^0.8.1",
     "unplugin-vue-components": "^0.19.5",
     "vite": "^2.9.9",
     "vite-plugin-chunk-split": "^0.2.2",

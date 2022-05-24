@@ -140,7 +140,7 @@ import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
 import { translationCommon } from '@/apis/translation/index.js'
 import { userSettingStore } from '@/store/userSetting'
-import { clearGuide, showGuide } from '@/utils/showGuide.js'
+import { showGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 
 const store = userSettingStore()
@@ -200,8 +200,6 @@ function settingOk() {
 
 // 打开设置模态框
 function openSettingModal() {
-  // 如果引导框是打开的，则立即关闭引导
-  clearGuide(true)
   settingModalRef.value.openSettingModal()
 }
 
@@ -244,16 +242,16 @@ function changeTranslateType() {
 
 function firstGuide() {
   const option = {
-    element: '#setting-wrapper',
-    popover: {
-      className: 'setting_popover',
-      title: '初次使用？',
-      description: '你应该点击这里去配置一下服务哦~',
-      position: 'left'
-    }
+    id: 'firstUseMain',
+    title: '初次使用？',
+    text: '你应该点击这里去配置一下服务哦~🖊️',
+    attachTo: {
+      element: '#setting-wrapper',
+      on: 'left'
+    },
+    classes: 'guide_wrapper'
   }
-
-  showGuide(option)
+  showGuide(option, 'firstUseMain')
 }
 
 // 读取配置
@@ -282,10 +280,7 @@ const copyResult = throttle((val = resultObj.data.resultText) => {
 onMounted(() => {
   window?.utools && utoolsInit()
   readSetting()
-  setTimeout(() => {
-    // abcd:这里改成从utools取值
-    !getDbStorageItem('firstUseMain') && firstGuide()
-  }, 1)
+  !getDbStorageItem('firstUseMain') && firstGuide()
 })
 
 // 监听用户输入，防抖翻译
@@ -302,15 +297,16 @@ watch(
   () => {
     if (resultObj.data.resultCode === 401) {
       const option = {
-        element: '#setting-wrapper',
-        popover: {
-          className: 'setting_popover',
-          title: '未配置服务',
-          description: '你应该点击这里去配置一下服务哦~',
-          position: 'left'
-        }
+        id: 'missingParameter',
+        title: '未配置服务',
+        text: '你应该点击这里去配置一下服务哦~🖊️',
+        attachTo: {
+          element: '#setting-wrapper',
+          on: 'left'
+        },
+        classes: 'guide_wrapper'
       }
-      showGuide(option)
+      showGuide(option, 'firstUseMain')
     }
   }
 )

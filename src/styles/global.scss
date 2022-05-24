@@ -19,9 +19,7 @@
 
 html,
 body,
-.driver-popover-title,
-.driver-popover-description,
-.driver-popover-footer {
+.guide_wrapper {
   font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', system-ui,
     —apple-system, Segoe UI, Rototo, Emoji, Helvetica, Arial, sans-serif !important;
 }
@@ -73,13 +71,39 @@ body,
   border-radius: 0;
 }
 
-.setting_popover {
-  top: calc(100vh - 128px) !important;
-}
+.guide_wrapper {
+  box-shadow: 0 4px 29px #0000003d !important;
 
-.driver-popover-tip {
-  &.right {
-    bottom: 6px !important;
-    top: initial !important;
+  .shepherd-header {
+    background-color: transparent !important;
+  }
+
+  .shepherd-text,
+  .shepherd-header,
+  .shepherd-footer {
+    padding: 12px !important;
+    font-size: 14px;
+  }
+
+  .shepherd-text {
+    padding-top: 0 !important;
+    color: #1d2129;
+    line-height: 1.7;
+  }
+
+  .shepherd-title {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .shepherd-button {
+    background-color: $primary-color;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: rgba($color: $primary-color, $alpha: 0.8) !important;
+    }
   }
 }
