@@ -243,8 +243,8 @@ function changeTranslateType() {
 function firstGuide() {
   const option = {
     id: 'firstUseMain',
-    title: '初次使用？',
-    text: '你应该点击这里去配置一下服务哦~🖊️',
+    title: '欢迎使用易翻☺️',
+    text: '你应该点击这里去配置一下服务哦~',
     attachTo: {
       element: '#setting-wrapper',
       on: 'left'
