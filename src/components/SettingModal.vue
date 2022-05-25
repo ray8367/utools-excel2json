@@ -52,6 +52,16 @@
                 />
               </a-form-item>
             </a-col>
+            <a-col :span="18">
+              <a-form-item label="复制按钮行为">
+                <a-radio-group v-model="formData.copyBtnBehavior">
+                  <a-radio value="open">仅复制</a-radio>
+                  <a-radio value="close">
+                    复制并隐藏插件（若插件被分离，则不会隐藏）</a-radio
+                  >
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
             <!-- <a-col :span="18">
               <a-form-item label="默认翻译方式">
                 <a-select
@@ -180,6 +190,7 @@ const emit = defineEmits(['ok'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
+  copyBtnBehavior: 'open', // 复制按钮的行为
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
   token: undefined, // 百度

@@ -185,6 +185,11 @@ const translateToOptions = ref(
 // 清空输入框
 function clearInput() {
   userInput.value = ''
+  inputFocus()
+}
+
+// 输入框获取焦点
+function inputFocus() {
   inputRef.value.focus()
 }
 
@@ -196,6 +201,7 @@ function settingOk() {
     // 设置成功，刷新上一次翻译
     startTranslation(currentTranslation.value, true)
   })
+  inputFocus()
 }
 
 // 打开设置模态框
@@ -207,6 +213,7 @@ function openSettingModal() {
 function changeRadioHandler() {
   store.setDefaultStorage(currentTranslation.value)
   startTranslation()
+  inputFocus()
 }
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
@@ -238,6 +245,7 @@ function changeTranslateType() {
   setTimeout(() => {
     startTranslation()
   }, 0)
+  inputFocus()
 }
 
 function firstGuide() {
@@ -274,11 +282,15 @@ function utoolsInit() {
 // 复制结果
 const copyResult = throttle((val = resultObj.data.resultText) => {
   copy(val)
+  // if (xxx && window.utools) {
+  //   window.utools.hideMainWindow()
+  // }
   Message.success('复制成功')
 }, 300)
 
 onMounted(() => {
   window?.utools && utoolsInit()
+  inputFocus()
   readSetting()
   !getDbStorageItem('firstUseMain') && firstGuide()
 })
