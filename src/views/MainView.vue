@@ -147,7 +147,8 @@ const store = userSettingStore()
 const {
   homeOption,
   getHomeApiOptions: translateApiOptions,
-  getHomeFontSize: textFont
+  getHomeFontSize: textFont,
+  copyBtnBehavior
 } = storeToRefs(store)
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
@@ -280,12 +281,12 @@ function utoolsInit() {
 }
 
 // 复制结果
-const copyResult = throttle((val = resultObj.data.resultText) => {
-  copy(val)
-  // if (xxx && window.utools) {
-  //   window.utools.hideMainWindow()
-  // }
+const copyResult = throttle(async (val = resultObj.data.resultText) => {
+  await copy(val)
   Message.success('复制成功')
+  if (copyBtnBehavior.value === 'close' && window.utools) {
+    window.utools.hideMainWindow()
+  }
 }, 300)
 
 onMounted(() => {
@@ -391,11 +392,13 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 .setting_icon {
-  @apply absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover:text-[#666];
+  @apply absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover: text-[#666];
   transition: transform 250ms ease;
+
   &:hover {
     transform: rotate(60deg);
   }
+
   &:active {
     color: $primary-color;
     transform: scale(0.8) rotate(60deg);
@@ -411,10 +414,12 @@ watchEffect(() => {
     font-size: v-bind(textFont);
     resize: none;
   }
+
   ::v-deep(.arco-textarea-wrapper) {
     background-color: #fff;
     border-color: #e9e9e9;
   }
+
   ::v-deep(.arco-textarea-focus) {
     border-color: $primary-color;
   }
@@ -425,6 +430,7 @@ watchEffect(() => {
       background-color: #29292c;
       border-color: #00000000;
     }
+
     ::v-deep(.arco-textarea-focus) {
       border-color: #666666;
     }

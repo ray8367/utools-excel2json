@@ -9,6 +9,7 @@ const KEY_SETTING = 'keyConfig'
 const HOME_OPTION = 'homeOption'
 const DEFAULT_API = 'defaultApi'
 const FONT_SIZE = 'fontSize'
+const COPY_BTN_BEHAVIOR = 'copyBtnBehavior'
 
 export const userSettingStore = defineStore('settings', {
   state: () => {
@@ -52,7 +53,8 @@ export const userSettingStore = defineStore('settings', {
       homeOption: initHomeOptionState(),
       defaultApi: initDefaultApiState(),
       keyConfig: initKeyConfigState(),
-      fontSize: initFontSizeState()
+      fontSize: initFontSizeState(),
+      copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close'
     }
   },
 
@@ -70,7 +72,8 @@ export const userSettingStore = defineStore('settings', {
 
     /** 获取设置页表单 */
     getSetingFormData: state => {
-      const { homeOption, defaultApi, keyConfig, fontSize } = state
+      const { homeOption, defaultApi, keyConfig, fontSize, copyBtnBehavior } =
+        state
 
       return {
         homeHasApi: homeOption, // 首页展示的翻译方式
@@ -84,7 +87,8 @@ export const userSettingStore = defineStore('settings', {
         accessKeySecret: keyConfig.ali?.accessKeySecret, // 阿里
         youdaoId: keyConfig.youdao?.appid, // 有道
         youdaoSecret: keyConfig.youdao?.appkey, // 有道
-        caiyunToken: keyConfig.caiyun?.token // 彩云
+        caiyunToken: keyConfig.caiyun?.token, // 彩云
+        copyBtnBehavior // 复制按钮行为 (open|close)
       }
     }
   },
@@ -112,6 +116,12 @@ export const userSettingStore = defineStore('settings', {
     setFontSize(data) {
       this.fontSize = data
       setDbStorageItem(FONT_SIZE, data)
+    },
+
+    /** 设置复制行为 */
+    setCopyBtnBehavior(data) {
+      this.copyBtnBehavior = data
+      setDbStorageItem(COPY_BTN_BEHAVIOR, data)
     },
 
     /**
