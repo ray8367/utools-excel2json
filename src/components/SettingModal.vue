@@ -57,27 +57,29 @@
                 <a-radio-group v-model="formData.copyBtnBehavior">
                   <a-radio value="open">仅复制</a-radio>
                   <a-radio value="close">
-                    复制并隐藏插件（若插件被分离，则不会隐藏）</a-radio
-                  >
+                    复制并隐藏插件（若插件被分离，则不会隐藏）
+                  </a-radio>
                 </a-radio-group>
               </a-form-item>
             </a-col>
-            <!-- <a-col :span="18">
-              <a-form-item label="默认翻译方式">
-                <a-select
-                  v-model="formData.defaultApi"
-                  placeholder="想要一打开插件就用什么翻译呢？"
-                >
-                  <a-option
-                    v-for="item in defaultOptions"
-                    :key="item.value"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-option>
-                </a-select>
+            <a-col :span="18">
+              <a-form-item label="代码模式">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>代码模式</span>
+                    <a-popover>
+                      <icon-question-circle />
+                      <template #content>
+                        代码模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
+                        <icon-code class="text-16px" />
+                        图标进行快速切换，如果你看不懂这句话，那么请不要打开这个选项
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
+                <a-switch v-model="formData.codeMode" />
               </a-form-item>
-            </a-col> -->
+            </a-col>
             <a-divider orientation="left">百度翻译</a-divider>
             <a-col :span="18">
               <a-form-item label="APP ID">
@@ -176,6 +178,7 @@
 </template>
 
 <script setup>
+import { IconQuestionCircle, IconCode } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
@@ -186,11 +189,12 @@ import { getDbStorageItem } from '@/utils/storage.js'
 const settingStore = userSettingStore()
 
 const modalVis = ref(false) // 弹框的显隐
-const emit = defineEmits(['ok'])
+const emit = defineEmits(['ok', 'cancel'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 复制按钮的行为
+  codeMode: true, // 代码模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
   token: undefined, // 百度
@@ -280,6 +284,7 @@ function modalOk() {
 
 // 点击弹框取消
 function modalCancel() {
+  emit('cancel')
   closeSettingModal()
 }
 

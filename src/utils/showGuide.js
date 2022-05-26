@@ -39,7 +39,5 @@ export function showGuide(params, localName) {
 }
 
 export function clearGuide() {
-  const a = tour?.getCurrentStep()
-  console.log('a: ', a)
   tour?.cancel()
 }

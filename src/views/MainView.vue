@@ -3,8 +3,20 @@
     class="main_wrapper flex-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
     <!-- 设置按钮 -->
-    <div id="setting-wrapper" class="setting_icon" @click="openSettingModal">
+    <div
+      id="setting-wrapper"
+      class="icon setting_icon"
+      @click="openSettingModal"
+    >
       <icon-settings />
+    </div>
+    <!-- 代码模式按钮 -->
+    <div
+      class="icon code_icon"
+      :class="{ active: codeMode }"
+      @click="changeMode"
+    >
+      <icon-code />
     </div>
     <div
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
@@ -43,39 +55,58 @@
         <div
           class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px dark:border-[#3d3d3d]"
         >
-          <!-- 翻译From的select -->
-          <a-select
-            v-model="translateFrom"
-            :style="{ width: '130px' }"
-            @change="changeTranslateType"
-          >
-            <a-option
-              v-for="item in translateFromOptions"
-              :key="item.value"
-              :value="item.value"
-              :disabled="item.disabled"
+          <!-- 代码模式的select -->
+          <template v-if="codeMode">
+            <a-select
+              v-model="codeSelect"
+              :style="{ width: '130px' }"
+              @change="changeCodeSelect"
             >
-              {{ item.label }}
-            </a-option>
-          </a-select>
+              <a-option
+                v-for="(item, index) in changeCaseArr"
+                :key="index"
+                :value="item.name"
+              >
+                {{ item.label }}
+              </a-option>
+            </a-select>
+          </template>
 
-          <icon-arrow-right />
-
-          <!-- 翻译To的select -->
-          <a-select
-            v-model="translateTo"
-            :style="{ width: '130px' }"
-            @change="changeTranslateType"
-          >
-            <a-option
-              v-for="item in translateToOptions"
-              :key="item.value"
-              :value="item.value"
-              :disabled="item.disabled"
+          <template v-else>
+            <!-- 翻译From的select -->
+            <a-select
+              v-model="translateFrom"
+              :style="{ width: '130px' }"
+              @change="changeTranslateType"
             >
-              {{ item.label }}
-            </a-option>
-          </a-select>
+              <a-option
+                v-for="item in translateFromOptions"
+                :key="item.value"
+                :value="item.value"
+                :disabled="item.disabled"
+              >
+                {{ item.label }}
+              </a-option>
+            </a-select>
+
+            <icon-arrow-right />
+
+            <!-- 翻译To的select -->
+            <a-select
+              v-model="translateTo"
+              :style="{ width: '130px' }"
+              @change="changeTranslateType"
+            >
+              <a-option
+                v-for="item in translateToOptions"
+                :key="item.value"
+                :value="item.value"
+                :disabled="item.disabled"
+              >
+                {{ item.label }}
+              </a-option>
+            </a-select>
+          </template>
         </div>
       </section>
 
@@ -96,6 +127,7 @@
             <div
               v-else
               class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
+              :class="{ code_textarea: codeMode }"
             >
               <a-textarea
                 v-model="resultObj.data.resultText"
@@ -105,10 +137,7 @@
               />
               <transition name="component-fade" mode="out-in">
                 <div
-                  v-show="
-                    resultObj.data.resultText?.trim() &&
-                    resultObj.data.resultCode === 200
-                  "
+                  v-show="shouldShowCopyBtn"
                   class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
                 >
                   <ColorfulBtn @click="copyResult()">
@@ -124,7 +153,7 @@
   </div>
 
   <!-- 设置弹窗 -->
-  <SettingModal ref="settingModalRef" @ok="settingOk" />
+  <SettingModal ref="settingModalRef" @ok="settingOk" @cancel="settingCancel" />
 </template>
 
 <script setup>
@@ -134,7 +163,8 @@ import { nanoid } from 'nanoid'
 import {
   IconArrowRight,
   IconSettings,
-  IconCopy
+  IconCopy,
+  IconCode
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
@@ -142,7 +172,7 @@ import { translationCommon } from '@/apis/translation/index.js'
 import { userSettingStore } from '@/store/userSetting'
 import { showGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
-
+import { changeCaseArr } from '@/assets/changeCaseMap.js'
 const store = userSettingStore()
 const {
   homeOption,
@@ -150,6 +180,7 @@ const {
   getHomeFontSize: textFont,
   copyBtnBehavior
 } = storeToRefs(store)
+const codeMode = ref(false)
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultObj = reactive({
@@ -160,9 +191,11 @@ const resultObj = reactive({
   }
 })
 const { copy } = useClipboard() // 复制结果功能
+const keys = useMagicKeys()
 const currentTranslation = ref('') // 当前翻译api
 const translateFrom = ref('auto') // 当前翻译From
 const translateTo = ref('zh') // 当前翻译to
+const codeSelect = ref('camelCase') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 const inputRef = ref() // 输入textarea的dom
 // 翻译方式From参数的选项
@@ -205,9 +238,23 @@ function settingOk() {
   inputFocus()
 }
 
+// 设置弹框点击了取消
+function settingCancel() {
+  inputFocus()
+}
+
 // 打开设置模态框
 function openSettingModal() {
   settingModalRef.value.openSettingModal()
+}
+
+// 变更模式
+function changeMode() {
+  codeMode.value = !codeMode.value
+  setTimeout(() => {
+    startTranslation()
+    inputFocus()
+  }, 0)
 }
 
 // 修改选中翻译 保存当前选中并翻译
@@ -233,12 +280,26 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
     isRefresh
   }
   const { text, code } = await translationCommon(val, obj)
+  const calcText = codeMode.value ? getCodeResult(text, codeSelect.value) : text
   resultObj.data = {
-    resultText: text,
+    resultText: calcText,
     resultCode: code,
     resultId: nanoid()
   }
   pageLoading.value = false
+}
+// 切换代码模式的方式select
+function changeCodeSelect() {
+  const result = getCodeResult(resultObj.data.resultText, codeSelect.value)
+  resultObj.data.resultText = result
+}
+
+// 获取代码模式的翻译结果
+function getCodeResult(text = '', type = 'camelCase') {
+  const changeCase = changeCaseArr.find(item => item.name === type)
+  if (!text) return text
+  if (!changeCase) return text
+  return changeCase.handle(text)
 }
 
 // 切换翻译的From和To
@@ -284,9 +345,11 @@ function utoolsInit() {
 const copyResult = throttle(async (val = resultObj.data.resultText) => {
   await copy(val)
   Message.success('复制成功')
-  if (copyBtnBehavior.value === 'close' && window.utools) {
-    window.utools.hideMainWindow()
-  }
+  setTimeout(() => {
+    if (copyBtnBehavior.value === 'close' && window.utools) {
+      window.utools.hideMainWindow()
+    }
+  }, 300)
 }, 300)
 
 onMounted(() => {
@@ -361,6 +424,7 @@ watchEffect(() => {
   }
 })
 
+// 单独处理彩云的选项
 watchEffect(() => {
   // 如果不是彩云，直接return
   if (currentTranslation.value !== 'caiyun') return
@@ -388,17 +452,52 @@ watchEffect(() => {
     translateTo.value = 'en'
   }
 })
+
+watchEffect(() => {
+  if (codeMode.value) {
+    translateFrom.value = 'auto'
+    translateTo.value = 'en'
+  } else {
+    translateFrom.value = 'auto'
+    translateTo.value = 'zh'
+  }
+})
+
+// 是否应该显示复制按钮
+const shouldShowCopyBtn = computed(() => {
+  return resultObj.data.resultText?.trim() && resultObj.data.resultCode === 200
+})
+
+// 监听复制快捷键
+watchEffect(() => {
+  const WindowsCopyKeys = keys['ctrl+shift+x']
+  const MacCopyKeys = keys['command+shift+x']
+  if ((WindowsCopyKeys.value || MacCopyKeys.value) && shouldShowCopyBtn.value) {
+    copyResult()
+  }
+})
 </script>
 
 <style lang="scss" scoped>
+.icon {
+  transition: all 250ms ease;
+  @apply text-20px text-[#999] cursor-pointer hover: text-[#666];
+}
+.code_icon {
+  @apply absolute left-3px bottom-3px;
+  &:hover {
+    transform: rotate(180deg);
+  }
+  &.active {
+    color: $primary-color;
+  }
+}
 .setting_icon {
-  @apply absolute right-3px bottom-3px text-20px text-[#999] cursor-pointer hover: text-[#666];
-  transition: transform 250ms ease;
+  @apply absolute right-3px bottom-3px;
 
   &:hover {
     transform: rotate(60deg);
   }
-
   &:active {
     color: $primary-color;
     transform: scale(0.8) rotate(60deg);
@@ -452,6 +551,24 @@ watchEffect(() => {
 
 // 下面的文本域样式
 .text_readonly {
+  background-color: transparent;
+  position: relative;
+  &.code_textarea {
+    &::after {
+      content: '<code />';
+      position: absolute;
+      font-size: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f5f6f7;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      // FIXIT:code背景会遮挡文字，夜间模式颜色
+    }
+  }
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
