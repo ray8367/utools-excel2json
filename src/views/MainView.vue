@@ -180,7 +180,7 @@ const {
   getHomeFontSize: textFont,
   copyBtnBehavior
 } = storeToRefs(store)
-const codeMode = ref(false)
+const codeMode = computed(() => store.codeMode) // 代码模式
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultObj = reactive({
@@ -250,7 +250,7 @@ function openSettingModal() {
 
 // 变更模式
 function changeMode() {
-  codeMode.value = !codeMode.value
+  store.setCodeMode(!codeMode.value)
   setTimeout(() => {
     startTranslation()
     inputFocus()

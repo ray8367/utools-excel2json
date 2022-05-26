@@ -194,7 +194,7 @@ const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 复制按钮的行为
-  codeMode: true, // 代码模式
+  codeMode: false, // 代码模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
   token: undefined, // 百度
@@ -277,6 +277,7 @@ function modalOk() {
   settingStore.setKeyConfig(keyDatas)
   settingStore.setFontSize(formData.textFont)
   settingStore.setCopyBtnBehavior(formData.copyBtnBehavior)
+  settingStore.setCodeMode(formData.codeMode)
   Message.success({ content: '设置成功', duration: 1000 })
   emit('ok')
   closeSettingModal()

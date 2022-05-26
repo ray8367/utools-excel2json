@@ -10,6 +10,7 @@ const HOME_OPTION = 'homeOption'
 const DEFAULT_API = 'defaultApi'
 const FONT_SIZE = 'fontSize'
 const COPY_BTN_BEHAVIOR = 'copyBtnBehavior'
+const CODE_MODE = 'codeMode'
 
 export const userSettingStore = defineStore('settings', {
   state: () => {
@@ -49,12 +50,18 @@ export const userSettingStore = defineStore('settings', {
       return Number.parseInt(fontSize)
     }
 
+    function getStorageBoolean(key, defaultState) {
+      const value = getDbStorageItem(key) || defaultState
+      return value === 'true' || value === true ? true : false
+    }
+
     return {
       homeOption: initHomeOptionState(),
       defaultApi: initDefaultApiState(),
       keyConfig: initKeyConfigState(),
       fontSize: initFontSizeState(),
-      copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close'
+      copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close',
+      codeMode: getStorageBoolean(CODE_MODE, false)
     }
   },
 
@@ -72,8 +79,14 @@ export const userSettingStore = defineStore('settings', {
 
     /** 获取设置页表单 */
     getSetingFormData: state => {
-      const { homeOption, defaultApi, keyConfig, fontSize, copyBtnBehavior } =
-        state
+      const {
+        homeOption,
+        defaultApi,
+        keyConfig,
+        fontSize,
+        copyBtnBehavior,
+        codeMode
+      } = state
 
       return {
         homeHasApi: homeOption, // 首页展示的翻译方式
@@ -88,7 +101,8 @@ export const userSettingStore = defineStore('settings', {
         youdaoId: keyConfig.youdao?.appid, // 有道
         youdaoSecret: keyConfig.youdao?.appkey, // 有道
         caiyunToken: keyConfig.caiyun?.token, // 彩云
-        copyBtnBehavior // 复制按钮行为 (open|close)
+        copyBtnBehavior, // 复制按钮行为 (open|close)
+        codeMode // 代码模式
       }
     }
   },
@@ -122,6 +136,12 @@ export const userSettingStore = defineStore('settings', {
     setCopyBtnBehavior(data) {
       this.copyBtnBehavior = data
       setDbStorageItem(COPY_BTN_BEHAVIOR, data)
+    },
+
+    /** 设置代码模式 */
+    setCodeMode(data) {
+      this.codeMode = data
+      setDbStorageItem(CODE_MODE, data)
     },
 
     /**
