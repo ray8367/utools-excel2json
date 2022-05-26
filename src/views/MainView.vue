@@ -131,14 +131,14 @@
             >
               <a-textarea
                 v-model="resultObj.data.resultText"
-                class="rounded-b-8px"
+                class="rounded-b-8px relative z-1"
                 placeholder="翻译结果"
                 readonly
               />
               <transition name="component-fade" mode="out-in">
                 <div
                   v-show="shouldShowCopyBtn"
-                  class="absolute bottom-10px left-1/2 transform -translate-x-1/2"
+                  class="absolute bottom-10px left-1/2 transform -translate-x-1/2 z-1"
                 >
                   <ColorfulBtn @click="copyResult()">
                     <icon-copy /> 复制结果
@@ -185,7 +185,7 @@ const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultObj = reactive({
   data: {
-    resultText: '', // 翻译结果
+    resultText: ``, // 翻译结果
     resultCode: 0, // 翻译结果状态(code = 200 为成功)
     resultId: nanoid()
   }
@@ -515,7 +515,7 @@ watchEffect(() => {
   }
 
   ::v-deep(.arco-textarea-wrapper) {
-    background-color: #fff;
+    background-color: transparent;
     border-color: #e9e9e9;
   }
 
@@ -526,7 +526,7 @@ watchEffect(() => {
   // 深色模式
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-textarea-wrapper) {
-      background-color: #29292c;
+      background-color: transparent;
       border-color: #00000000;
     }
 
@@ -562,6 +562,7 @@ watchEffect(() => {
       align-items: center;
       justify-content: center;
       color: #f5f6f7;
+      // color: rgba($color: #000000, $alpha: 0.05);
       left: 0;
       right: 0;
       top: 0;
@@ -576,6 +577,10 @@ watchEffect(() => {
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
+    }
+
+    &.code_textarea::after {
+      color: rgba($color: #000000, $alpha: 0.1);
     }
   }
 }
