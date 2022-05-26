@@ -7,7 +7,8 @@
     "build": "vite build",
     "lint": "eslint --fix --ext .js,.vue src",
     "preview": "vite preview",
-    "p:build": "webpack --config ./public/preload/webpack.config.js"
+    "p:build": "webpack --config ./public/preload/webpack.config.js",
+    "a:build": "yarn run p:build && yarn run build"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.11",
