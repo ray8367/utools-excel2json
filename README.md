@@ -1,10 +1,23 @@
-# utools-easy-translation  易翻
+# utools-easy-translation utools-易翻
 
-> 易翻：可能是utools上第2好用的翻译插件，支持多种语言互翻
+## 插件简介
+
+一个以 api 驱动的翻译插件，接入常用翻译平台服务，支持多种语言互翻，即用即走、不中断、无干扰，旨在打造一个更加便捷、美观、高效的翻译插件。
 
 ## 技术栈
 
 vue3 + vite2 + utools
+
+
+## 插件功能
+
+1. 多种语言互翻
+2. 自定义翻译方式
+3. 自定义首页翻译文本字体大小
+4. 支持一键复制并隐藏插件
+5. 代码模式（大小驼峰、中下划线、大小分词、对象属性、文件路径、常量）
+6. ...
+
 
 ## 服务申请说明
 
@@ -33,9 +46,6 @@ vue3 + vite2 + utools
 - [x] 德语
 - [x] 法语
 
-
-
-
 ## 开发说明
 
 ### 安装依赖
@@ -52,10 +62,10 @@ yarn
 
 ```json
 {
-     "preload": "./preload/src/index.js",
-      "development": {
-        "main": "http://127.0.0.1:6789"
-      }
+  "preload": "./preload/src/index.js",
+  "development": {
+    "main": "http://127.0.0.1:6789"
+  }
 }
 ```
 
@@ -64,8 +74,6 @@ yarn
 ```bash
 yarn run dev
 ```
-
-
 
 ### 打包发布
 
@@ -87,8 +95,7 @@ yarn run build
 
 ```json
 {
-    "main": "./index.html",
-    "preload": "./preload/dist/index.js",
+  "main": "./index.html",
+  "preload": "./preload/dist/index.js"
 }
 ```
-
