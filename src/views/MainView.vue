@@ -35,7 +35,6 @@
           v-model="userInput"
           class="rounded-t-8px"
           placeholder="请输入要翻译的内容"
-          :readonly="pageLoading"
         />
       </div>
       <section class="tools_wrapper flex my-8px">
