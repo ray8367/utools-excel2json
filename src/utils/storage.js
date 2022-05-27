@@ -19,3 +19,12 @@ export function setDbStorageItem(key, value) {
     return window.localStorage.setItem(key, value)
   }
 }
+
+/** 移除数据 */
+export function removeDbStorageItem(key) {
+  if (utools) {
+    return utools.dbStorage.removeItem(key)
+  } else {
+    return window.localStorage.removeItem(key)
+  }
+}

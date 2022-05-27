@@ -12,7 +12,7 @@
       <template #title> 设置 </template>
       <div>
         <p class="indent-4px">
-          插件的功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
+          插件的部分功能依赖第三方服务，不幸的是您需要自行申请之后才能使用它们☹️，但是万幸，他们都是免费的😁
         </p>
         <p>
           <a-link
@@ -349,13 +349,18 @@ function modalClose() {
   clearGuide()
 }
 
-// 打开弹窗
-function openSettingModal() {
-  modalVis.value = true
+// 获取设置
+function getSetting() {
   const tempFormData = settingStore.getSetingFormData
   Object.keys(formData).forEach(key => {
     formData[key] = tempFormData[key]
   })
+}
+
+// 打开弹窗
+function openSettingModal() {
+  modalVis.value = true
+  getSetting()
 }
 
 // 关闭弹窗
@@ -373,6 +378,14 @@ function openWebUrl(e) {
 function resetData() {
   Message.success({ content: '已重置，插件将在2秒后退出', duration: 2000 })
   setTimeout(() => {}, 2000)
+}
+
+/** 重置设置 */
+function resetHandler() {
+  // 确认重置调用
+  settingStore.reset()
+  // 重新获取设置
+  getSetting()
 }
 
 // 暴露打开弹窗的函数，供父组件调用
