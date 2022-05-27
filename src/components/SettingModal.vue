@@ -216,6 +216,7 @@ import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 import { clearGuide, showGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
+import { removeDbStorageItem } from '@/utils/storage'
 
 // 从pinia读取设置
 const settingStore = userSettingStore()
@@ -374,16 +375,21 @@ function openWebUrl(e) {
 
 // 重置数据
 function resetData() {
-  Message.success({ content: '已重置，插件将在2秒后退出', duration: 2000 })
-  setTimeout(() => {}, 2000)
-}
-
-/** 重置设置 */
-function resetHandler() {
-  // 确认重置调用
+  // 重置设置
   settingStore.reset()
+  removeDbStorageItem('firstUseMain')
+  removeDbStorageItem('firstUseSetting')
   // 重新获取设置
   getSetting()
+  Message.success({ content: '已重置，插件将在2秒后退出', duration: 2000 })
+  setTimeout(() => {
+    if (window.utools) {
+      window.utools.outPlugin()
+    } else {
+      emit('cancel')
+      closeSettingModal()
+    }
+  }, 2000)
 }
 
 // 暴露打开弹窗的函数，供父组件调用
