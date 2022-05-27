@@ -35,6 +35,7 @@
           v-model="userInput"
           class="rounded-t-8px"
           placeholder="请输入要翻译的内容"
+          :readonly="pageLoading"
         />
       </div>
       <section class="tools_wrapper flex my-8px">
@@ -122,12 +123,12 @@
           <transition name="component-fade">
             <Loading
               v-if="pageLoading"
-              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#29292c])"
+              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#272728])"
             />
             <div
               v-else
               class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
-              :class="{ code_textarea: codeMode }"
+              :class="[codeMode && ['code_textarea', 'font-mono']]"
             >
               <a-textarea
                 v-model="resultObj.data.resultText"
@@ -235,7 +236,6 @@ function settingOk() {
     // 设置成功，刷新上一次翻译
     startTranslation(currentTranslation.value, true)
   })
-  inputFocus()
 }
 
 // 设置弹框点击了取消
@@ -257,7 +257,6 @@ function changeMode() {
   store.setCodeMode(!codeMode.value)
   setTimeout(() => {
     startTranslation()
-    inputFocus()
   }, 0)
 }
 
@@ -265,7 +264,6 @@ function changeMode() {
 function changeRadioHandler() {
   store.setDefaultStorage(currentTranslation.value)
   startTranslation()
-  inputFocus()
 }
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
@@ -291,6 +289,7 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
     resultId: nanoid()
   }
   pageLoading.value = false
+  nextTick(() => inputFocus())
 }
 // 切换命名翻译模式的方式select
 function changeCodeSelect() {
@@ -311,7 +310,6 @@ function changeTranslateType() {
   setTimeout(() => {
     startTranslation()
   }, 0)
-  inputFocus()
 }
 
 function firstGuide() {

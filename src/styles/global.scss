@@ -20,7 +20,7 @@
 @font-face {
   font-display: swap;
   font-family: 'JetBrains Mono NL';
-  src: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-be392405-5b88-4143-ad6b-f155b106ab85/304c69e8-538c-45a1-ac16-185b2c019bc5.woff2') format('woff2');
+  src: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-be392405-5b88-4143-ad6b-f155b106ab85/a79e6f39-cad5-42ff-9b6b-6440af613c01.woff2') format('woff2');
 }
 
 html,
@@ -36,7 +36,7 @@ body,
 
 .font-mono {
   font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
+    monospace !important;
 }
 
 ::-webkit-scrollbar {
