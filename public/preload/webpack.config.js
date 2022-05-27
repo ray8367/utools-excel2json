@@ -25,7 +25,7 @@ module.exports = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        extractComments: false //不将注释提取到单独的文件中
+        extractComments: false // 不将注释提取到单独的文件中
       })
     ]
   },
