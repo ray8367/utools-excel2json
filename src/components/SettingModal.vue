@@ -216,13 +216,12 @@ import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 import { clearGuide, showGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
-import { removeDbStorageItem } from '@/utils/storage'
 
 // 从pinia读取设置
 const settingStore = userSettingStore()
 
 const modalVis = ref(false) // 弹框的显隐
-const emit = defineEmits(['ok', 'cancel'])
+const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
@@ -377,19 +376,15 @@ function openWebUrl(e) {
 function resetData() {
   // 重置设置
   settingStore.reset()
-  removeDbStorageItem('firstUseMain')
-  removeDbStorageItem('firstUseSetting')
-  // 重新获取设置
-  getSetting()
-  Message.success({ content: '已重置，插件将在2秒后退出', duration: 2000 })
+  // removeDbStorageItem('firstUseMain')
+  // removeDbStorageItem('firstUseSetting')
+  // resetGuide()
+  Message.success({ content: '已重置', duration: 300 })
+  // 关闭弹窗并通知重置
   setTimeout(() => {
-    if (window.utools) {
-      window.utools.outPlugin()
-    } else {
-      emit('cancel')
-      closeSettingModal()
-    }
-  }, 2000)
+    closeSettingModal()
+    emit('reset')
+  }, 300)
 }
 
 // 暴露打开弹窗的函数，供父组件调用

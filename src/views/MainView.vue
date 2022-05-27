@@ -154,7 +154,12 @@
   </div>
 
   <!-- 设置弹窗 -->
-  <SettingModal ref="settingModalRef" @ok="settingOk" @cancel="settingCancel" />
+  <SettingModal
+    ref="settingModalRef"
+    @ok="settingOk"
+    @cancel="settingCancel"
+    @reset="resetHandler"
+  />
 </template>
 
 <script setup>
@@ -324,7 +329,6 @@ function firstGuide() {
     classes: 'guide_wrapper'
   }
   console.log('首页引导出现')
-  userInput.value = '首页引导出现...'
   showGuide(option, 'firstUseMain')
 }
 
@@ -356,13 +360,17 @@ const copyResult = throttle(async (val = resultObj.data.resultText) => {
   }, 300)
 }, 300)
 
+/** 重置后首页设置 */
+function resetHandler() {
+  clearInput()
+  readSetting()
+}
+
 onMounted(() => {
-  console.log('onMounted')
   window?.utools && utoolsInit()
   inputFocus()
   readSetting()
-  console.log('检查首页引导是否该出现')
-  userInput.value = '检查首页引导是否该出现'
+  console.log('检查首页引导是否该出现:', getDbStorageItem('firstUseMain'))
   !getDbStorageItem('firstUseMain') && firstGuide()
 })
 
