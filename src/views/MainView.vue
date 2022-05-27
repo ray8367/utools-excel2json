@@ -10,7 +10,7 @@
     >
       <icon-settings />
     </div>
-    <!-- 代码模式按钮 -->
+    <!-- 命名翻译模式按钮 -->
     <div
       class="icon code_icon"
       :class="{ active: codeMode }"
@@ -55,7 +55,7 @@
         <div
           class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px dark:border-[#3d3d3d]"
         >
-          <!-- 代码模式的select -->
+          <!-- 命名翻译模式的select -->
           <template v-if="codeMode">
             <a-select
               v-model="codeSelect"
@@ -180,7 +180,7 @@ const {
   getHomeFontSize: textFont,
   copyBtnBehavior
 } = storeToRefs(store)
-const codeMode = computed(() => store.codeMode) // 代码模式
+const codeMode = computed(() => store.codeMode) // 命名翻译模式
 const pageLoading = ref(false) // 是否正在翻译
 const userInput = ref('') // 输入的内容
 const resultObj = reactive({
@@ -251,7 +251,7 @@ function openSettingModal() {
 // 变更模式
 function changeMode() {
   Message.success({
-    content: `代码模式${codeMode.value ? '关闭' : '开启'}`,
+    content: `命名翻译模式${codeMode.value ? '关闭' : '开启'}`,
     duration: 1000
   })
   store.setCodeMode(!codeMode.value)
@@ -292,13 +292,13 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
   }
   pageLoading.value = false
 }
-// 切换代码模式的方式select
+// 切换命名翻译模式的方式select
 function changeCodeSelect() {
   const result = getCodeResult(resultObj.data.resultText, codeSelect.value)
   resultObj.data.resultText = result
 }
 
-// 获取代码模式的翻译结果
+// 获取命名翻译模式的翻译结果
 function getCodeResult(text = '', type = 'camelCase') {
   const changeCase = changeCaseArr.find(item => item.name === type)
   if (!text) return text

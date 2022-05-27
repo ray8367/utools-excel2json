@@ -76,14 +76,14 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="代码模式">
+              <a-form-item label="命名翻译模式">
                 <template #label>
                   <div class="space-x-4px">
-                    <span>代码模式</span>
+                    <span>命名翻译模式</span>
                     <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
-                        代码模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
+                        命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
                         <icon-code class="text-16px" />
                         图标进行快速切换，如果你看不懂这句话，那么请不要打开这个选项
                       </template>
@@ -207,7 +207,7 @@ const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 复制按钮的行为
-  codeMode: false, // 代码模式
+  codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
   token: undefined, // 百度

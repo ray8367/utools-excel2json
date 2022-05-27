@@ -102,7 +102,7 @@ export const userSettingStore = defineStore('settings', {
         youdaoSecret: keyConfig.youdao?.appkey, // 有道
         caiyunToken: keyConfig.caiyun?.token, // 彩云
         copyBtnBehavior, // 复制按钮行为 (open|close)
-        codeMode // 代码模式
+        codeMode // 命名翻译模式
       }
     }
   },
@@ -138,7 +138,7 @@ export const userSettingStore = defineStore('settings', {
       setDbStorageItem(COPY_BTN_BEHAVIOR, data)
     },
 
-    /** 设置代码模式 */
+    /** 设置命名翻译模式 */
     setCodeMode(data) {
       this.codeMode = data
       setDbStorageItem(CODE_MODE, data)
