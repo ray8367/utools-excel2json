@@ -17,6 +17,12 @@
   src: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-be392405-5b88-4143-ad6b-f155b106ab85/84b9b260-9c21-4b60-9a4c-e7a4312fc862.woff2') format('woff2');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: 'JetBrains Mono NL';
+  src: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-be392405-5b88-4143-ad6b-f155b106ab85/304c69e8-538c-45a1-ac16-185b2c019bc5.woff2') format('woff2');
+}
+
 html,
 body,
 .guide_wrapper {
@@ -29,7 +35,7 @@ body,
 }
 
 .font-mono {
-  font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+  font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
 }
 

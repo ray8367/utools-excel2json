@@ -533,41 +533,30 @@ watchEffect(() => {
     ::v-deep(.arco-textarea-focus) {
       border-color: #666666;
     }
-  }
-}
-
-// 上面的文本域样式
-.top_text {
-  ::v-deep(.arco-textarea) {
-    &::after {
-      display: block;
-      width: 100px;
-      height: 100px;
-      content: '123';
-      background-color: #336600;
+    ::v-deep(.arco-textarea) {
+      background-color: #242425a6;
     }
   }
 }
 
 // 下面的文本域样式
 .text_readonly {
-  background-color: transparent;
   position: relative;
   &.code_textarea {
     &::after {
-      content: '<code />';
+      content: '<code/>';
       position: absolute;
-      font-size: 120px;
+      font-size: 100px;
+      font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas,
+        'Liberation Mono', 'Courier New', monospace;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #f5f6f7;
-      // color: rgba($color: #000000, $alpha: 0.05);
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
-      // FIXIT:code背景会遮挡文字，夜间模式颜色
     }
   }
   ::v-deep(.arco-textarea-focus) {
@@ -580,7 +569,7 @@ watchEffect(() => {
     }
 
     &.code_textarea::after {
-      color: rgba($color: #000000, $alpha: 0.1);
+      color: rgba($color: #000000, $alpha: 0.22);
     }
   }
 }
