@@ -4,8 +4,6 @@
       :visible="modalVis"
       fullscreen
       title-align="start"
-      @ok="modalOk"
-      @cancel="modalCancel"
       @open="modalOpen"
       @close="modalClose"
     >
@@ -202,8 +200,8 @@
             </a-popconfirm>
           </div>
           <div class="space-x-12px">
-            <a-button>取消</a-button>
-            <a-button type="primary">确定</a-button>
+            <a-button @click="modalCancel">取消</a-button>
+            <a-button type="primary" @click="modalOk">确定</a-button>
           </div>
         </div>
       </template>
