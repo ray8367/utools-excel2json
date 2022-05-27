@@ -340,11 +340,27 @@ function readSetting() {
   }
 }
 
+/** 根据关键字切换命名翻译模式 */
+function changeCodeModeByKeyword(code) {
+  console.log('code:', code) // codeMode&xx
+  const reg = /^codeMode__/
+  if (reg.test(code)) {
+    console.log(11)
+    store.setCodeMode(true)
+    const modeName = code.split('__')[1]
+    console.log(modeName)
+    codeSelect.value = modeName
+  } else {
+    console.log(22)
+  }
+}
+
 // 初始化utools
 function utoolsInit() {
   window.utools.onPluginEnter(({ code, payload }) => {
     settingModalRef.value.closeSettingModal()
     userInput.value = code === 'anyword' ? payload : ''
+    changeCodeModeByKeyword(code)
   })
   window.utools.subInputBlur()
 }
