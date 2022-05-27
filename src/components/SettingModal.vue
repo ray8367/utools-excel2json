@@ -329,13 +329,18 @@ function modalClose() {
   clearGuide()
 }
 
-// 打开弹窗
-function openSettingModal() {
-  modalVis.value = true
+// 获取设置
+function getSetting() {
   const tempFormData = settingStore.getSetingFormData
   Object.keys(formData).forEach(key => {
     formData[key] = tempFormData[key]
   })
+}
+
+// 打开弹窗
+function openSettingModal() {
+  modalVis.value = true
+  getSetting()
 }
 
 // 关闭弹窗
@@ -347,6 +352,14 @@ function closeSettingModal() {
 function openWebUrl(e) {
   if (!window.utools) return
   window.utools.shellOpenExternal(e.target.getAttribute('href'))
+}
+
+/** 重置设置 */
+function resetHandler() {
+  // 确认重置调用
+  settingStore.reset()
+  // 重新获取设置
+  getSetting()
 }
 
 // 暴露打开弹窗的函数，供父组件调用

@@ -2,7 +2,11 @@
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 
-import { getDbStorageItem, setDbStorageItem } from '@/utils/storage'
+import {
+  getDbStorageItem,
+  setDbStorageItem,
+  removeDbStorageItem
+} from '@/utils/storage'
 import { apiOptions } from '@/assets/translateApiOption'
 
 const KEY_SETTING = 'keyConfig'
@@ -12,58 +16,62 @@ const FONT_SIZE = 'fontSize'
 const COPY_BTN_BEHAVIOR = 'copyBtnBehavior'
 const CODE_MODE = 'codeMode'
 
-export const userSettingStore = defineStore('settings', {
-  state: () => {
-    /** 获取默认的首页api */
-    function getDefaultHomeApi() {
-      return apiOptions.slice(0, 4).map(i => i.value)
-    }
+/** 获取初始化初始值 */
+function getInitState() {
+  /** 获取默认的首页api */
+  console.log('获取初始化初始值')
+  const getDefaultHomeApi = () => {
+    return apiOptions.slice(0, 4).map(i => i.value)
+  }
 
-    function initHomeOptionState() {
-      const strData = getDbStorageItem(HOME_OPTION)
-      if (strData) {
-        try {
-          return JSON.parse(strData)
-        } catch (error) {
-          return getDefaultHomeApi()
-        }
-      } else {
-        return getDefaultHomeApi()
-      }
-    }
-
-    function initDefaultApiState() {
-      return getDbStorageItem(DEFAULT_API) || getDefaultHomeApi()[0]
-    }
-
-    function initKeyConfigState() {
-      const strData = getDbStorageItem(KEY_SETTING) || '{}'
+  const initHomeOptionState = () => {
+    const strData = getDbStorageItem(HOME_OPTION)
+    if (strData) {
       try {
         return JSON.parse(strData)
       } catch (error) {
-        return {}
+        return getDefaultHomeApi()
       }
+    } else {
+      return getDefaultHomeApi()
     }
+  }
 
-    function initFontSizeState() {
-      const fontSize = getDbStorageItem(FONT_SIZE) || 16
-      return Number.parseInt(fontSize)
-    }
+  const initDefaultApiState = () => {
+    return getDbStorageItem(DEFAULT_API) || getDefaultHomeApi()[0]
+  }
 
-    function getStorageBoolean(key, defaultState) {
-      const value = getDbStorageItem(key) || defaultState
-      return value === 'true' || value === true ? true : false
+  const initKeyConfigState = () => {
+    const strData = getDbStorageItem(KEY_SETTING) || '{}'
+    try {
+      return JSON.parse(strData)
+    } catch (error) {
+      return {}
     }
+  }
 
-    return {
-      homeOption: initHomeOptionState(),
-      defaultApi: initDefaultApiState(),
-      keyConfig: initKeyConfigState(),
-      fontSize: initFontSizeState(),
-      copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close',
-      codeMode: getStorageBoolean(CODE_MODE, false)
-    }
-  },
+  const initFontSizeState = () => {
+    const fontSize = getDbStorageItem(FONT_SIZE) || 16
+    return Number.parseInt(fontSize)
+  }
+
+  const getStorageBoolean = (key, defaultState) => {
+    const value = getDbStorageItem(key) || defaultState
+    return value === 'true' || value === true ? true : false
+  }
+
+  return {
+    homeOption: initHomeOptionState(),
+    defaultApi: initDefaultApiState(),
+    keyConfig: initKeyConfigState(),
+    fontSize: initFontSizeState(),
+    copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close',
+    codeMode: getStorageBoolean(CODE_MODE, false)
+  }
+}
+
+export const userSettingStore = defineStore('settings', {
+  state: () => getInitState(),
 
   getters: {
     /** 获取首页api选择 */
@@ -142,6 +150,23 @@ export const userSettingStore = defineStore('settings', {
     setCodeMode(data) {
       this.codeMode = data
       setDbStorageItem(CODE_MODE, data)
+    },
+
+    /** 重置设置 */
+    reset() {
+      const resetKeys = [
+        KEY_SETTING,
+        HOME_OPTION,
+        DEFAULT_API,
+        FONT_SIZE,
+        COPY_BTN_BEHAVIOR,
+        CODE_MODE
+      ]
+      resetKeys.forEach(key => {
+        removeDbStorageItem(key)
+      })
+
+      this.$reset()
     },
 
     /**
