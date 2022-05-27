@@ -127,7 +127,7 @@
             <div
               v-else
               class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
-              :class="[codeMode && ['code_textarea', 'font-mono']]"
+              :class="[codeMode && ['code_textarea', 'code_font-family']]"
             >
               <a-textarea
                 v-model="resultObj.data.resultText"
