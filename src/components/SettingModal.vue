@@ -54,6 +54,19 @@
             </a-col>
             <a-col :span="18">
               <a-form-item label="复制按钮行为">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>复制按钮行为</span>
+                    <a-popover position="right">
+                      <icon-question-circle />
+                      <template #content>
+                        用于指定点击“复制结果”按钮后，是否自动隐藏插件，也可以使用<br />
+                        Ctrl+Shift+C / Command+Shift+C<br />
+                        进行快捷键复制
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
                 <a-radio-group v-model="formData.copyBtnBehavior">
                   <a-radio value="open">仅复制</a-radio>
                   <a-radio value="close">
@@ -67,7 +80,7 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>代码模式</span>
-                    <a-popover>
+                    <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
                         代码模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的

@@ -250,6 +250,10 @@ function openSettingModal() {
 
 // 变更模式
 function changeMode() {
+  Message.success({
+    content: `代码模式${codeMode.value ? '关闭' : '开启'}`,
+    duration: 1000
+  })
   store.setCodeMode(!codeMode.value)
   setTimeout(() => {
     startTranslation()
@@ -344,7 +348,7 @@ function utoolsInit() {
 // 复制结果
 const copyResult = throttle(async (val = resultObj.data.resultText) => {
   await copy(val)
-  Message.success('复制成功')
+  Message.success({ content: '复制成功', duration: 2500 })
   setTimeout(() => {
     if (copyBtnBehavior.value === 'close' && window.utools) {
       window.utools.hideMainWindow()
