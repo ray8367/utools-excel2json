@@ -186,6 +186,27 @@
           </a-row>
         </a-form>
       </div>
+      <template #footer>
+        <div class="flex justify-between">
+          <div>
+            <a-popconfirm
+              position="tl"
+              content-class="popconfirm_wrapper"
+              type="warning"
+              content="确定要重置本插件的数据吗？重置可以解决大部分问题，但在此之前请备份好相关服务的信息哦~"
+              ok-text="取消"
+              cancel-text="确定"
+              @cancel="resetData"
+            >
+              <a-button type="outline" status="danger">重置插件数据</a-button>
+            </a-popconfirm>
+          </div>
+          <div class="space-x-12px">
+            <a-button>取消</a-button>
+            <a-button type="primary">确定</a-button>
+          </div>
+        </div>
+      </template>
     </a-modal>
   </div>
 </template>
@@ -309,7 +330,6 @@ function modalOpen() {
 }
 
 // 首次提示链接位置
-
 function firstGuide() {
   const option = {
     id: 'firstUseSetting',
@@ -347,6 +367,12 @@ function closeSettingModal() {
 function openWebUrl(e) {
   if (!window.utools) return
   window.utools.shellOpenExternal(e.target.getAttribute('href'))
+}
+
+// 重置数据
+function resetData() {
+  Message.success({ content: '已重置，插件将在2秒后退出', duration: 2000 })
+  setTimeout(() => {}, 2000)
 }
 
 // 暴露打开弹窗的函数，供父组件调用

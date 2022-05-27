@@ -472,8 +472,8 @@ const shouldShowCopyBtn = computed(() => {
 
 // 监听复制快捷键
 watchEffect(() => {
-  const WindowsCopyKeys = keys['ctrl+shift+x']
-  const MacCopyKeys = keys['command+shift+x']
+  const WindowsCopyKeys = keys['ctrl+shift+c']
+  const MacCopyKeys = keys['command+shift+c']
   if ((WindowsCopyKeys.value || MacCopyKeys.value) && shouldShowCopyBtn.value) {
     copyResult()
   }
