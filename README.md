@@ -53,7 +53,9 @@
 
 感谢所有已经为易翻插件做出贡献的人！
 
-![](doc/贡献者.png)  
+[Lainbo (lainbo) - Gitee.com](https://gitee.com/lainbo)
+
+[Milo (Milo_admin) - Gitee.com](https://gitee.com/Milo_admin)
 
 
 ## 开发说明
