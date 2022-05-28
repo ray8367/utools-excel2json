@@ -35,6 +35,23 @@
 |中文-繁体|✅|✅|✅|✅|✅||
 |文言文|✅||||||
 
+## 插件截图
+![](doc/image_rU-rkEiVIi.png)
+
+![](doc/image_-afiQ5AAtJ.png)
+
+![](doc/image_lYvUiy-r5T.png)
+
+![](doc/image_tAmnG_v9yK.png)
+
+![](doc/image_o7cqFpllbF.png)
+
+
+## 贡献者
+感谢所有已经为易翻插件做出贡献的人！
+![](doc/贡献者.png)
+
+
 ## 开发说明
 
 ### 安装依赖
