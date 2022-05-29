@@ -327,7 +327,7 @@ function firstGuide() {
     },
     classes: 'guide_wrapper'
   }
-  console.log('首页引导出现')
+
   showGuide(option, 'firstUseMain')
 }
 
@@ -341,16 +341,12 @@ function readSetting() {
 
 /** 根据关键字切换命名翻译模式 */
 function changeCodeModeByKeyword(code) {
-  console.log('code:', code) // codeMode&xx
+  // codeMode&xx
   const reg = /^codeMode__/
   if (reg.test(code)) {
-    console.log(11)
     store.setCodeMode(true)
     const modeName = code.split('__')[1]
-    console.log(modeName)
     codeSelect.value = modeName
-  } else {
-    console.log(22)
   }
 }
 
@@ -385,7 +381,7 @@ onMounted(() => {
   window?.utools && utoolsInit()
   inputFocus()
   readSetting()
-  console.log('检查首页引导是否该出现:', getDbStorageItem('firstUseMain'))
+
   !getDbStorageItem('firstUseMain') && firstGuide()
 })
 
