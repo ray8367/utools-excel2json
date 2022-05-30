@@ -36,17 +36,32 @@
 |中文-繁体|✅|✅|✅|✅|✅||
 |文言文|✅||||||
 
+## 代码模式快捷键
+
+通过以下快捷键可以直接进入命名翻译模式，帮助你快速命名
+
+1. mmxt（“命名小驼”的首字母）：小驼峰模式，如 "getUserInformation"
+2. mmdt（“命名大驼”的首字母）：大驼峰模式，如 "GetUserInformation"
+3. mmxh（“命名下划”的首字母）：下划线模式，如 "get_user_information"
+4. mmzhx（“命名中划小”的首字母）：中划线小写模式，如 "get-user-information"
+5. mmzhd（“命名中划大”的首字母）：中划线大写模式，如 "Get-User-Information"
+6. mmfcx（“命名分词小”的首字母）：分词小写模式，如 "get user information"
+7. mmfcd（“命名分词大”的首字母）：分词大写模式，如 "Get User Information"
+8. mmdx（“命名对象”的首字母）：对象属性模式，如 "get.user.information"
+9. mmwj（“命名文件”的首字母）：文件路径模式，如 "get/user/information"
+10. mmcl（“命名常量”的首字母）：常量模式，如 "GET_USER_INFORMATION"
+
 ## 插件截图
 
-![](doc/image_rU-rkEiVIi.png) 
+![](doc/1.png) 
 
-![](doc/image_-afiQ5AAtJ.png) 
+![](doc/2.png) 
 
-![](doc/image_lYvUiy-r5T.png) 
+![](doc/3.png) 
 
-![](doc/image_tAmnG_v9yK.png) 
+![](doc/4.png) 
 
-![](doc/image_o7cqFpllbF.png) 
+![](doc/5.png) 
 
 
 ## 贡献者
