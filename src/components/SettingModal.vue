@@ -5,7 +5,7 @@
       fullscreen
       title-align="start"
       @open="modalOpen"
-      @close="modalCancel"
+      @cancel="modalCancel"
     >
       <template #title> 设置 </template>
       <div>
