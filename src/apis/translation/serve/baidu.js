@@ -6,57 +6,6 @@ import md5 from 'crypto-js/md5'
 import axios from 'axios'
 import { toResultData } from '../common'
 
-function generateReqKey(config) {
-  const { method, url } = config
-  return [method, url].join('&')
-}
-
-const pendingRequest = new Map()
-// 把当前请求信息添加到pendingRequest对象中
-function addPendingRequest(config) {
-  const requestKey = generateReqKey(config)
-  config.cancelToken =
-    config.cancelToken ||
-    new axios.CancelToken(cancel => {
-      if (!pendingRequest.has(requestKey)) {
-        pendingRequest.set(requestKey, cancel)
-      }
-    })
-}
-
-// 检查是否存在重复请求，若存在则取消已发的请求
-function removePendingRequest(config) {
-  const requestKey = generateReqKey(config)
-  if (pendingRequest.has(requestKey)) {
-    // console.log('从pendingRequest对象中移除请求:', requestKey)
-    const cancelToken = pendingRequest.get(requestKey)
-    cancelToken('cancel')
-    pendingRequest.delete(requestKey)
-  }
-}
-
-axios.interceptors.request.use(
-  function (config) {
-    removePendingRequest(config)
-    addPendingRequest(config)
-    return config
-  },
-  error => {
-    return Promise.reject(error)
-  }
-)
-
-axios.interceptors.response.use(
-  response => {
-    removePendingRequest(response.config) // 从pendingRequest对象中移除请求
-    return response
-  },
-  error => {
-    removePendingRequest(error.config || {}) // 从pendingRequest对象中移除请求
-    return Promise.reject(error)
-  }
-)
-
 const errors = {
   52001: '请求超时，请重试',
   52002: '系统错误，请重试',
@@ -73,6 +22,8 @@ const errors = {
   58002: '服务当前已关闭，请前往管理控制台开启服务',
   90107: '认证未通过或未生效，请前往我的认证查看认证进度'
 }
+
+let isCancel = false
 
 /**
  * 通用翻译
@@ -98,9 +49,21 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
   }
 
   try {
+    /** 使用AbortController来取消请求 */
+    const controller = new AbortController()
+    let signal = controller.signal
+
+    if (isCancel) {
+      console.log('取消请求:')
+      controller.abort() // 不支持 message 参数
+    }
+    isCancel = true
     const res = await axios.get(url, {
-      params
+      params,
+      signal
     })
+    isCancel = false
+
     const { error_code, error_msg, trans_result } = res.data
     let result
     if (error_code) {
@@ -122,7 +85,10 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
     }
     return result
   } catch (err) {
-    if (err.message === 'cancel') {
+    isCancel = false
+    console.log('err:', err)
+    // if (err.message === 'cancel') {
+    if (err.code === 'ERR_CANCELED') {
       return toResultData(204)
     } else {
       return toResultData(500)

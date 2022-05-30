@@ -45,8 +45,6 @@ export async function translationCommon(tag, options) {
   result = await fn({ q, from, to, keyConfig })
   if (result.code === 503) {
     // 访问频率受限，再次发起翻译
-    // console.log(q, '== 访问频率受限，再次发起翻译')
-    // result = await fn({ q, from, to, keyConfig })
     return await translationCommon(tag, options)
   }
 
