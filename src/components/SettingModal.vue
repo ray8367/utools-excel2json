@@ -58,18 +58,34 @@
                     <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
-                        用于指定点击“复制结果”按钮后，是否自动隐藏插件，也可以使用<br />
-                        Ctrl+Shift+C / Command+Shift+C<br />
-                        进行快捷键复制
+                        <p>
+                          用于指定点击“复制结果”按钮 或
+                          快捷键复制后，是否自动隐藏插件。
+                        </p>
+
+                        <p>
+                          如果开启隐藏并输入，请务必保证进入插件前的电脑光标位置，否则会因无法知晓你要输入到哪里，造成功能失效。
+                        </p>
+
+                        <a-divider class="my-8px" />
+
+                        <p class="font-bold">注意</p>
+
+                        <ul class="list-decimal pl-16px">
+                          <li>若插件被分离，则不会隐藏</li>
+
+                          <li>
+                            Ctrl+Shift+C / Command+Shift+C 可进行快捷键复制
+                          </li>
+                        </ul>
                       </template>
                     </a-popover>
                   </div>
                 </template>
                 <a-radio-group v-model="formData.copyBtnBehavior">
                   <a-radio value="open">仅复制</a-radio>
-                  <a-radio value="close">
-                    复制并隐藏插件（若插件被分离，则不会隐藏）
-                  </a-radio>
+                  <a-radio value="close"> 复制并隐藏插件 </a-radio>
+                  <a-radio value="closeInput"> 复制隐藏并输入 </a-radio>
                 </a-radio-group>
               </a-form-item>
             </a-col>
@@ -344,6 +360,7 @@ function firstGuide() {
 
 // 关闭设置弹框回调
 function modalClose() {
+  console.log('关闭设置弹框回调')
   clearGuide()
 }
 

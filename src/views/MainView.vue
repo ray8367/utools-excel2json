@@ -364,15 +364,20 @@ function utoolsInit() {
 const copyResult = throttle(async (val = resultObj.data.resultText) => {
   await copy(val)
   Message.success({ content: '复制成功', duration: 2500 })
-  setTimeout(() => {
-    if (copyBtnBehavior.value === 'close' && window.utools) {
-      window.utools.hideMainWindow()
-      if (codeMode.value) {
-        // 命名翻译模式自动粘贴
-        paste()
+  // utools处理
+  if (window.utools) {
+    const behavior = copyBtnBehavior.value
+    setTimeout(() => {
+      if (behavior === 'close' || behavior === 'closeInput') {
+        // 自动关闭
+        window.utools.hideMainWindow()
+        if (behavior === 'closeInput') {
+          // 自动输入
+          paste()
+        }
       }
-    }
-  }, 300)
+    }, 300)
+  }
 }, 300)
 
 // 粘贴
