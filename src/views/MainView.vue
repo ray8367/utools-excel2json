@@ -141,7 +141,7 @@
                   class="absolute bottom-10px left-1/2 transform -translate-x-1/2 z-1"
                 >
                   <ColorfulBtn @click="copyResult()">
-                    <icon-copy /> 复制结果
+                    <icon-copy /> {{ copyBtnText }}
                   </ColorfulBtn>
                 </div>
               </transition>
@@ -220,6 +220,16 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
+
+// 动态返回复制按钮文字
+const copyBtnTextMap = new Map([
+  ['open', '复制结果'],
+  ['close', '复制后隐藏'],
+  ['closeInput', '复制后输入']
+])
+const copyBtnText = computed(() => {
+  return copyBtnTextMap.get(copyBtnBehavior.value) || '复制结果'
+})
 
 // 清空输入框
 function clearInput() {
