@@ -65,7 +65,7 @@ function getInitState() {
     defaultApi: initDefaultApiState(),
     keyConfig: initKeyConfigState(),
     fontSize: initFontSizeState(),
-    copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'close',
+    copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'open',
     codeMode: getStorageBoolean(CODE_MODE, false)
   }
 }
