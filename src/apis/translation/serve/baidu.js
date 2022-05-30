@@ -7,8 +7,8 @@ import axios from 'axios'
 import { toResultData } from '../common'
 
 const errors = {
-  52001: '请求超时，请重试',
-  52002: '系统错误，请重试',
+  // 52001: '请求超时，请重试',
+  // 52002: '系统错误，请重试',
   52003: '未授权用户，请检查appid是否正确或者服务是否开通',
   54000: '必填参数为空，请检查是否少传参数',
   54001: '签名错误，请检查您的签名生成方法',
@@ -64,11 +64,11 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
     })
     isCancel = false
 
-    const { error_code, error_msg, trans_result } = res.data
+    const { error_code, trans_result } = res.data
     let result
     if (error_code) {
       // 翻译失败
-      result = toResultData(500, null, errors[error_code] || error_msg)
+      result = toResultData(500, null, errors[error_code])
 
       if (error_code === '54003') {
         // 访问频率受限，返回503
