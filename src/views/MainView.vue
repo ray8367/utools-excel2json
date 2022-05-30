@@ -367,9 +367,27 @@ const copyResult = throttle(async (val = resultObj.data.resultText) => {
   setTimeout(() => {
     if (copyBtnBehavior.value === 'close' && window.utools) {
       window.utools.hideMainWindow()
+      if (codeMode.value) {
+        // 命名翻译模式自动粘贴
+        paste()
+      }
     }
   }, 300)
 }, 300)
+
+// 粘贴
+function paste() {
+  const utools = window.utools
+  if (utools.isWindows()) {
+    utools.simulateKeyboardTap('v', 'ctrl')
+  }
+  if (utools.isMacOs()) {
+    utools.simulateKeyboardTap('v', 'command')
+  }
+  if (utools.isLinux()) {
+    utools.simulateKeyboardTap('v', 'ctrl')
+  }
+}
 
 /** 重置后首页设置 */
 function resetHandler() {
