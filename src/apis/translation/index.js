@@ -4,7 +4,9 @@ import { languageCorrectionByTag } from '@/utils/language'
 /**
  * 翻译
  * @param {String} tag 翻译标识
- * @param {Object} options 参数
+ * @param {String} options.q 请求翻译query(UTF-8编码)
+ * @param {String} options.from 翻译源语言(可设置为auto)
+ * @param {String} options.to 翻译目标语言 (可设置为auto)
  */
 export async function translationCommon(tag, options) {
   const { q, isRefresh } = options
@@ -43,10 +45,12 @@ export async function translationCommon(tag, options) {
   result = await fn({ q, from, to, keyConfig })
   if (result.code === 503) {
     // 访问频率受限，再次发起翻译
-    result = await fn({ q, from, to, keyConfig })
+    // console.log(q, '== 访问频率受限，再次发起翻译')
+    // result = await fn({ q, from, to, keyConfig })
+    return await translationCommon(tag, options)
   }
-  result.result = result
 
+  result.result = result
   // last.optionsStr = optionsStr
   return result
 }

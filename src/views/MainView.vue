@@ -389,7 +389,8 @@ onMounted(() => {
 watch(
   userInput,
   debounce(function () {
-    !pageLoading.value && startTranslation()
+    // !pageLoading.value && startTranslation()
+    startTranslation()
   }, 300)
 )
 

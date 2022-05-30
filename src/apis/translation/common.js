@@ -46,7 +46,7 @@ export function getUseFnByTag(tag) {
 
 /**
  * 返回信息对象
- * @param {Number} code[200,304,503,500,401,400,403] 状态码
+ * @param {Number} code[200,304,503,500,401,400,403,204] 状态码
  * @param {String} data 翻译返回值信息
  * @param {String} customMsg 自定义信息值
  * @returns
@@ -55,17 +55,22 @@ export function toResultData(code, data, customMsg) {
   const codeOptions = {
     200: '成功',
     304: '成功(上次返回结果)',
-    503: '访问频率受限',
-    500: '访问接口出错',
+    503: '操作太快了，点击重试再试一次吧',
+    500: '出现了一些问题，如果你确定服务信息填写无误，点击重试再试一次吧',
     400: '参数信息不正确',
     401: '未配置密钥或密钥信息不完整',
-    403: '请使用utools来调用该接口'
+    403: '请使用utools来调用该接口',
+    204: '请求已取消'
   }
   data = data || {}
 
   let message = codeOptions[code]
   if (code !== 200 && code !== 304) {
+    // 翻译失败，将错误信息赋值给text
     message = `翻译失败：${customMsg || message}`
+    if (code === 204) {
+      message = ''
+    }
     data.text = message
   }
 
