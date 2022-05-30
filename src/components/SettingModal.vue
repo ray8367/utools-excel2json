@@ -5,7 +5,7 @@
       fullscreen
       title-align="start"
       @open="modalOpen"
-      @close="modalClose"
+      @close="modalCancel"
     >
       <template #title> 设置 </template>
       <div>
@@ -333,6 +333,8 @@ function modalOk() {
 
 // 点击弹框取消
 function modalCancel() {
+  console.log('关闭设置弹框回调')
+  clearGuide()
   emit('cancel')
   closeSettingModal()
 }
@@ -359,10 +361,10 @@ function firstGuide() {
 }
 
 // 关闭设置弹框回调
-function modalClose() {
-  console.log('关闭设置弹框回调')
-  clearGuide()
-}
+// function modalClose() {
+//   console.log('关闭设置弹框回调')
+//   clearGuide()
+// }
 
 // 获取设置
 function getSetting() {
