@@ -47,7 +47,9 @@
                   :max="20"
                   placeholder="请输入文本框字号（14 ~ 20）"
                   mode="button"
-                />
+                >
+                  <template #suffix> 像素 </template>
+                </a-input-number>
               </a-form-item>
             </a-col>
             <a-col :span="18">
@@ -58,14 +60,15 @@
                     <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
-                        <p>
-                          用于指定点击“复制结果”按钮 或
-                          快捷键复制后，是否自动隐藏插件。
-                        </p>
-
-                        <p>
-                          如果开启隐藏并输入，请务必保证进入插件前的电脑光标位置，否则会因无法知晓你要输入到哪里，造成功能失效。
-                        </p>
+                        <ul class="list-disc pl-16px">
+                          <li>
+                            用于指定点击“复制结果”按钮
+                            或快捷键复制后，是否自动隐藏插件。
+                          </li>
+                          <li>
+                            如果开启隐藏并输入，请务必保证进入插件前的电脑光标位置，否则会因无法知晓你要输入到哪里，造成功能失效。
+                          </li>
+                        </ul>
 
                         <a-divider class="my-8px" />
 
@@ -74,9 +77,7 @@
                         <ul class="list-decimal pl-16px">
                           <li>若插件被分离，则不会隐藏</li>
 
-                          <li>
-                            Ctrl+Shift+C / Command+Shift+C 可进行快捷键复制
-                          </li>
+                          <li>{{ calcShortcutKey() + ' ' }}可进行快捷键复制</li>
                         </ul>
                       </template>
                     </a-popover>
@@ -97,9 +98,16 @@
                     <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
-                        命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
-                        <icon-code class="text-16px" />
-                        图标进行快速切换，如果你看不懂这句话，那么请不要打开这个选项
+                        <p>
+                          命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
+                          <icon-code class="text-16px" />
+                          图标进行快速切换。
+                        </p>
+                        <p class="font-bold text-red-500">
+                          如果你看不懂这句话，那么请不要打开这个选项，也请保持首页左下角的
+                          <icon-code class="text-16px" />
+                          按钮为灰色状态，以免影响使用！
+                        </p>
                       </template>
                     </a-popover>
                   </div>
@@ -329,6 +337,17 @@ function modalOk() {
   Message.success({ content: '设置成功', duration: 1000 })
   emit('ok')
   closeSettingModal()
+}
+
+// 动态快捷键文案
+function calcShortcutKey() {
+  if (!window.utools) {
+    return 'Ctrl+Shift+C / Command+Shift+C'
+  } else if (window.utools.isMacOs()) {
+    return 'Command+Shift+C'
+  } else {
+    return 'Ctrl+Shift+C'
+  }
 }
 
 // 点击弹框取消
