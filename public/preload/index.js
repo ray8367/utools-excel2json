@@ -1,4 +1,4 @@
-/**涉及node业务 */
+/** 涉及node业务 */
 
 const tencent = require('./tencentcloudApi')
 const google = require('./googleTranslateApi')

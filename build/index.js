@@ -6,7 +6,7 @@ console.time('处理 plugin.json')
 const filePath = path.join(__dirname, '../dist/plugin.json')
 const json = fs.readFileSync(filePath, 'utf8')
 const data = JSON.parse(json)
-data.preload = './preload/dist/index.js'
+// data.preload = './preload/dist/index.js'
 delete data['development']
 
 fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
