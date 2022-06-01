@@ -18,11 +18,11 @@
     {
       "code": "anyword",
       "label": "易翻翻译",
-      "explain": "可能是utools上第2好用的翻译插件，支持多种语言互翻",
+      "explain": "翻译当前文本",
       "cmds": [
         {
           "type": "over",
-          "label": "易翻翻译：翻译当前文本"
+          "label": "翻译"
         }
       ]
     },
