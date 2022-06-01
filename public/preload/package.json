@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.11",
-    "tencentcloud-sdk-nodejs": "^4.0.349",
     "got": "11"
   },
   "keywords": [],

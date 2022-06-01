@@ -1,6 +1,5 @@
 /** 涉及node业务 */
 
-const tencent = require('./tencentcloudApi')
 const google = require('./googleTranslateApi')
 const ali = require('./alicloudApi')
 
@@ -13,11 +12,6 @@ process.once('loaded', () => {
 
 // 提供给web的方法
 window.servers = {
-  // 腾讯翻译
-  tencentTextTranslate: (credential, params) => {
-    return tencent.textTranslate(credential, params)
-  },
-
   // 谷歌翻译
   googleTextTranslate: params => {
     try {
