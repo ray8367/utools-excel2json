@@ -3,6 +3,11 @@
  * https://help.aliyun.com/document_detail/97592.html
  *  */
 
+import md5 from 'crypto-js/md5'
+import Base64 from 'crypto-js/enc-base64'
+import hmacSHA1 from 'crypto-js/hmac-sha1'
+import { nanoid } from 'nanoid'
+import axios from 'axios'
 import google from '../serve/google'
 import { toResultData } from '../common'
 
@@ -13,42 +18,105 @@ import { toResultData } from '../common'
  * @param {String} options.to 翻译目标语言(不可设置为auto)
  * @param {Object} options.keyConfig key配置
  */
-export default function ({ q, from, to, keyConfig }) {
+export default async function ({ q, from, to, keyConfig }) {
+  const date = new Date().toGMTString()
+
   var params = {
+    Action: 'TranslateGeneral',
     SourceText: q,
     SourceLanguage: from,
     TargetLanguage: to,
     FormatType: 'text',
     Scene: 'general'
   }
+  const bodyString = JSON.stringify(params)
 
-  if (window.servers) {
-    return window.servers
-      .aliTextTranslate(keyConfig, params)
-      .then(res => {
-        const { Data } = res
-        return toResultData(200, { text: Data.Translated })
-      })
-      .catch(async err => {
-        const errQ = err.toString()
-        // 翻译报错
-        let { code: gCode, text: gText } = await google({
-          q: errQ,
-          from: 'auto',
-          to: 'zh-CN'
-        })
-        return toResultData(500, null, gCode === 200 && gText ? gText : errQ)
-      })
-  } else {
-    return toResultData(503)
+  const { bodyMd5, uuid, authHeader } = toSign(date, bodyString, keyConfig)
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json;chrset=utf-8',
+    'Content-MD5': bodyMd5,
+    'Content-Length': bodyString.length,
+    'x-acs-Date': date,
+    'x-acs-Host': 'mt.cn-hangzhou.aliyuncs.com',
+    Authorization: authHeader,
+    'x-acs-signature-nonce': uuid,
+    'x-acs-signature-method': 'HMAC-SHA1',
+    'x-acs-version': '2019-01-02'
   }
+
+  console.log('headers:', headers)
+
+  const url = import.meta.env.VITE_ALI_BASEURL + '/api/translate/web/ecommerce'
+
+  try {
+    const res = await axios.post(url, params, { headers })
+    console.log('res:', res)
+  } catch (err) {
+    console.error(err)
+    return toResultData(500)
+  }
+
+  // if (window.servers) {
+  //   return window.servers
+  //     .aliTextTranslate(keyConfig, params)
+  //     .then(res => {
+  //       const { Data } = res
+  //       return toResultData(200, { text: Data.Translated })
+  //     })
+  //     .catch(async err => {
+  //       const errQ = err.toString()
+  //       // 翻译报错
+  //       let { code: gCode, text: gText } = await google({
+  //         q: errQ,
+  //         from: 'auto',
+  //         to: 'zh-CN'
+  //       })
+  //       return toResultData(500, null, gCode === 200 && gText ? gText : errQ)
+  //     })
+  // } else {
+  //   return toResultData(403)
+  // }
+  return toResultData(200, { text: '逗你玩~' })
 }
 
 /** 签名 */
-// function toSign() {
-//   /** 1. 计算body的MD5值，然后再对其进行base64编码，编码后的值设置到 Header中。 */
-//   /** 2. 使用请求中的Header参数构造规范化的Header字符串 */
-//   /** 3. CanonicalizedResource 表示客户想要访问资源的规范描述，需要将子资源和qurey一同按照字典序，从小到大排列并以 & 为分隔符生成子资源字符串(?后的所有参数)，示例如下(alimt所有请求都不带参数)。*/
-//   /** 4. 将上两步构造的规范化字符串按照下面的规则构造成待签名的字符串。 */
-//   /** 5. 按照 RFC2104的定义，计算待签名字符串StringToSign的 HMAC 值，按照 Base64 编码规则把上面的 HMAC 值编码成字符串，并在前面加上AccessKeyId，即得到签名值（Authorization） */
-// }
+function toSign(date, bodyString, keyConfig) {
+  console.log('toSign()')
+  const { accessKeySecret, accessKeyId } = keyConfig
+
+  /** 1.对body做MD5+BASE64加密 */
+  const bodyMd5 = Base64.stringify(md5(bodyString))
+  console.log('bodyMd5:', bodyMd5)
+  const uuid = nanoid()
+  const stringToSign =
+    'POST' +
+    '\n' + // HTTP_Verb只支持POST
+    'application/json' +
+    '\n' + // Accept为application/json
+    bodyMd5 +
+    '\n' + // 第1步中计算出来的MD5值
+    'application/json;chrset=utf-8' +
+    '\n' + // Content-Type值为application/json;chrset=utf-8
+    date +
+    '\n' + // Date值为GMT时间
+    'x-acs-signature-method:HMAC-SHA1\n' +
+    'x-acs-signature-nonce:' +
+    uuid +
+    '\n' +
+    'x-acs-version:2019-01-02' +
+    '\n'
+  console.log('stringToSign:', stringToSign)
+
+  /** 2.计算 HMAC-SHA1 */
+  const signature = hmacSHA1(stringToSign, accessKeySecret).toString()
+  console.log('signature:', signature)
+
+  /** 3. 得到 authorization header */
+  const authHeader = 'acs ' + accessKeyId + ':' + signature
+  return {
+    bodyMd5,
+    uuid,
+    authHeader
+  }
+}
