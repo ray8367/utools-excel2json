@@ -40,7 +40,7 @@ export default function ({ q, from, to, keyConfig }) {
         return toResultData(500, null, gCode === 200 && gText ? gText : errQ)
       })
   } else {
-    return toResultData(503)
+    return toResultData(403)
   }
 }
 

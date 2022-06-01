@@ -10,7 +10,7 @@ import { languageCorrectionByTag } from '@/utils/language'
  */
 export async function translationCommon(tag, options) {
   const { q, isRefresh } = options
-  let result
+  // let last
   // 空值优化
   if (!q) {
     return toResultData(400)
@@ -42,13 +42,13 @@ export async function translationCommon(tag, options) {
     return toResultData(400)
   }
 
-  result = await fn({ q, from, to, keyConfig })
+  let result = await fn({ q, from, to, keyConfig })
   if (result.code === 503) {
     // 访问频率受限，再次发起翻译
     return await translationCommon(tag, options)
   }
 
-  result.result = result
+  // last.result = result
   // last.optionsStr = optionsStr
   return result
 }
