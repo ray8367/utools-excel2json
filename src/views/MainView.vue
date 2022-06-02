@@ -393,18 +393,11 @@ const copyResult = throttle(async (val = resultObj.data.resultText) => {
 // 粘贴
 function paste() {
   const utools = window.utools
-  if (utools.isWindows()) {
-    utools.simulateKeyboardTap('v', 'ctrl')
-  }
-  if (utools.isMacOs()) {
-    utools.simulateKeyboardTap('v', 'command')
-  }
-  if (utools.isLinux()) {
-    utools.simulateKeyboardTap('v', 'ctrl')
-  }
+  const key = utools.isMacOs() ? 'command' : 'ctrl'
+  utools.simulateKeyboardTap('v', key)
 }
 
-/** 重置后首页设置 */
+// 重置后首页设置
 function resetHandler() {
   clearInput()
   readSetting()
