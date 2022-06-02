@@ -23,7 +23,7 @@ window.servers = {
   },
 
   // 阿里翻译
-  aliTextTranslate: (credential, params) => {
-    return ali.textTranslate(credential, params)
+  aliTextTranslate: (params, credential) => {
+    return ali.textTranslate(params, credential)
   }
 }
