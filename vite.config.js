@@ -92,6 +92,12 @@ export default defineConfig({
         target: 'http://api.interpreter.caiyunai.com/v1/translator',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/caiyunApi/, '')
+      },
+      // 阿里翻译
+      '/aliApi': {
+        target: 'http://mt.cn-hangzhou.aliyuncs.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/aliApi/, '')
       }
     }
   }
