@@ -375,6 +375,7 @@ const copyResult = throttle(async (val = resultObj.data.resultText) => {
   await copy(val)
   Message.success({ content: '复制成功', duration: 2500 })
   // utools处理
+  // TODO:优化这一坨if
   if (window.utools) {
     const behavior = copyBtnBehavior.value
     setTimeout(() => {
