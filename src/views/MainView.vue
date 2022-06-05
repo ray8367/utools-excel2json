@@ -175,7 +175,7 @@ import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
 import { translationCommon } from '@/apis/translation/index.js'
 import { userSettingStore } from '@/store/userSetting'
-import { showGuide } from '@/utils/showGuide.js'
+import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
 const store = userSettingStore()
@@ -413,15 +413,14 @@ onMounted(() => {
 })
 
 // 监听用户输入，防抖翻译
-watch(
-  userInput,
-  debounce(function () {
-    // !pageLoading.value && startTranslation()
-    startTranslation()
-  }, 300)
-)
+watch(userInput, () => debounceStart())
 
-// 监听
+// 加了一层防抖的翻译
+const debounceStart = debounce(function () {
+  startTranslation()
+}, 300)
+
+// 监听401，自动弹引导层
 watch(
   () => resultObj.data.resultId,
   () => {
@@ -436,6 +435,7 @@ watch(
         },
         classes: 'guide_wrapper'
       }
+      clearGuide()
       showGuide(option, 'firstUseMain')
     }
   }
@@ -529,6 +529,23 @@ watchEffect(() => {
   if ((WindowsCopyKeys.value || MacCopyKeys.value) && shouldShowCopyBtn.value) {
     copyResult()
   }
+})
+
+// Tab键切换翻译方式
+onKeyStroke('Tab', e => e.preventDefault())
+watchEffect(() => {
+  const tabKeys = keys['tab']
+  if (!tabKeys.value) return
+  let currentIndex = translateApiOptions.value.findIndex(
+    i => i.value === currentTranslation.value
+  )
+  currentIndex += 1
+  currentIndex > translateApiOptions.value.length - 1 && (currentIndex = 0)
+  const nextApi = translateApiOptions.value[currentIndex]?.value
+  currentTranslation.value = nextApi
+  setTimeout(() => {
+    debounceStart()
+  }, 0)
 })
 </script>
 
