@@ -44,6 +44,7 @@ export default async function ({ q, from, to, keyConfig }) {
   const url = import.meta.env.VITE_HUOSHAN_BASEURL
 
   const query = 'Action=TranslateText&Version=2020-06-01'
+  // const bodyData = ''
   const bodyData = {
     TextList: [q],
     SourceLanguage: from,
@@ -91,15 +92,25 @@ function getCanonicalHeadersArr(headers) {
   return result
 }
 
+function iso8601(date) {
+  if (date === undefined) {
+    date = new Date()
+  }
+  return date.toISOString().replace(/\.\d{3}Z$/, 'Z')
+}
+
 /** 生成签名 */
 function toSign(query, bodyData, keyConfig) {
   const payload = JSON.stringify(bodyData)
+  // const payload = bodyData
   const { accessKeyId, secretAccessKey } = keyConfig
   const nowTime = dayjs().add('-8', 'h')
   const xDate = nowTime.format('YYYYMMDDTHHmmss[Z]')
+  // const xDate = iso8601().replace(/[:\-]|\.\d{3}/g, '')
   const date = xDate.slice(0, 8)
+  console.log('payload:', payload)
   const headers = {
-    'X-Host': 'open.volcengineapi.com',
+    // 'X-Host': 'open.volcengineapi.com',
     'Content-Type': 'application/json; charset=utf-8',
     'X-Content-Sha256': SHA256(payload).toString(encHex),
     'X-Date': xDate
