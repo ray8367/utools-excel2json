@@ -531,11 +531,15 @@ watchEffect(() => {
   }
 })
 
+// 设置弹窗的状态
+const settingActive = computed(() => {
+  return settingModalRef.value.modalVis
+})
+
 // Tab键切换翻译方式
-onKeyStroke('Tab', e => e.preventDefault())
-watchEffect(() => {
-  const tabKeys = keys['tab']
-  if (!tabKeys.value) return
+onKeyStroke('Tab', e => {
+  if (settingActive.value) return
+  e.preventDefault()
   let currentIndex = translateApiOptions.value.findIndex(
     i => i.value === currentTranslation.value
   )

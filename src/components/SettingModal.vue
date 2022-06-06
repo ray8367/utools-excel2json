@@ -352,7 +352,6 @@ function calcShortcutKey() {
 
 // 点击弹框取消
 function modalCancel() {
-  console.log('关闭设置弹框回调')
   clearGuide()
   emit('cancel')
   closeSettingModal()
@@ -381,7 +380,7 @@ function firstGuide() {
 
 // 关闭设置弹框回调
 // function modalClose() {
-//   console.log('关闭设置弹框回调')
+//
 //   clearGuide()
 // }
 
@@ -414,9 +413,6 @@ function openWebUrl(e) {
 function resetData() {
   // 重置设置
   settingStore.reset()
-  // removeDbStorageItem('firstUseMain')
-  // removeDbStorageItem('firstUseSetting')
-  // resetGuide()
   Message.success({ content: '已重置', duration: 300 })
   // 关闭弹窗并通知重置
   setTimeout(() => {
@@ -428,7 +424,8 @@ function resetData() {
 // 暴露打开弹窗的函数，供父组件调用
 defineExpose({
   openSettingModal,
-  closeSettingModal
+  closeSettingModal,
+  modalVis
 })
 </script>
 
