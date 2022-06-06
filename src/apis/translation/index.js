@@ -39,7 +39,7 @@ export async function translationCommon(tag, options) {
 
   const fn = getUseFnByTag(tag)
   if (!fn) {
-    return toResultData(400)
+    return toResultData(400, null, '这个功能还在建设中哦')
   }
 
   let result = await fn({ q, from, to, keyConfig })

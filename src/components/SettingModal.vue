@@ -205,6 +205,26 @@
                 />
               </a-form-item>
             </a-col>
+
+            <a-divider orientation="left">火山翻译</a-divider>
+            <a-col :span="18">
+              <a-form-item label="Access Key ID">
+                <a-input
+                  v-model.trim="formData.huoshanAccessKeyId"
+                  placeholder="请输入火山翻译Access Key ID"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="Secret Access Key">
+                <a-input-password
+                  v-model.trim="formData.huoshanSecretAccessKey"
+                  placeholder="请输入火山翻译Secret Access Key"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-col>
           </a-row>
         </a-form>
       </div>
@@ -326,6 +346,11 @@ function modalOk() {
 
     caiyun: {
       token: formData.caiyunToken
+    },
+
+    huoshan: {
+      accessKeyId: formData.huoshanAccessKeyId,
+      secretAccessKey: formData.huoshanSecretAccessKey
     }
   }
   settingStore.setHomeOption(formData.homeHasApi)

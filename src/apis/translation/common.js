@@ -41,7 +41,7 @@ const applys = {
 
 /** 根据tag获取翻译方法 */
 export function getUseFnByTag(tag) {
-  return applys?.[tag].fn
+  return applys?.[tag]?.fn
 }
 
 /**
