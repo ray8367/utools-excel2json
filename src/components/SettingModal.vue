@@ -160,7 +160,7 @@
               <a-form-item label="Secret Id">
                 <a-input
                   v-model.trim="formData.accessKeyId"
-                  placeholder="请输入阿里云Access Key ID"
+                  placeholder="请输入阿里云AccessKeyID"
                   allow-clear
                 />
               </a-form-item>
@@ -208,19 +208,19 @@
 
             <a-divider orientation="left">火山翻译</a-divider>
             <a-col :span="18">
-              <a-form-item label="Access Key ID">
+              <a-form-item label="AccessKeyID">
                 <a-input
                   v-model.trim="formData.huoshanAccessKeyId"
-                  placeholder="请输入火山翻译Access Key ID"
+                  placeholder="请输入火山翻译AccessKeyID"
                   allow-clear
                 />
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="Secret Access Key">
+              <a-form-item label="SecretAccessKey">
                 <a-input-password
                   v-model.trim="formData.huoshanSecretAccessKey"
-                  placeholder="请输入火山翻译Secret Access Key"
+                  placeholder="请输入火山翻译SecretAccessKey"
                   allow-clear
                 />
               </a-form-item>
