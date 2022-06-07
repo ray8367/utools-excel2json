@@ -280,7 +280,9 @@ const formData = reactive({
   accessKeySecret: undefined, // 阿里
   youdaoId: undefined, // 有道
   youdaoSecret: undefined, // 有道
-  caiyunToken: undefined // 彩云
+  caiyunToken: undefined, // 彩云
+  huoshanAccessKeyId: undefined, // 火山
+  huoshanSecretAccessKey: undefined // 火山
 })
 
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
