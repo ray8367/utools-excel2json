@@ -247,6 +247,8 @@ function settingOk() {
   nextTick(() => {
     // 重新读取设置
     readSetting()
+    // 输入框获取焦点
+    inputFocus()
     // 设置成功，刷新上一次翻译
     startTranslation(currentTranslation.value, true)
   })
@@ -269,6 +271,7 @@ function changeMode() {
     duration: 1000
   })
   store.setCodeMode(!codeMode.value)
+  inputFocus()
   setTimeout(() => {
     startTranslation()
   }, 0)
@@ -321,6 +324,7 @@ function getCodeResult(text = '', type = 'camelCase') {
 
 // 切换翻译的From和To
 function changeTranslateType() {
+  inputFocus()
   setTimeout(() => {
     startTranslation()
   }, 0)

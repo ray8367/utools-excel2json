@@ -29,14 +29,15 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
     var(--houdini-colorB) 100%
   );
   box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
-  transition: 300ms --houdini-colorA, 300ms --houdini-colorB, 200ms transform,
-    250ms box-shadow;
+  transition: 300ms --houdini-colorA, 300ms --houdini-colorB,
+    200ms transform linear, 250ms box-shadow;
   &:hover {
     --houdini-colorA: #eeeeee;
     --houdini-colorB: #fff;
   }
   &:active {
     box-shadow: 2px 2px 7px -2px #888, -5px -5px 12px #fff;
+    transform: scale(1.2);
   }
 
   @media (prefers-color-scheme: dark) {
