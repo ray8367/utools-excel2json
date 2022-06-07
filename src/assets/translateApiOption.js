@@ -22,5 +22,9 @@ export const apiOptions = [
   {
     label: '彩云小译',
     value: 'caiyun'
+  },
+  {
+    label: '火山翻译',
+    value: 'huoshan'
   }
 ]

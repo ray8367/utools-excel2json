@@ -98,6 +98,12 @@ export default defineConfig({
         target: 'http://mt.cn-hangzhou.aliyuncs.com',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/aliApi/, '')
+      },
+      // 火山翻译
+      '/huoshanApi': {
+        target: 'https://open.volcengineapi.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/huoshanApi/, '')
       }
     }
   }

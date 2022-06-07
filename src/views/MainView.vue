@@ -448,7 +448,8 @@ const apiNotSupport = {
   google: ['wyw'],
   ali: ['wyw'],
   youdao: ['wyw'],
-  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor']
+  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor'],
+  huoshan: ['wyw']
 }
 
 // 根据api动态变更选项的disabled属性

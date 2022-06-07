@@ -44,6 +44,16 @@ export const optionsData = {
     zh: 'zh',
     en: 'en',
     jp: 'ja'
+  },
+  huoshan: {
+    zh: 'zh',
+    en: 'en',
+    jp: 'ja',
+    ru: 'ru',
+    de: 'de',
+    fra: 'fr',
+    cht: 'zh-Hant',
+    kor: 'ko'
   }
 }
 

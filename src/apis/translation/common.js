@@ -4,6 +4,7 @@ import google from './serve/google'
 import youdao from './serve/youdao'
 import ali from './serve/ali'
 import caiyun from './serve/caiyun'
+import huoshan from './serve/huoshan'
 import { getKeyByTag } from '@/store/userSetting'
 
 const applys = {
@@ -36,12 +37,17 @@ const applys = {
     fn: caiyun,
     label: '彩云小译',
     keys: ['token']
+  },
+  huoshan: {
+    fn: huoshan,
+    label: '火山翻译',
+    keys: ['accessKeyId', 'secretAccessKey']
   }
 }
 
 /** 根据tag获取翻译方法 */
 export function getUseFnByTag(tag) {
-  return applys?.[tag].fn
+  return applys?.[tag]?.fn
 }
 
 /**

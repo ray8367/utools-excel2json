@@ -17,7 +17,7 @@ const COPY_BTN_BEHAVIOR = 'copyBtnBehavior'
 const CODE_MODE = 'codeMode'
 
 /** 获取初始化初始值 */
-function getInitState () {
+function getInitState() {
   /** 获取默认的首页api */
   const getDefaultHomeApi = () => {
     return apiOptions.slice(0, 4).map(i => i.value)
@@ -108,6 +108,8 @@ export const userSettingStore = defineStore('settings', {
         youdaoId: keyConfig.youdao?.appid, // 有道
         youdaoSecret: keyConfig.youdao?.appkey, // 有道
         caiyunToken: keyConfig.caiyun?.token, // 彩云
+        huoshanAccessKeyId: keyConfig.huoshan?.accessKeyId, // 火山
+        huoshanSecretAccessKey: keyConfig.huoshan?.secretAccessKey, // 火山
         copyBtnBehavior, // 复制按钮行为 (open|close)
         codeMode // 命名翻译模式
       }
@@ -116,43 +118,43 @@ export const userSettingStore = defineStore('settings', {
 
   actions: {
     /** 设置首页可见翻译 */
-    setHomeOption (data) {
+    setHomeOption(data) {
       this.homeOption = data
       setDbStorageItem(HOME_OPTION, JSON.stringify(data))
     },
 
     /** 设置默认翻译 */
-    setDefaultStorage (data) {
+    setDefaultStorage(data) {
       this.defaultApi = data
       setDbStorageItem(DEFAULT_API, data)
     },
 
     /** 设置密钥 */
-    setKeyConfig (data) {
+    setKeyConfig(data) {
       this.keyConfig = data
       setDbStorageItem(KEY_SETTING, JSON.stringify(data))
     },
 
     /** 设置字体大小 */
-    setFontSize (data) {
+    setFontSize(data) {
       this.fontSize = data
       setDbStorageItem(FONT_SIZE, data)
     },
 
     /** 设置复制行为 */
-    setCopyBtnBehavior (data) {
+    setCopyBtnBehavior(data) {
       this.copyBtnBehavior = data
       setDbStorageItem(COPY_BTN_BEHAVIOR, data)
     },
 
     /** 设置命名翻译模式 */
-    setCodeMode (data) {
+    setCodeMode(data) {
       this.codeMode = data
       setDbStorageItem(CODE_MODE, data)
     },
 
     /** 重置设置 */
-    reset () {
+    reset() {
       const resetKeys = [
         KEY_SETTING,
         HOME_OPTION,
@@ -172,13 +174,13 @@ export const userSettingStore = defineStore('settings', {
      * 获取指定密钥
      * @param {String} tag 第三方api标识
      */
-    getKeyByTag (tag) {
+    getKeyByTag(tag) {
       return this.keyConfig[tag] || {}
     }
   }
 })
 
-export function getKeyByTag (tag) {
+export function getKeyByTag(tag) {
   const settingStore = userSettingStore()
   const { keyConfig } = settingStore
   return keyConfig[tag] || {}
