@@ -88,9 +88,7 @@ const errors = {
  */
 export default async function ({ q, from, to, keyConfig }) {
   const url = import.meta.env.VITE_TENCENT_BASEURL
-  const nowTime = dayjs()
-  const timestamp = nowTime.unix().toString()
-  const date = nowTime.format('YYYY-MM-DD')
+
   const params = {
     SourceText: q,
     Source: from,
@@ -98,7 +96,7 @@ export default async function ({ q, from, to, keyConfig }) {
     ProjectId: 0
   }
 
-  const authorization = toSign(params, keyConfig, timestamp, date)
+  const { authorization, timestamp } = toSign(params, keyConfig)
   const headers = {
     'X-TC-Action': 'TextTranslate',
     'X-TC-Version': '2018-03-21',
@@ -108,12 +106,6 @@ export default async function ({ q, from, to, keyConfig }) {
     'Content-Type': 'application/json; charset=utf-8'
   }
 
-  console.log({
-    params,
-    authorization,
-    headers
-  })
-
   try {
     const res = await axios.post(url, params, { headers })
     const { TargetText, Error } = res.data?.Response
@@ -122,7 +114,6 @@ export default async function ({ q, from, to, keyConfig }) {
       // 翻译失败
       result = toResultData(500, null, errors[Error.Code])
     } else {
-      console.log('TargetText:', TargetText)
       result = toResultData(200, { text: TargetText })
     }
     return result
@@ -132,19 +123,30 @@ export default async function ({ q, from, to, keyConfig }) {
   }
 }
 
-/** 生成签名 */
-function toSign(params, keyConfig, timestamp, date) {
-  // console.log('toSign()')
+/** 根据时间戳(unix)获取UTC时间 */
+function getDateToTimestamp(timestamp) {
+  const date = new Date(timestamp * 1000)
+  const year = date.getUTCFullYear()
+  const month = ('0' + (date.getUTCMonth() + 1)).slice(-2)
+  const day = ('0' + date.getUTCDate()).slice(-2)
+  return `${year}-${month}-${day}`
+}
 
+/** 生成签名 */
+function toSign(params, keyConfig) {
+  // console.log('toSign()')
+  const timestamp = dayjs().unix().toString()
+  const date = getDateToTimestamp(timestamp)
   const payload = JSON.stringify(params)
   const { secretId, secretKey } = keyConfig
-  /** 1. 拼接规范请求串 */
+  const service = 'tmt'
+  const host = 'tmt.tencentcloudapi.com'
+  // /** 1. 拼接规范请求串 */
   // console.log('1. 拼接规范请求串 ')
   const HTTPRequestMethod = 'POST',
     CanonicalURI = '/',
     CanonicalQueryString = '',
-    CanonicalHeaders =
-      'content-type:application/json; charset=utf-8\nhost:tmt.tencentcloudapi.com\n',
+    CanonicalHeaders = `content-type:application/json; charset=utf-8\nhost:${host}\n`,
     SignedHeaders = 'content-type;host'
   // const HashedRequestPayload = SHA256(body).toString(encHex).toLowerCase()
   const HashedRequestPayload = SHA256(payload).toString(encHex).toLowerCase()
@@ -166,7 +168,7 @@ function toSign(params, keyConfig, timestamp, date) {
   // console.log('2. 拼接待签名字符串')
   const Algorithm = 'TC3-HMAC-SHA256'
   const RequestTimestamp = timestamp // 时间戳
-  const CredentialScope = `${date}/tmt/tc3_request` // 需与时间戳的日期保持一致
+  const CredentialScope = `${date}/${service}/tc3_request` // 需与时间戳的日期保持一致
   const HashedCanonicalRequest = SHA256(CanonicalRequest)
     .toString(encHex)
     .toLowerCase()
@@ -185,14 +187,14 @@ function toSign(params, keyConfig, timestamp, date) {
   // console.log(' 3. 计算签名')
 
   const SecretDate = hmacSHA256(date, 'TC3' + secretKey)
-  const SecretService = hmacSHA256('tmt', SecretDate)
+  const SecretService = hmacSHA256(service, SecretDate)
   const SecretSigning = hmacSHA256('tc3_request', SecretService)
   const Signature = hmacSHA256(StringToSign, SecretSigning).toString(encHex)
   // console.log('Signature:', Signature)
 
-  /** 4. 拼接 Authorization */
+  // /** 4. 拼接 Authorization */
   // console.log(' 拼接 Authorization')
-  const Authorization =
+  const authorization =
     Algorithm +
     ' ' +
     'Credential=' +
@@ -206,6 +208,6 @@ function toSign(params, keyConfig, timestamp, date) {
     'Signature=' +
     Signature
 
-  // console.log('Authorization:', Authorization)
-  return Authorization
+  // console.log('authorization:', authorization)
+  return { authorization, timestamp }
 }
