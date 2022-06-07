@@ -5,7 +5,6 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
-// import axios from 'axios'
 import { toResultData } from '../common'
 
 const errors = {
@@ -53,51 +52,54 @@ const errors = {
  * @param {Object} options.keyConfig key配置
  */
 export default async function ({ q, from, to, keyConfig }) {
-  const url = import.meta.env.VITE_HUOSHAN_BASEURL
+  if (window.utools) {
+    const url = import.meta.env.VITE_HUOSHAN_BASEURL
+    const query = 'Action=TranslateText&Version=2020-06-01'
 
-  const query = 'Action=TranslateText&Version=2020-06-01'
-  // const bodyData = ''
-  if (from === 'auto') {
-    from = ''
-  }
-  const bodyData = {
-    TextList: [q],
-    SourceLanguage: from,
-    TargetLanguage: to
-  }
-
-  const headers = toSign(query, bodyData, keyConfig)
-
-  try {
-    // const res = await axios.post(url + `?${query}`, bodyData, { headers })
-    const resData = await fetch(url + `?${query}`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(bodyData)
-    }).then(res => {
-      return res.json()
-    })
-    console.log('resData:', resData)
-    const { TranslationList } = resData
-    const ResponseMetadata =
-      resData.ResponseMetadata || resData.ResponseMetaData
-    let result
-    const apiError = ResponseMetadata?.Error?.Code
-    if (apiError) {
-      return toResultData(500, null, errors[apiError])
-    } else {
-      let text = TranslationList[0].Translation
-      result = toResultData(200, { text })
+    if (from === 'auto') {
+      from = ''
     }
-    return result
-  } catch (err) {
-    const apiError = err?.response?.data?.ResponseMetadata?.Error?.Code
-    if (apiError) {
-      return toResultData(500, null, errors[apiError])
-    } else {
-      console.error(err)
-      return toResultData(500)
+    const bodyData = {
+      TextList: [q],
+      SourceLanguage: from,
+      TargetLanguage: to
     }
+
+    const headers = toSign(query, bodyData, keyConfig)
+
+    try {
+      // const res = await axios.post(url + `?${query}`, bodyData, { headers })
+      const resData = await fetch(url + `?${query}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(bodyData)
+      }).then(res => {
+        return res.json()
+      })
+      console.log('resData:', resData)
+      const { TranslationList } = resData
+      const ResponseMetadata =
+        resData.ResponseMetadata || resData.ResponseMetaData
+      let result
+      const apiError = ResponseMetadata?.Error?.Code
+      if (apiError) {
+        return toResultData(500, null, errors[apiError])
+      } else {
+        let text = TranslationList[0].Translation
+        result = toResultData(200, { text })
+      }
+      return result
+    } catch (err) {
+      const apiError = err?.response?.data?.ResponseMetadata?.Error?.Code
+      if (apiError) {
+        return toResultData(500, null, errors[apiError])
+      } else {
+        console.error(err)
+        return toResultData(500)
+      }
+    }
+  } else {
+    return toResultData(403)
   }
 }
 
