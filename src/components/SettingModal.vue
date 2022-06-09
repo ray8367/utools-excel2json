@@ -277,7 +277,7 @@ const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 快捷键的行为
-  copyBtnShow: [1, 2, 3], // 快捷键的行为
+  copyBtnShow: [1, 2, 3], // 首页显示的按钮
   codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
