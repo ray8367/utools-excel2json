@@ -10,6 +10,15 @@
 
 <script setup>
 import { IconMore } from '@arco-design/web-vue/es/icon'
+
+// 按钮点击放大的倍率
+const magnification = ref(1.2)
+
+// 按钮放大，文字同步缩小为14的倍率
+const minification = computed(() => {
+  const after = (magnification.value * 14).toFixed(3)
+  return (14 / after).toFixed(3)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -33,11 +42,11 @@ import { IconMore } from '@arco-design/web-vue/es/icon'
     var(--houdini-colorB) 100%
   );
   box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
-  transition: 300ms --houdini-colorA, 300ms --houdini-colorB,
-    200ms transform linear, 250ms box-shadow;
+  transition: 0.3s --houdini-colorA, 0.3s --houdini-colorB,
+    0.1s transform linear, 0.2s box-shadow;
   .text_inner {
-    transition: all 200ms;
-    line-height: 0;
+    transition: all 0.1s linear;
+    @apply leading-0;
   }
   &:hover {
     --houdini-colorA: #eeeeee;
@@ -45,9 +54,9 @@ import { IconMore } from '@arco-design/web-vue/es/icon'
   }
   &:active {
     box-shadow: 2px 2px 7px -2px #888, -5px -5px 12px #fff;
-    transform: scale(1.15);
+    transform: scale(v-bind(magnification));
     .text_inner {
-      transform: scale(0.869);
+      transform: scale(v-bind(minification));
     }
   }
 
