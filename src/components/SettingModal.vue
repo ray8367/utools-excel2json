@@ -27,7 +27,7 @@
           <a-row>
             <a-divider orientation="left">基本设置</a-divider>
             <a-col :span="18">
-              <a-form-item label="首页翻译方式">
+              <a-form-item label="翻译方式">
                 <a-checkbox-group v-model="formData.homeHasApi">
                   <a-checkbox
                     v-for="item in translateApiOptions"
@@ -53,32 +53,17 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="复制按钮行为">
+              <a-form-item label="快捷键行为">
                 <template #label>
                   <div class="space-x-4px">
-                    <span>复制按钮行为</span>
+                    <span>快捷键行为</span>
                     <a-popover position="right">
                       <icon-question-circle />
                       <template #content>
-                        <ul class="list-disc pl-16px">
-                          <li>
-                            用于指定点击“复制结果”按钮
-                            或快捷键复制后，是否自动隐藏插件。
-                          </li>
-                          <li>
-                            如果开启隐藏并输入，请务必保证进入插件前的电脑光标位置，否则会因无法知晓你要输入到哪里，造成功能失效。
-                          </li>
-                        </ul>
-
-                        <a-divider class="my-8px" />
-
-                        <p class="font-bold">注意</p>
-
-                        <ul class="list-decimal pl-16px">
-                          <li>若插件被分离，则不会隐藏</li>
-
-                          <li>{{ calcShortcutKey() + ' ' }}可进行快捷键复制</li>
-                        </ul>
+                        <p>
+                          {{ calcShortcutKey() + ' ' }}
+                          可进行快捷键复制，该选项可设置按下快捷键后会发生什么
+                        </p>
                       </template>
                     </a-popover>
                   </div>
@@ -88,6 +73,28 @@
                   <a-radio value="close"> 复制并隐藏插件 </a-radio>
                   <a-radio value="closeInput"> 复制隐藏并输入 </a-radio>
                 </a-radio-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="显示按钮">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>显示按钮</span>
+                    <a-popover position="right">
+                      <icon-question-circle />
+                      <template #content>
+                        <p>
+                          翻译页底部会显示的按钮，请根据您的使用习惯勾选，勾选多个将会在翻译完成后，底部显示多个按钮，以应对不同的情况
+                        </p>
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
+                <a-checkbox-group v-model="formData.copyBtnShow">
+                  <a-checkbox :value="1">仅复制</a-checkbox>
+                  <a-checkbox :value="2">复制并隐藏</a-checkbox>
+                  <a-checkbox :value="3">复制并输入</a-checkbox>
+                </a-checkbox-group>
               </a-form-item>
             </a-col>
             <a-col :span="18">
@@ -269,7 +276,8 @@ const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
   textFont: 16, // 文本框字号
-  copyBtnBehavior: 'open', // 复制按钮的行为
+  copyBtnBehavior: 'open', // 快捷键的行为
+  copyBtnShow: [1, 2, 3], // 快捷键的行为
   codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度

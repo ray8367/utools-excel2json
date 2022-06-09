@@ -143,10 +143,16 @@
               <transition name="component-fade" mode="out-in">
                 <div
                   v-show="shouldShowCopyBtn"
-                  class="absolute bottom-10px left-1/2 transform -translate-x-1/2 z-1"
+                  class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
                 >
-                  <ColorfulBtn @click="copyResult()">
-                    <icon-copy /> {{ copyBtnText }}
+                  <ColorfulBtn @click="copyFn(1)">
+                    <icon-copy /> 仅复制
+                  </ColorfulBtn>
+                  <ColorfulBtn @click="copyFn(2)">
+                    <icon-fullscreen-exit /> 复制并隐藏
+                  </ColorfulBtn>
+                  <ColorfulBtn @click="copyFn(3)">
+                    <icon-edit /> 复制并输入
                   </ColorfulBtn>
                 </div>
               </transition>
@@ -175,7 +181,9 @@ import {
   IconSettings,
   IconCopy,
   IconCode,
-  IconClose
+  IconClose,
+  IconEdit,
+  IconFullscreenExit
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
@@ -226,16 +234,6 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
-
-// 动态返回复制按钮文字
-const copyBtnTextMap = new Map([
-  ['open', '复制结果'],
-  ['close', '复制后隐藏'],
-  ['closeInput', '复制后输入']
-])
-const copyBtnText = computed(() => {
-  return copyBtnTextMap.get(copyBtnBehavior.value) || '复制结果'
-})
 
 // 清空输入框
 function clearInput() {
@@ -381,11 +379,10 @@ function utoolsInit() {
 }
 
 // 复制结果
-const copyResult = throttle(async (val = resultObj.data.resultText) => {
-  await copy(val)
-  Message.success({ content: '复制成功', duration: 2500 })
+const shortcutKeyCopy = throttle(async () => {
+  await copyOnly()
   // utools处理
-  // TODO:优化这一坨if
+
   if (window.utools) {
     const behavior = copyBtnBehavior.value
     setTimeout(() => {
@@ -401,8 +398,47 @@ const copyResult = throttle(async (val = resultObj.data.resultText) => {
   }
 }, 300)
 
+// 复制按钮
+const copyFn = throttle((val = 1) => {
+  switch (val) {
+    case 1:
+      copyOnly()
+      break
+    case 2:
+      copyHidden()
+      break
+    case 3:
+      copyInput()
+      break
+  }
+}, 300)
+
+// 仅复制
+async function copyOnly() {
+  await copy(resultObj.data.resultText)
+  Message.success({ content: '复制成功', duration: 2500 })
+  console.log('仅复制')
+}
+
+// 复制并隐藏
+async function copyHidden() {
+  await copyOnly()
+  setTimeout(() => {
+    window?.utools?.hideMainWindow()
+  }, 300)
+  console.log('复制并隐藏')
+}
+
+// 复制并输入
+async function copyInput() {
+  await copyHidden()
+  paste()
+  console.log('复制并输入')
+}
+
 // 粘贴
 function paste() {
+  if (!window.utools) return
   const utools = window.utools
   const key = utools.isMacOs() ? 'command' : 'ctrl'
   utools.simulateKeyboardTap('v', key)
@@ -538,7 +574,7 @@ watchEffect(() => {
   const WindowsCopyKeys = keys['ctrl+shift+c']
   const MacCopyKeys = keys['command+shift+c']
   if ((WindowsCopyKeys.value || MacCopyKeys.value) && shouldShowCopyBtn.value) {
-    copyResult()
+    shortcutKeyCopy()
   }
 })
 
