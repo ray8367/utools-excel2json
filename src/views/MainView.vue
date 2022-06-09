@@ -145,13 +145,22 @@
                   v-show="shouldShowCopyBtn"
                   class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
                 >
-                  <ColorfulBtn @click="copyFn(1)">
+                  <ColorfulBtn
+                    v-if="copyBtnShow.includes(1)"
+                    @click="copyFn(1)"
+                  >
                     <icon-copy /> 仅复制
                   </ColorfulBtn>
-                  <ColorfulBtn @click="copyFn(2)">
+                  <ColorfulBtn
+                    v-if="copyBtnShow.includes(2)"
+                    @click="copyFn(2)"
+                  >
                     <icon-fullscreen-exit /> 复制并隐藏
                   </ColorfulBtn>
-                  <ColorfulBtn @click="copyFn(3)">
+                  <ColorfulBtn
+                    v-if="copyBtnShow.includes(3)"
+                    @click="copyFn(3)"
+                  >
                     <icon-edit /> 复制并输入
                   </ColorfulBtn>
                 </div>
@@ -197,7 +206,8 @@ const {
   homeOption,
   getHomeApiOptions: translateApiOptions,
   getHomeFontSize: textFont,
-  copyBtnBehavior
+  copyBtnBehavior,
+  copyBtnShow
 } = storeToRefs(store)
 const codeMode = computed(() => store.codeMode) // 命名翻译模式
 const pageLoading = ref(false) // 是否正在翻译
@@ -443,6 +453,7 @@ function paste() {
   if (!utools) return
   const key = utools.isMacOs() ? 'command' : 'ctrl'
   utools.simulateKeyboardTap('v', key)
+  console.log('粘贴..')
 }
 
 // 重置后首页设置

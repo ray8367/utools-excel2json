@@ -369,6 +369,7 @@ function modalOk() {
   settingStore.setFontSize(formData.textFont)
   settingStore.setCopyBtnBehavior(formData.copyBtnBehavior)
   settingStore.setCodeMode(formData.codeMode)
+  settingStore.setCopyBtnShow(formData.copyBtnShow)
   Message.success({ content: '设置成功', duration: 1000 })
   emit('ok')
   closeSettingModal()

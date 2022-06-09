@@ -14,6 +14,7 @@ const HOME_OPTION = 'homeOption'
 const DEFAULT_API = 'defaultApi'
 const FONT_SIZE = 'fontSize'
 const COPY_BTN_BEHAVIOR = 'copyBtnBehavior'
+const COPY_BTN_SHOW = 'copyBtnShow'
 const CODE_MODE = 'codeMode'
 
 /** 获取初始化初始值 */
@@ -59,13 +60,19 @@ function getInitState() {
     return value === 'true' || value === true ? true : false
   }
 
+  const getCopyBtnShow = () => {
+    const value = getDbStorageItem(COPY_BTN_SHOW) || '[1,2,3]'
+    return JSON.parse(value)
+  }
+
   return {
     homeOption: initHomeOptionState(),
     defaultApi: initDefaultApiState(),
     keyConfig: initKeyConfigState(),
     fontSize: initFontSizeState(),
     copyBtnBehavior: getDbStorageItem(COPY_BTN_BEHAVIOR) || 'open',
-    codeMode: getStorageBoolean(CODE_MODE, false)
+    codeMode: getStorageBoolean(CODE_MODE, false),
+    copyBtnShow: getCopyBtnShow()
   }
 }
 
@@ -92,7 +99,8 @@ export const userSettingStore = defineStore('settings', {
         keyConfig,
         fontSize,
         copyBtnBehavior,
-        codeMode
+        codeMode,
+        copyBtnShow
       } = state
 
       return {
@@ -110,7 +118,8 @@ export const userSettingStore = defineStore('settings', {
         caiyunToken: keyConfig.caiyun?.token, // 彩云
         huoshanAccessKeyId: keyConfig.huoshan?.accessKeyId, // 火山
         huoshanSecretAccessKey: keyConfig.huoshan?.secretAccessKey, // 火山
-        copyBtnBehavior, // 复制按钮行为 (open|close)
+        copyBtnBehavior, // 复制快捷键行为 (open:仅复制|close:复制并隐藏|closeInput:复制隐藏并输入)
+        copyBtnShow, // 首页显示复制按钮 []
         codeMode // 命名翻译模式
       }
     }
@@ -141,10 +150,16 @@ export const userSettingStore = defineStore('settings', {
       setDbStorageItem(FONT_SIZE, data)
     },
 
-    /** 设置复制行为 */
+    /** 设置复制快捷键行为 */
     setCopyBtnBehavior(data) {
       this.copyBtnBehavior = data
       setDbStorageItem(COPY_BTN_BEHAVIOR, data)
+    },
+
+    /** 设置复制按钮 */
+    setCopyBtnShow(data) {
+      this.copyBtnShow = data
+      setDbStorageItem(COPY_BTN_SHOW, JSON.stringify(data))
     },
 
     /** 设置命名翻译模式 */
@@ -161,6 +176,7 @@ export const userSettingStore = defineStore('settings', {
         DEFAULT_API,
         FONT_SIZE,
         COPY_BTN_BEHAVIOR,
+        COPY_BTN_SHOW,
         CODE_MODE
       ]
       resetKeys.forEach(key => {
