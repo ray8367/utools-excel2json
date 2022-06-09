@@ -292,7 +292,7 @@ const formData = reactive({
   huoshanAccessKeyId: undefined, // 火山
   huoshanSecretAccessKey: undefined // 火山
 })
-
+const utools = window?.utools
 const translateApiOptions = ref(apiOptions) // 翻译方式选项
 
 // 默认翻译方式的下拉选项
@@ -376,9 +376,9 @@ function modalOk() {
 
 // 动态快捷键文案
 function calcShortcutKey() {
-  if (!window.utools) {
+  if (!utools) {
     return 'Ctrl+Shift+C / Command+Shift+C'
-  } else if (window.utools.isMacOs()) {
+  } else if (utools.isMacOs()) {
     return 'Command+Shift+C'
   } else {
     return 'Ctrl+Shift+C'
@@ -440,8 +440,8 @@ function closeSettingModal() {
 
 // 打开url
 function openWebUrl(e) {
-  if (!window.utools) return
-  window.utools.shellOpenExternal(e.target.getAttribute('href'))
+  if (!utools) return
+  utools.shellOpenExternal(e.target.getAttribute('href'))
 }
 
 // 重置数据

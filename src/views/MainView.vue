@@ -235,6 +235,8 @@ const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
 
+const utools = window?.utools
+
 // 清空输入框
 function clearInput() {
   userInput.value = ''
@@ -370,12 +372,12 @@ function changeCodeModeByKeyword(code) {
 
 // 初始化utools
 function utoolsInit() {
-  window.utools.onPluginEnter(({ code, payload }) => {
+  utools.onPluginEnter(({ code, payload }) => {
     settingModalRef.value.closeSettingModal()
     userInput.value = code === 'anyword' ? payload : ''
     changeCodeModeByKeyword(code)
   })
-  window.utools.subInputBlur()
+  utools.subInputBlur()
 }
 
 // 复制结果
@@ -383,12 +385,12 @@ const shortcutKeyCopy = throttle(async () => {
   await copyOnly()
   // utools处理
 
-  if (window.utools) {
+  if (utools) {
     const behavior = copyBtnBehavior.value
     setTimeout(() => {
       if (behavior === 'close' || behavior === 'closeInput') {
         // 自动关闭
-        window.utools.hideMainWindow()
+        utools.hideMainWindow()
         if (behavior === 'closeInput') {
           // 自动输入
           paste()
@@ -424,7 +426,7 @@ async function copyOnly() {
 async function copyHidden() {
   await copyOnly()
   setTimeout(() => {
-    window?.utools?.hideMainWindow()
+    utools?.hideMainWindow()
   }, 300)
   console.log('复制并隐藏')
 }
@@ -438,8 +440,7 @@ async function copyInput() {
 
 // 粘贴
 function paste() {
-  if (!window.utools) return
-  const utools = window.utools
+  if (!utools) return
   const key = utools.isMacOs() ? 'command' : 'ctrl'
   utools.simulateKeyboardTap('v', key)
 }
@@ -451,7 +452,7 @@ function resetHandler() {
 }
 
 onMounted(() => {
-  window?.utools && utoolsInit()
+  utools && utoolsInit()
   inputFocus()
   readSetting()
 
