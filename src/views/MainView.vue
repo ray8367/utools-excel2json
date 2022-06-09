@@ -25,7 +25,12 @@
         <!-- 清除按钮 -->
         <transition name="component-scale">
           <template v-if="!['', undefined, null].includes(userInput)">
-            <ClearBtn @click="clearInput" />
+            <MimicryBtn
+              class="absolute right-10px bottom-10px"
+              @click="clearInput"
+            >
+              <icon-close />
+            </MimicryBtn>
           </template>
         </transition>
 
@@ -169,7 +174,8 @@ import {
   IconArrowRight,
   IconSettings,
   IconCopy,
-  IconCode
+  IconCode,
+  IconClose
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'

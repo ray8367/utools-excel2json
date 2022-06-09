@@ -1,11 +1,15 @@
 <template>
-  <div class="clear_btn">
-    <icon-close class="text-slate-400" />
+  <div class="mimicry_btn">
+    <span class="text_inner">
+      <slot>
+        <icon-more />
+      </slot>
+    </span>
   </div>
 </template>
 
 <script setup>
-import { IconClose } from '@arco-design/web-vue/es/icon'
+import { IconMore } from '@arco-design/web-vue/es/icon'
 </script>
 
 <style lang="scss" scoped>
@@ -21,7 +25,7 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
   initial-value: #fff;
 }
 
-.clear_btn {
+.mimicry_btn {
   border: 1px solid #f2f3f4;
   background-image: linear-gradient(
     145deg,
@@ -31,13 +35,20 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
   box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
   transition: 300ms --houdini-colorA, 300ms --houdini-colorB,
     200ms transform linear, 250ms box-shadow;
+  .text_inner {
+    transition: all 200ms;
+    line-height: 0;
+  }
   &:hover {
     --houdini-colorA: #eeeeee;
     --houdini-colorB: #fff;
   }
   &:active {
     box-shadow: 2px 2px 7px -2px #888, -5px -5px 12px #fff;
-    transform: scale(1.2);
+    transform: scale(1.15);
+    .text_inner {
+      transform: scale(0.869);
+    }
   }
 
   @media (prefers-color-scheme: dark) {
@@ -53,6 +64,6 @@ import { IconClose } from '@arco-design/web-vue/es/icon'
       box-shadow: 1px 1px 6px #112, -3px -3px 6px #333;
     }
   }
-  @apply absolute right-10px bottom-10px w-24px h-24px z-10 flex-c rounded-8px cursor-pointer;
+  @apply p-4px z-10 flex-c rounded-8px cursor-pointer text-slate-400 select-none;
 }
 </style>
