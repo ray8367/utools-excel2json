@@ -196,6 +196,7 @@ import {
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
+import { delay } from 'lodash-es'
 import { translationCommon } from '@/apis/translation/index.js'
 import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
@@ -390,25 +391,25 @@ function utoolsInit() {
   utools.subInputBlur()
 }
 
-// 复制结果
+// 快捷键复制结果
 const shortcutKeyCopy = throttle(async () => {
   await copyOnly()
-  // utools处理
-
-  if (utools) {
-    const behavior = copyBtnBehavior.value
-    setTimeout(() => {
-      if (behavior === 'close' || behavior === 'closeInput') {
-        // 自动关闭
-        utools.hideMainWindow()
-        if (behavior === 'closeInput') {
-          // 自动输入
-          paste()
-        }
-      }
-    }, 300)
+  if (!utools) return
+  const behavior = copyBtnBehavior.value
+  if (behavior === 'close') {
+    await delayCloseUtools()
+  } else if (behavior === 'closeInput') {
+    await delayCloseUtools()
+    await paste()
   }
 }, 300)
+
+// 延迟时间关闭utools
+function delayCloseUtools(delayTime = 300) {
+  delay(function () {
+    utools.hideMainWindow()
+  }, delayTime)
+}
 
 // 复制按钮
 const copyFn = throttle((val = 1) => {
@@ -435,24 +436,22 @@ async function copyOnly() {
 // 复制并隐藏
 async function copyHidden() {
   await copyOnly()
-  setTimeout(() => {
-    utools?.hideMainWindow()
-  }, 300)
+  await delayCloseUtools()
   console.log('复制并隐藏')
 }
 
 // 复制并输入
 async function copyInput() {
   await copyHidden()
-  paste()
+  await paste()
   console.log('复制并输入')
 }
 
 // 粘贴
-function paste() {
+async function paste() {
   if (!utools) return
   const key = utools.isMacOs() ? 'command' : 'ctrl'
-  utools.simulateKeyboardTap('v', key)
+  await utools.simulateKeyboardTap('v', key)
   console.log('粘贴..')
 }
 
