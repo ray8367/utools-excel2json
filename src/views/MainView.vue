@@ -350,7 +350,7 @@ function changeTranslateType() {
 function firstGuide() {
   const option = {
     id: 'firstUseMain',
-    title: '欢迎使用易翻☺️',
+    title: '欢迎使用易翻😁',
     text: '初次使用，应该点击这里去配置一下服务哦~',
     attachTo: {
       element: '#setting-wrapper',
