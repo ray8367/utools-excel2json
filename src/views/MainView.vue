@@ -378,6 +378,8 @@ function changeCodeModeByKeyword(code) {
     store.setCodeMode(true)
     const modeName = code.split('__')[1]
     codeSelect.value = modeName
+  } else {
+    store.setCodeMode(false)
   }
 }
 
