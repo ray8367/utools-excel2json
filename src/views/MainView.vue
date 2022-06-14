@@ -706,7 +706,7 @@ onKeyStroke('Tab', e => {
     }
 
     &.code_textarea::after {
-      color: rgba($color: #000000, $alpha: 0.22);
+      color: rgba($color: #000, $alpha: 0.22);
     }
   }
 }

@@ -50,7 +50,7 @@ const minification = computed(() => {
   }
   &:hover,
   &:active {
-    --houdini-colorA: #eeeeee;
+    --houdini-colorA: #eee;
     --houdini-colorB: #fff;
   }
   &:active {
