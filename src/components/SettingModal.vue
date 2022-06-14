@@ -4,7 +4,7 @@
       :visible="modalVis"
       fullscreen
       title-align="start"
-      modal-animation-name="slide-dynamic-origin"
+      modal-animation-name="slide-bottom"
       @open="modalOpen"
       @cancel="modalCancel"
     >
