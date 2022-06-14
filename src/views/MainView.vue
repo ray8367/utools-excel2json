@@ -408,6 +408,7 @@ const shortcutKeyCopy = throttle(async () => {
 
 // 延迟时间关闭utools
 function delayCloseUtools(delayTime = 300) {
+  if (!utools) return
   return new Promise(resolve => {
     delay(function () {
       utools.hideMainWindow()
