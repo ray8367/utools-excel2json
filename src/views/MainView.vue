@@ -742,19 +742,19 @@ onKeyStroke('Tab', e => {
 @keyframes stroke {
   0% {
     fill: rgba(0, 0, 0, 0);
-    stroke: $primary-color;
+    stroke: rgba($color: $primary-color, $alpha: 0.22);
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
     stroke-width: 0.8;
   }
   50% {
     fill: rgba(0, 0, 0, 0);
-    stroke: $primary-color;
+    stroke: rgba($color: $primary-color, $alpha: 0.22);
     stroke-width: 1.2;
   }
   70% {
     fill: rgba(0, 0, 0, 0);
-    stroke: $primary-color;
+    stroke: rgba($color: $primary-color, $alpha: 0.22);
     stroke-width: 1.5;
   }
   90%,
