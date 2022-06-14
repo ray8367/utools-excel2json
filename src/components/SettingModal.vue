@@ -4,9 +4,23 @@
       :visible="modalVis"
       fullscreen
       title-align="start"
+      modal-animation-name="zoom-in"
       @open="modalOpen"
       @cancel="modalCancel"
     >
+      <!-- zoom-in -->
+      <!-- zoom-in-fade-out -->
+      <!-- zoom-in-big -->
+      <!-- zoom-in-left -->
+      <!-- zoom-in-top -->
+      <!-- zoom-in-bottom -->
+      <!-- slide-dynamic-origin -->
+      <!-- slide-left -->
+      <!-- slide-right -->
+      <!-- slide-top -->
+      <!-- slide-bottom -->
+      <!-- fade-in-standard -->
+      <!-- fade-in -->
       <template #title> 设置 </template>
       <div>
         <p class="indent-4px">

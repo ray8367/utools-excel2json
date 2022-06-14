@@ -435,21 +435,18 @@ const copyFn = throttle((val = 1) => {
 async function copyOnly() {
   await copy(resultObj.data.resultText)
   Message.success({ content: '复制成功', duration: 2500 })
-  console.log('仅复制')
 }
 
 // 复制并隐藏
 async function copyHidden() {
   await copyOnly()
   await delayCloseUtools()
-  console.log('复制并隐藏')
 }
 
 // 复制并输入
 async function copyInput() {
   await copyHidden()
   await paste()
-  console.log('复制并输入')
 }
 
 // 粘贴
@@ -457,7 +454,6 @@ async function paste() {
   if (!utools) return
   const key = utools.isMacOs() ? 'command' : 'ctrl'
   await utools.simulateKeyboardTap('v', key)
-  console.log('粘贴..')
 }
 
 // 重置后首页设置
