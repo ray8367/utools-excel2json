@@ -134,11 +134,7 @@
               class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
               :class="[codeMode && ['code_font-family']]"
             >
-              <div v-if="codeMode" class="code_bg">
-                <svg>
-                  <text x="0" y="75%">&lt;code/&gt;</text>
-                </svg>
-              </div>
+              <codeBg v-if="codeMode" />
               <a-textarea
                 v-model="resultObj.data.resultText"
                 class="rounded-b-8px relative z-1"
@@ -685,20 +681,6 @@ onKeyStroke('Tab', e => {
 // 下面的文本域样式
 .text_readonly {
   position: relative;
-  .code_bg {
-    position: absolute;
-    font-size: 100px;
-    font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas, 'Liberation Mono',
-      'Courier New', monospace;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #f5f6f7;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-  }
   ::v-deep(.arco-textarea-focus) {
     border-color: #e9e9e9;
   }
@@ -706,10 +688,6 @@ onKeyStroke('Tab', e => {
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-textarea-focus) {
       border-color: transparent;
-    }
-
-    &.code_bg {
-      color: rgba($color: #000, $alpha: 0.22);
     }
   }
 }
@@ -721,49 +699,6 @@ onKeyStroke('Tab', e => {
       text-shadow: 0 3px 15px #ffffffb8;
       background-color: #222 !important;
     }
-  }
-}
-.code_bg {
-  svg {
-    width: 415px;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  svg text {
-    animation: stroke 2s ease;
-    font-size: 100px;
-    animation-fill-mode: both;
-  }
-}
-// TODO:兼容深色模式
-@keyframes stroke {
-  0% {
-    fill: rgba(0, 0, 0, 0);
-    stroke: rgba($color: $primary-color, $alpha: 0.22);
-    stroke-dashoffset: 25%;
-    stroke-dasharray: 0 50%;
-    stroke-width: 0.8;
-  }
-  50% {
-    fill: rgba(0, 0, 0, 0);
-    stroke: rgba($color: $primary-color, $alpha: 0.22);
-    stroke-width: 1.2;
-  }
-  70% {
-    fill: rgba(0, 0, 0, 0);
-    stroke: rgba($color: $primary-color, $alpha: 0.22);
-    stroke-width: 1.5;
-  }
-  90%,
-  100% {
-    fill: #f5f6f7;
-    stroke: rgba(0, 0, 0, 0);
-    stroke-dashoffset: -25%;
-    stroke-dasharray: 50% 0;
-    stroke-width: 0;
   }
 }
 </style>
