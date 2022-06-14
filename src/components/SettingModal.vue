@@ -28,6 +28,17 @@
             <a-divider orientation="left">基本设置</a-divider>
             <a-col :span="18">
               <a-form-item label="翻译方式">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>显示按钮</span>
+                    <a-popover position="right">
+                      <icon-question-circle />
+                      <template #content>
+                        <p>在首页您可以通过tab键快速切换翻译方式</p>
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
                 <a-checkbox-group v-model="formData.homeHasApi">
                   <a-checkbox
                     v-for="item in translateApiOptions"

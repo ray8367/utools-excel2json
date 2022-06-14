@@ -378,6 +378,8 @@ function changeCodeModeByKeyword(code) {
     store.setCodeMode(true)
     const modeName = code.split('__')[1]
     codeSelect.value = modeName
+  } else {
+    store.setCodeMode(false)
   }
 }
 
@@ -406,9 +408,12 @@ const shortcutKeyCopy = throttle(async () => {
 
 // 延迟时间关闭utools
 function delayCloseUtools(delayTime = 300) {
-  delay(function () {
-    utools.hideMainWindow()
-  }, delayTime)
+  return new Promise(resolve => {
+    delay(function () {
+      utools.hideMainWindow()
+      resolve()
+    }, delayTime)
+  })
 }
 
 // 复制按钮
