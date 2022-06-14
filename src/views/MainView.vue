@@ -621,6 +621,9 @@ onKeyStroke('Tab', e => {
   &:hover {
     transform: rotate(180deg);
   }
+  &:active {
+    transform: scale(0.8) rotate(180deg);
+  }
   &.active {
     color: $primary-color;
   }
@@ -664,7 +667,7 @@ onKeyStroke('Tab', e => {
     }
 
     ::v-deep(.arco-textarea-focus) {
-      border-color: #666666;
+      border-color: #777;
     }
     ::v-deep(.arco-textarea) {
       background-color: #242425a6;

@@ -18,12 +18,6 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `@import "@/styles/variable.scss";`
-      },
-      less: {
-        modifyVars: {
-          'arcoblue-6': '#165dff'
-        },
-        javascriptEnabled: true
       }
     }
   },
