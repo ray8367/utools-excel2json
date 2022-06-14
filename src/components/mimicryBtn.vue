@@ -48,7 +48,8 @@ const minification = computed(() => {
     transition: all 0.1s linear;
     @apply leading-0;
   }
-  &:hover {
+  &:hover,
+  &:active {
     --houdini-colorA: #eeeeee;
     --houdini-colorB: #fff;
   }
@@ -65,7 +66,8 @@ const minification = computed(() => {
     --houdini-colorB: #333;
     box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
     border: 1px solid #444;
-    &:hover {
+    &:hover,
+    &:active {
       --houdini-colorA: #222;
       --houdini-colorB: #222;
     }
