@@ -1,0 +1,56 @@
+// 覆盖组件库的样式
+.arco-modal {
+  border-radius: 0;
+}
+
+.arco-popover-popup-content,
+.popconfirm_wrapper {
+  width: 300px;
+}
+
+// 不让Modal外部出现滚动条，优化动画效果，因为该项目不会出现Modal中内容很多需要滚动Modal的情况
+.arco-modal-wrapper {
+  overflow: hidden;
+}
+
+// 引导层样式
+.guide_wrapper {
+  box-shadow: 0 4px 29px #0000003d !important;
+
+  .shepherd-header {
+    background-color: transparent !important;
+  }
+
+  .shepherd-text,
+  .shepherd-header,
+  .shepherd-footer {
+    padding: 12px !important;
+    font-size: 14px;
+  }
+
+  .shepherd-text {
+    padding-top: 0 !important;
+    color: #1d2129;
+    line-height: 1.7;
+  }
+
+  .shepherd-title {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .shepherd-button {
+    background-color: $primary-color;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: rgba($color: $primary-color, $alpha: 0.8) !important;
+    }
+  }
+}
+
+.shepherd-modal-overlay-container {
+  opacity: 0.4 !important;
+}

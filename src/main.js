@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import '@arco-design/web-vue/es/message/style/css.js'
 import 'virtual:windi.css'
-import '@/styles/global.scss'
-import { createPinia } from 'pinia'
+import '@/styles/index.scss'
 import 'shepherd.js/dist/css/shepherd.css'
+import { createPinia } from 'pinia'
 
 createApp(App).use(createPinia()).mount('#app')

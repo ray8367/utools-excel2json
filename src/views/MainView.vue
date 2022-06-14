@@ -124,7 +124,7 @@
         }"
       >
         <div class="flex h-full relative">
-          <transition name="component-fade">
+          <transition name="fade-in-standard">
             <Loading
               v-if="pageLoading"
               class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#272728])"
@@ -140,7 +140,7 @@
                 placeholder="翻译结果"
                 readonly
               />
-              <transition name="component-fade" mode="out-in">
+              <transition name="fade-in-standard" mode="out-in">
                 <div
                   v-show="shouldShowCopyBtn"
                   class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
