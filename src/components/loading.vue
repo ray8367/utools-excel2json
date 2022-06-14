@@ -1,12 +1,8 @@
 <template>
-  <div class="flex-c flex-col">
-    <svg
-      class="ap"
-      viewBox="0 0 128 256"
-      width="128px"
-      height="256px"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+  <div
+    class="flex-c flex-col bg-white w-full h-full dark:(border-transparent bg-[#272728])"
+  >
+    <svg class="ap" viewBox="0 0 128 256" width="128px" height="256px">
       <defs>
         <linearGradient id="ap-grad1" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="hsl(223,90%,55%)" />

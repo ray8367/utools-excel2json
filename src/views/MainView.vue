@@ -127,7 +127,7 @@
           <transition name="fade-in-standard">
             <Loading
               v-if="pageLoading"
-              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 w-full h-full dark:(border-transparent bg-[#272728])"
+              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0"
             />
             <div
               v-else
