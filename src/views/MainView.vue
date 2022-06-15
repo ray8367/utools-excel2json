@@ -22,11 +22,10 @@
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1 relative">
-        <transition-group name="component-scale">
+        <transition name="component-scale">
           <!-- 发音按钮 -->
           <template v-if="!['', undefined, null].includes(userInput)">
             <MimicryBtn
-              key="2"
               class="absolute left-10px bottom-8px"
               :loading="fromReadLoading"
               @click="readAloud('from')"
@@ -34,18 +33,20 @@
               <icon-sound />
             </MimicryBtn>
           </template>
-        </transition-group>
+        </transition>
 
         <!-- 清除按钮 -->
-        <template v-if="!['', undefined, null].includes(userInput)">
-          <MimicryBtn
-            key="1"
-            class="absolute right-10px bottom-8px"
-            @click="clearInput"
-          >
-            <icon-close />
-          </MimicryBtn>
-        </template>
+        <transition name="component-scale">
+          <template v-if="!['', undefined, null].includes(userInput)">
+            <MimicryBtn
+              key="1"
+              class="absolute right-10px bottom-8px"
+              @click="clearInput"
+            >
+              <icon-close />
+            </MimicryBtn>
+          </template>
+        </transition>
 
         <!-- 上方文本域 -->
         <a-textarea
@@ -137,11 +138,9 @@
         }"
       >
         <div class="flex h-full relative">
-          <!-- -1：等待用户操作、200：翻译成功、401：未配置服务，均应该显示<code/> -->
+          <!-- -1：等待用户操作、200：翻译成功均应该显示<code/> -->
           <codeBg
-            v-if="
-              codeMode && [-1, 200, 401].includes(resultObj.data.resultCode)
-            "
+            v-if="codeMode && [-1, 200].includes(resultObj.data.resultCode)"
           />
           <transition name="fade-in-standard">
             <Loading
