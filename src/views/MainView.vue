@@ -197,6 +197,9 @@
     @cancel="settingCancel"
     @reset="resetHandler"
   />
+
+  <!-- 音频播放 -->
+  <audio ref="audioRef"></audio>
 </template>
 
 <script setup>
@@ -221,6 +224,7 @@ import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
+import { voiceMap, voiceReading } from '@/apis/mstts/index.js'
 const store = userSettingStore()
 const {
   homeOption,
@@ -268,14 +272,40 @@ const fromReadLoading = ref(false) // 原文发音按钮的Loading
 const toReadLoading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
-
+const audioRef = ref()
 // 发音按钮行为分发
-function readAloud(type = 'from') {
+async function readAloud(type = 'from') {
   console.log('type: ', type === 'from' ? '原文发音' : '译文发音')
-  fromReadLoading.value = true
-  setTimeout(() => {
+  let voice
+  if (type === 'from') {
+    voice = voiceMap[translateFrom.value] || ''
+    fromReadLoading.value = true
+    voicePlay(voice)
     fromReadLoading.value = false
-  }, 2000)
+  } else if (type === 'to') {
+    voice = voiceMap[translateTo.value] || ''
+    toReadLoading.value = true
+    voicePlay(voice)
+    toReadLoading.value = false
+  }
+}
+
+// 播放语音
+let lastAudioId = ''
+async function voicePlay(voice) {
+  const { code, data, errmsg } = await voiceReading(
+    resultObj.data?.resultText,
+    voice,
+    lastAudioId
+  )
+  if (code === 200) {
+    lastAudioId = data
+    audioRef.value.src = data
+    audioRef.value.play()
+  } else {
+    Message.error('啊哦，播放出错了，请再试一次吧！')
+    console.log(errmsg)
+  }
 }
 
 // 清空输入框
