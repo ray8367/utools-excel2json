@@ -224,7 +224,11 @@ import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
-import { voiceMap, voiceReading } from '@/apis/mstts/index.js'
+import {
+  voiceMap,
+  voiceReading,
+  voiceReadingToBase64
+} from '@/apis/mstts/index.js'
 const store = userSettingStore()
 const {
   homeOption,
@@ -293,6 +297,7 @@ async function readAloud(type = 'from') {
 // 播放语音
 let lastAudioId = ''
 async function voicePlay(voice) {
+  // #region mp3文件
   const { code, data, errmsg } = await voiceReading(
     resultObj.data?.resultText,
     voice,
@@ -306,6 +311,16 @@ async function voicePlay(voice) {
     Message.error('啊哦，播放出错了，请再试一次吧！')
     console.log(errmsg)
   }
+  // #endregion
+
+  // #region base64
+  // audioRef.value.src = await voiceReadingToBase64(
+  //   resultObj.data?.resultText,
+  //   voice,
+  //   lastAudioId
+  // )
+  // audioRef.value.play()
+  // #endregion
 }
 
 // 清空输入框
