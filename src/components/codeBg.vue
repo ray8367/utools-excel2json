@@ -37,24 +37,24 @@
 @keyframes stroke_light {
   0% {
     fill: #0000;
-    stroke: #f4f5f6;
+    stroke: rgba($primary-color, $alpha: 1);
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
     stroke-width: 0.8;
   }
   50% {
     fill: #0000;
-    stroke: #f4f5f6;
+    stroke: rgba($primary-color, $alpha: 0.6);
     stroke-width: 1.2;
   }
   70% {
     fill: #0000;
-    stroke: #f4f5f6;
+    stroke: #f5f6f7;
     stroke-width: 1.5;
   }
   90%,
   100% {
-    fill: #f7f8f9;
+    fill: #f5f6f7;
     stroke: #0000;
     stroke-dashoffset: -25%;
     stroke-dasharray: 50% 0;
@@ -66,19 +66,19 @@
 @keyframes stroke_dark {
   0% {
     fill: #0000;
-    stroke: #494949;
+    stroke: rgba(#fff, $alpha: 1);
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
     stroke-width: 0.8;
   }
   50% {
     fill: #0000;
-    stroke: #494949;
+    stroke: rgba(#777, $alpha: 0.9);
     stroke-width: 1.2;
   }
   70% {
     fill: #0000;
-    stroke: #494949;
+    stroke: rgba(#393939, $alpha: 0.9);
     stroke-width: 1.5;
   }
   90%,

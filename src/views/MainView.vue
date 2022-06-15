@@ -27,7 +27,7 @@
           <template v-if="!['', undefined, null].includes(userInput)">
             <MimicryBtn
               key="2"
-              class="absolute left-10px bottom-10px"
+              class="absolute left-10px bottom-8px"
               :loading="originReadLoading"
               @click="readAloud"
             >
@@ -40,7 +40,7 @@
         <template v-if="!['', undefined, null].includes(userInput)">
           <MimicryBtn
             key="1"
-            class="absolute right-10px bottom-10px"
+            class="absolute right-10px bottom-8px"
             @click="clearInput"
           >
             <icon-close />
@@ -137,60 +137,55 @@
         }"
       >
         <div class="flex h-full relative">
+          <!-- -1：等待用户操作、200：翻译成功、401：未配置服务，均应该显示<code/> -->
+          <codeBg
+            v-if="
+              codeMode && [-1, 200, 401].includes(resultObj.data.resultCode)
+            "
+          />
           <transition name="fade-in-standard">
             <Loading
               v-if="pageLoading"
-              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0"
+              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 z-100"
             />
-            <div
-              v-else
-              class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
-              :class="[codeMode && ['code_font-family']]"
-            >
-              <codeBg v-if="codeMode" />
-              <a-textarea
-                v-model="resultObj.data.resultText"
-                class="rounded-b-8px relative z-1"
-                placeholder="翻译结果"
-                readonly
-              />
-              <transition-group name="fade-in-standard" mode="out-in">
-                <MimicryBtn
-                  v-show="shouldShowCopyBtn"
-                  key="1"
-                  class="absolute left-10px bottom-8px"
-                  :loading="originReadLoading"
-                  @click="readAloud"
-                >
-                  <icon-sound />
-                </MimicryBtn>
-                <div
-                  v-show="shouldShowCopyBtn"
-                  key="2"
-                  class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
-                >
-                  <ColorfulBtn
-                    v-if="copyBtnShow.includes(1)"
-                    @click="copyFn(1)"
-                  >
-                    <icon-copy /> 仅复制
-                  </ColorfulBtn>
-                  <ColorfulBtn
-                    v-if="copyBtnShow.includes(2)"
-                    @click="copyFn(2)"
-                  >
-                    <icon-fullscreen-exit /> 复制并隐藏
-                  </ColorfulBtn>
-                  <ColorfulBtn
-                    v-if="copyBtnShow.includes(3)"
-                    @click="copyFn(3)"
-                  >
-                    <icon-edit /> 复制并输入
-                  </ColorfulBtn>
-                </div>
-              </transition-group>
-            </div>
           </transition>
+          <div
+            class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
+            :class="[codeMode && ['code_font-family']]"
+          >
+            <a-textarea
+              v-model="resultObj.data.resultText"
+              class="rounded-b-8px relative z-1"
+              placeholder="翻译结果"
+              readonly
+            />
+            <transition-group name="fade-in-standard" mode="out-in">
+              <MimicryBtn
+                v-show="shouldShowCopyBtn"
+                key="1"
+                class="absolute left-10px bottom-8px"
+                :loading="originReadLoading"
+                @click="readAloud"
+              >
+                <icon-sound />
+              </MimicryBtn>
+              <div
+                v-show="shouldShowCopyBtn"
+                key="2"
+                class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
+              >
+                <ColorfulBtn v-if="copyBtnShow.includes(1)" @click="copyFn(1)">
+                  <icon-copy /> 仅复制
+                </ColorfulBtn>
+                <ColorfulBtn v-if="copyBtnShow.includes(2)" @click="copyFn(2)">
+                  <icon-fullscreen-exit /> 复制并隐藏
+                </ColorfulBtn>
+                <ColorfulBtn v-if="copyBtnShow.includes(3)" @click="copyFn(3)">
+                  <icon-edit /> 复制并输入
+                </ColorfulBtn>
+              </div>
+            </transition-group>
+          </div>
         </div>
       </a-resize-box>
     </div>
@@ -241,7 +236,7 @@ const userInput = ref('') // 输入的内容
 const resultObj = reactive({
   data: {
     resultText: ``, // 翻译结果
-    resultCode: 0, // 翻译结果状态(code = 200 为成功)
+    resultCode: -1, // 翻译结果状态(code = 200 为成功,code = -1为等待用户操作,code = 401为未配置翻译API)
     resultId: nanoid()
   }
 })
@@ -318,6 +313,11 @@ function changeMode() {
     content: `命名翻译模式${codeMode.value ? '关闭' : '开启'}`,
     duration: 1000
   })
+  // 如果未输入，则resultCode设为-1，即为等待用户操作状态，-1会触发Code动画
+  // 否则，将resultCode设为0，后面会触发翻译，翻译成功后继而变为200，会在成功后触发Code动画
+  // 如果连续翻译，resultCode从200 => 200并不会触发Code动画，符合预期
+  resultObj.data.resultCode = !userInput.value ? -1 : 0
+
   store.setCodeMode(!codeMode.value)
   inputFocus()
   setTimeout(() => {
