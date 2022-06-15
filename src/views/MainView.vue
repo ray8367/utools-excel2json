@@ -28,8 +28,8 @@
             <MimicryBtn
               key="2"
               class="absolute left-10px bottom-8px"
-              :loading="originReadLoading"
-              @click="readAloud"
+              :loading="fromReadLoading"
+              @click="readAloud('from')"
             >
               <icon-sound />
             </MimicryBtn>
@@ -164,8 +164,8 @@
                 v-show="shouldShowCopyBtn"
                 key="1"
                 class="absolute left-10px bottom-8px"
-                :loading="originReadLoading"
-                @click="readAloud"
+                :loading="toReadLoading"
+                @click="readAloud('to')"
               >
                 <icon-sound />
               </MimicryBtn>
@@ -265,15 +265,21 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
-const originReadLoading = ref(false) // 原文发音按钮的Loading
+const fromReadLoading = ref(false) // 原文发音按钮的Loading
+const toReadLoading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
-function readAloud() {
-  originReadLoading.value = true
+
+// 发音按钮行为分发
+function readAloud(type = 'from') {
+  console.log('type: ', type === 'from' ? '原文发音' : '译文发音')
+  inputFocus()
+  fromReadLoading.value = true
   setTimeout(() => {
-    originReadLoading.value = false
+    fromReadLoading.value = false
   }, 2000)
 }
+
 // 清空输入框
 function clearInput() {
   userInput.value = ''
@@ -308,7 +314,7 @@ function openSettingModal() {
 }
 
 // 变更模式
-function changeMode() {
+const changeMode = throttle(() => {
   Message.success({
     content: `命名翻译模式${codeMode.value ? '关闭' : '开启'}`,
     duration: 1000
@@ -323,7 +329,7 @@ function changeMode() {
   setTimeout(() => {
     startTranslation()
   }, 0)
-}
+}, 1000)
 
 // 修改选中翻译 保存当前选中并翻译
 function changeRadioHandler() {
