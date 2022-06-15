@@ -1,12 +1,16 @@
 <template>
-  <div class="mimicry_btn" :class="{ mimicry_btn_disabled: props.loading }">
+  <button
+    :disabled="props.loading || props.disabled"
+    class="mimicry_btn"
+    :class="{ mimicry_btn_disabled: props.loading || props.disabled }"
+  >
     <span class="text_inner">
       <icon-loading v-if="props.loading" />
       <slot v-else>
         <icon-more />
       </slot>
     </span>
-  </div>
+  </button>
 </template>
 
 <script setup>
@@ -16,6 +20,9 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
+  },
+  disabled: {
+    type: Boolean
   }
 })
 // 按钮点击放大的倍率
@@ -42,7 +49,6 @@ const minification = computed(() => {
 }
 
 .mimicry_btn {
-  // cursor: not-allowed;
   border: 1px solid #f2f3f4;
   background-image: linear-gradient(
     145deg,
@@ -84,9 +90,34 @@ const minification = computed(() => {
     }
   }
   @apply p-4px z-10 flex-c rounded-8px cursor-pointer text-slate-400 select-none;
-  &.mimicry_btn_disabled {
-    opacity: 0.8;
-    pointer-events: none;
+}
+
+// 禁用的样式
+.mimicry_btn_disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  &:hover,
+  &:active {
+    --houdini-colorA: #fff;
+    --houdini-colorB: #fff;
+  }
+  &:active {
+    box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
+    transform: scale(1);
+    .text_inner {
+      transform: scale(1);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
+    &:hover,
+    &:active {
+      --houdini-colorA: #333;
+      --houdini-colorB: #333;
+    }
+    &:active {
+      box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
+    }
   }
 }
 </style>
