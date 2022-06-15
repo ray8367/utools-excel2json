@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
 .code_bg {
-  @apply absolute text-100px flex-c left-0 right-0 top-0 bottom-0;
+  @apply absolute text-100px grid-c left-0 right-0 top-0 bottom-0;
   svg {
     width: 415px;
     text {

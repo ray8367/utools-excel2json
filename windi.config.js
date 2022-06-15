@@ -5,7 +5,8 @@ export default defineConfig({
     blocklist: 'img'
   },
   shortcuts: {
-    'flex-c': 'flex justify-center items-center'
+    'flex-c': 'flex justify-center items-center',
+    'grid-c': 'grid place-items-center'
   },
   theme: {
     screens: {

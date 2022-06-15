@@ -89,7 +89,7 @@ const minification = computed(() => {
       box-shadow: 1px 1px 6px #112, -3px -3px 6px #333;
     }
   }
-  @apply p-4px z-10 flex-c rounded-8px cursor-pointer text-slate-400 select-none;
+  @apply p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-400 select-none;
 }
 
 // 禁用的样式

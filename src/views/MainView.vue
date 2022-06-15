@@ -1,6 +1,6 @@
 <template>
   <div
-    class="main_wrapper flex-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
+    class="main_wrapper grid-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
     <!-- 设置按钮 -->
     <div
@@ -272,7 +272,6 @@ const utools = window?.utools
 // 发音按钮行为分发
 function readAloud(type = 'from') {
   console.log('type: ', type === 'from' ? '原文发音' : '译文发音')
-  inputFocus()
   fromReadLoading.value = true
   setTimeout(() => {
     fromReadLoading.value = false

@@ -64,7 +64,7 @@ function cleanFirst() {
 <style lang="scss" scoped>
 .btn_main {
   border: 1px solid #eeeeee;
-  @apply transition-all flex-c w-112px h-34px relative overflow-hidden rounded-4px bg-white shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800);
+  @apply transition-all grid-c w-112px h-34px relative overflow-hidden rounded-4px bg-white shadow-lg hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-800);
 }
 
 .ripple_wrapper {
