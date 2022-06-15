@@ -28,6 +28,7 @@
 
 <script setup>
 import { delay } from 'lodash-es'
+import { nanoid } from 'nanoid'
 const btnRef = ref() // 按钮的DOM
 
 const waveDomsArr = ref([]) // 波纹DOM数组
@@ -42,7 +43,7 @@ function showRipple(e) {
     top: e.pageY - pos.top - size / 2,
     width: size,
     height: size,
-    key: `${new Date().getTime() - Math.random().toFixed(4)}`
+    key: nanoid()
   }
   waveDomsArr.value.push(obj)
 }
@@ -95,7 +96,6 @@ function cleanFirst() {
 
   .btn_main {
     border: 1px solid #444444;
-
     &:hover {
       text-shadow: 0 2px 12px #ffffff6e;
     }
