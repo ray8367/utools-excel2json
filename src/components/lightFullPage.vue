@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg_wrapper fixed w-screen h-screen grid-c relative overflow-hidden"
-  >
+  <div class="bg_wrapper fixed w-screen h-screen grid-c overflow-hidden">
     <div class="relative w-200px h-200px">
       <div class="sun"></div>
       <div class="sun_ray"></div>
