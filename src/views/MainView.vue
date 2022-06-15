@@ -22,17 +22,30 @@
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1 relative">
-        <!-- 清除按钮 -->
-        <transition name="component-scale">
+        <transition-group name="component-scale">
+          <!-- 发音按钮 -->
           <template v-if="!['', undefined, null].includes(userInput)">
             <MimicryBtn
-              class="absolute right-10px bottom-10px"
-              @click="clearInput"
+              key="2"
+              class="absolute left-10px bottom-10px"
+              :loading="originReadLoading"
+              @click="readAloud"
             >
-              <icon-close />
+              <icon-sound />
             </MimicryBtn>
           </template>
-        </transition>
+        </transition-group>
+
+        <!-- 清除按钮 -->
+        <template v-if="!['', undefined, null].includes(userInput)">
+          <MimicryBtn
+            key="1"
+            class="absolute right-10px bottom-10px"
+            @click="clearInput"
+          >
+            <icon-close />
+          </MimicryBtn>
+        </template>
 
         <!-- 上方文本域 -->
         <a-textarea
@@ -141,9 +154,19 @@
                 placeholder="翻译结果"
                 readonly
               />
-              <transition name="fade-in-standard" mode="out-in">
+              <transition-group name="fade-in-standard" mode="out-in">
+                <MimicryBtn
+                  v-show="shouldShowCopyBtn"
+                  key="1"
+                  class="absolute left-10px bottom-8px"
+                  :loading="originReadLoading"
+                  @click="readAloud"
+                >
+                  <icon-sound />
+                </MimicryBtn>
                 <div
                   v-show="shouldShowCopyBtn"
+                  key="2"
                   class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
                 >
                   <ColorfulBtn
@@ -165,7 +188,7 @@
                     <icon-edit /> 复制并输入
                   </ColorfulBtn>
                 </div>
-              </transition>
+              </transition-group>
             </div>
           </transition>
         </div>
@@ -193,7 +216,8 @@ import {
   IconCode,
   IconClose,
   IconEdit,
-  IconFullscreenExit
+  IconFullscreenExit,
+  IconSound
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
@@ -246,9 +270,15 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
+const originReadLoading = ref(false) // 原文发音按钮的Loading
 
 const utools = window?.utools
-
+function readAloud() {
+  originReadLoading.value = true
+  setTimeout(() => {
+    originReadLoading.value = false
+  }, 2000)
+}
 // 清空输入框
 function clearInput() {
   userInput.value = ''

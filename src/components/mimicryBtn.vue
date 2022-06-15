@@ -1,7 +1,8 @@
 <template>
-  <div class="mimicry_btn">
+  <div class="mimicry_btn" :class="{ mimicry_btn_disabled: props.loading }">
     <span class="text_inner">
-      <slot>
+      <icon-loading v-if="props.loading" />
+      <slot v-else>
         <icon-more />
       </slot>
     </span>
@@ -9,8 +10,14 @@
 </template>
 
 <script setup>
-import { IconMore } from '@arco-design/web-vue/es/icon'
+import { IconMore, IconLoading } from '@arco-design/web-vue/es/icon'
 
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false
+  }
+})
 // 按钮点击放大的倍率
 const magnification = ref(1.2)
 
@@ -35,6 +42,7 @@ const minification = computed(() => {
 }
 
 .mimicry_btn {
+  // cursor: not-allowed;
   border: 1px solid #f2f3f4;
   background-image: linear-gradient(
     145deg,
@@ -76,5 +84,9 @@ const minification = computed(() => {
     }
   }
   @apply p-4px z-10 flex-c rounded-8px cursor-pointer text-slate-400 select-none;
+  &.mimicry_btn_disabled {
+    opacity: 0.8;
+    pointer-events: none;
+  }
 }
 </style>
