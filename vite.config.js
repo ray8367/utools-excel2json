@@ -98,6 +98,12 @@ export default defineConfig({
         target: 'https://open.volcengineapi.com',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/huoshanApi/, '')
+      },
+      // 接口
+      '/uniapi': {
+        target: 'https://be392405-5b88-4143-ad6b-f155b106ab85.bspapp.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/uniapi/, '')
       }
     }
   }
