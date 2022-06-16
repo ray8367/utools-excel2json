@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid-c flex-col bg-white w-full h-full dark:(border-transparent bg-[#272728])"
+    class="flex-c flex-col bg-white w-full h-full dark:(border-transparent bg-[#272728])"
   >
     <svg class="ap" viewBox="0 0 128 256" width="128px" height="256px">
       <defs>
