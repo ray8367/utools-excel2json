@@ -23,7 +23,7 @@
     >
       <div class="text_wrapper flex flex-1 relative">
         <!-- 发音按钮 -->
-        <!-- <transition name="component-scale">
+        <transition name="component-scale">
           <template v-if="!['', undefined, null].includes(userInput)">
             <MimicryBtn
               class="absolute left-10px bottom-8px"
@@ -33,7 +33,7 @@
               <icon-sound />
             </MimicryBtn>
           </template>
-        </transition> -->
+        </transition>
 
         <!-- 清除按钮 -->
         <transition name="component-scale">
@@ -159,7 +159,7 @@
               readonly
             />
             <transition-group name="fade-in-standard" mode="out-in">
-              <!-- <MimicryBtn
+              <MimicryBtn
                 v-show="shouldShowCopyBtn"
                 key="1"
                 class="absolute left-10px bottom-8px"
@@ -167,7 +167,7 @@
                 @click="readAloud('to')"
               >
                 <icon-sound />
-              </MimicryBtn> -->
+              </MimicryBtn>
               <div
                 v-show="shouldShowCopyBtn"
                 key="2"
