@@ -39,6 +39,7 @@ export async function voiceReading(text, voice, lastAudioId) {
  */
 export async function voiceReadingToBase64({ text, voice }) {
   const res = await fetch(baseUrl + '/mstts/base64', {
+    timeout: 300000,
     method: 'POST',
     responseType: 'blob',
     body: JSON.stringify({

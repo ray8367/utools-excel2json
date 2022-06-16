@@ -76,7 +76,6 @@ export default async function ({ q, from, to, keyConfig }) {
       }).then(res => {
         return res.json()
       })
-      console.log('resData:', resData)
       const { TranslationList } = resData
       const ResponseMetadata =
         resData.ResponseMetadata || resData.ResponseMetaData

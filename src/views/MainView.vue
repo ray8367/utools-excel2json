@@ -222,7 +222,9 @@ import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
-import { voiceMap, voiceReadingToBase64 } from '@/apis/mstts/index.js'
+import { voiceReadingToBase64 } from '@/apis/mstts/index.js'
+import { voiceMap } from '@/apis/mstts/data.js'
+
 const audioRef = ref()
 const audioUrl = ref('')
 const { playing } = useMediaControls(audioRef, { src: audioUrl })
@@ -277,7 +279,9 @@ const utools = window?.utools
 // 发音按钮
 async function readAloud() {
   resetAudio()
-  const voice = voiceMap[translateTo.value] || ''
+  const voiceObj = voiceMap[translateTo.value] || voiceMap['zh']
+  // TODO: 读取发音配置
+  const voice = voiceObj['default']
   toReadLoading.value = true
   await voicePlay(voice)
   toReadLoading.value = false
