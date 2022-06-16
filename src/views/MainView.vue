@@ -22,19 +22,6 @@
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1 relative">
-        <transition name="component-scale">
-          <!-- 发音按钮 -->
-          <template v-if="!['', undefined, null].includes(userInput)">
-            <MimicryBtn
-              class="absolute left-10px bottom-8px"
-              :loading="fromReadLoading"
-              @click="readAloud('from')"
-            >
-              <icon-sound />
-            </MimicryBtn>
-          </template>
-        </transition>
-
         <!-- 清除按钮 -->
         <transition name="component-scale">
           <template v-if="!['', undefined, null].includes(userInput)">
@@ -164,7 +151,7 @@
                 key="1"
                 class="absolute left-10px bottom-8px"
                 :loading="toReadLoading"
-                @click="readAloud('to')"
+                @click="readAloud"
               >
                 <icon-sound />
               </MimicryBtn>
@@ -197,6 +184,11 @@
     @cancel="settingCancel"
     @reset="resetHandler"
   />
+
+  <audio ref="audioRef" style="display: none">
+    <source :src="audioUrl" type="audio/mpeg" />
+    <source :src="audioUrl" type="audio/ogg" />
+  </audio>
 </template>
 
 <script setup>
@@ -221,11 +213,10 @@ import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
-import {
-  voiceMap,
-  voiceReading,
-  voiceReadingToBase64
-} from '@/apis/mstts/index.js'
+import { voiceMap, voiceReadingToBase64 } from '@/apis/mstts/index.js'
+const audioRef = ref()
+const audioUrl = ref('')
+const { playing } = useMediaControls(audioRef, { src: audioUrl })
 const store = userSettingStore()
 const {
   homeOption,
@@ -269,57 +260,30 @@ const translateFromOptions = ref([
 const translateToOptions = ref(
   cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
 )
-const fromReadLoading = ref(false) // 原文发音按钮的Loading
+
 const toReadLoading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
 
-// 发音按钮行为分发
-async function readAloud(type = 'from') {
-  let voice
-  if (type === 'from') {
-    voice = voiceMap[translateFrom.value] || ''
-    fromReadLoading.value = true
-    await voicePlay(voice)
-    fromReadLoading.value = false
-  } else if (type === 'to') {
-    voice = voiceMap[translateTo.value] || ''
-    toReadLoading.value = true
-    await voicePlay(voice)
-    toReadLoading.value = false
-  }
+// 发音按钮
+async function readAloud() {
+  const voice = voiceMap[translateTo.value] || ''
+  toReadLoading.value = true
+  await voicePlay(voice)
+  toReadLoading.value = false
 }
 
 // 播放语音
 let lastAudioId = ''
 async function voicePlay(voice) {
-  // #region mp3文件
-  // const { code, data, errmsg } = await voiceReading(
-  //   resultObj.data?.resultText,
-  //   voice,
-  //   lastAudioId
-  // )
-  // if (code === 200) {
-  //   lastAudioId = data
-  //   audioRef.value.src = data
-  //   audioRef.value.play()
-  // } else {
-  //   Message.error('啊哦，播放出错了，请再试一次吧！')
-  //
-  // }
-  // #endregion
-
-  // #region base64
-  const originBlob = await voiceReadingToBase64(
-    resultObj.data?.resultText,
+  const params = {
     voice,
-    lastAudioId
-  )
-  const url = window.URL.createObjectURL(originBlob)
-  const audio = new Audio()
-  audio.src = url
-  audio.play()
-  // #endregion
+    lastAudioId,
+    text: resultObj.data?.resultText
+  }
+  const originBlob = await voiceReadingToBase64(params)
+  audioUrl.value = window.URL.createObjectURL(originBlob)
+  playing.value = true
 }
 
 // 清空输入框

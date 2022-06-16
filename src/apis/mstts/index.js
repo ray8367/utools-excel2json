@@ -39,7 +39,7 @@ export async function voiceReading (text, voice, lastAudioId) {
  * @param {*} lastAudioId 上一次的语音id
  * @returns
  */
-export async function voiceReadingToBase64 (text, voice, lastAudioId) {
+export async function voiceReadingToBase64 ({ text, voice, lastAudioId }) {
   const res = await fetch(baseUrl + '/mstts/base64', {
     method: 'POST',
     responseType: 'blob',
