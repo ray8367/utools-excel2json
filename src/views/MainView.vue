@@ -157,7 +157,7 @@
 
                 <!-- 开始暂停按钮 -->
                 <MimicryBtn v-show="audioUrl" @click="playing = !playing">
-                  <component :is="playing ? IconPause : IconPlayArrow" />
+                  <component :is="playing ? IconPause : IconPlayArrowFill" />
                 </MimicryBtn>
               </div>
             </transition>
@@ -212,7 +212,7 @@ import {
   IconFullscreenExit,
   IconSound,
   IconPause,
-  IconPlayArrow
+  IconPlayArrowFill
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
