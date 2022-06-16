@@ -110,6 +110,28 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
+              <a-form-item label="朗读偏好">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>朗读偏好</span>
+                    <a-popover position="right">
+                      <icon-question-circle />
+                      <template #content>
+                        <p>
+                          可以指定翻译结果的朗读声音，如果你发现哪一个语种的朗读非常生硬，可以联系我们
+                        </p>
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
+                <a-radio-group v-model="formData.readingPreference">
+                  <a-radio value="default">系统默认</a-radio>
+                  <a-radio value="close"> 仅男声 </a-radio>
+                  <a-radio value="closeInput"> 仅女声 </a-radio>
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
               <a-form-item label="命名翻译模式">
                 <template #label>
                   <div class="space-x-4px">
@@ -290,6 +312,7 @@ const formData = reactive({
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 快捷键的行为
   copyBtnShow: [1, 2, 3], // 首页显示的按钮
+  readingPreference: 'default', // 朗读偏好
   codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
   appid: undefined, // 百度
