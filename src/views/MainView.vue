@@ -137,7 +137,7 @@
           </transition>
           <div
             class="text_wrapper text_readonly flex flex-1 absolute top-0 h-full w-full"
-            :class="[codeMode && ['code_font-family']]"
+            :class="{ 'code_font-family': codeMode }"
           >
             <a-textarea
               v-model="resultObj.data.resultText"
@@ -145,7 +145,7 @@
               placeholder="翻译结果"
               readonly
             />
-            <transition name="fade-in-standard">
+            <transition v-if="!codeMode" name="fade-in-standard">
               <div
                 v-show="shouldShowCopyBtn"
                 class="absolute left-10px bottom-8px z-1 flex space-x-4px"
