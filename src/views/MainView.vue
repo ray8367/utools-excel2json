@@ -145,19 +145,26 @@
               placeholder="翻译结果"
               readonly
             />
-            <transition-group name="fade-in-standard" mode="out-in">
-              <MimicryBtn
-                v-show="shouldShowCopyBtn"
-                key="1"
-                class="absolute left-10px bottom-8px"
-                :loading="toReadLoading"
-                @click="readAloud"
-              >
-                <icon-sound />
-              </MimicryBtn>
+            <transition name="fade-in-standard">
               <div
                 v-show="shouldShowCopyBtn"
-                key="2"
+                class="absolute left-10px bottom-8px z-1 flex space-x-4px"
+              >
+                <!-- 播放按钮 -->
+                <MimicryBtn :loading="toReadLoading" @click="readAloud">
+                  <icon-sound />
+                </MimicryBtn>
+
+                <!-- 开始暂停按钮 -->
+                <MimicryBtn v-show="audioUrl" @click="playing = !playing">
+                  <component :is="playing ? IconPause : IconPlayArrow" />
+                </MimicryBtn>
+              </div>
+            </transition>
+
+            <transition name="fade-in-standard" mode="out-in">
+              <div
+                v-show="shouldShowCopyBtn"
                 class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
               >
                 <ColorfulBtn v-if="copyBtnShow.includes(1)" @click="copyFn(1)">
@@ -170,7 +177,7 @@
                   <icon-edit /> 复制并输入
                 </ColorfulBtn>
               </div>
-            </transition-group>
+            </transition>
           </div>
         </div>
       </a-resize-box>
@@ -203,7 +210,9 @@ import {
   IconClose,
   IconEdit,
   IconFullscreenExit,
-  IconSound
+  IconSound,
+  IconPause,
+  IconPlayArrow
 } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
@@ -267,6 +276,8 @@ const utools = window?.utools
 
 // 发音按钮
 async function readAloud() {
+  playing.value = false
+  audioUrl.value = ''
   const voice = voiceMap[translateTo.value] || ''
   toReadLoading.value = true
   await voicePlay(voice)
