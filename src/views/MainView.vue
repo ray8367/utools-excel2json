@@ -197,9 +197,6 @@
     @cancel="settingCancel"
     @reset="resetHandler"
   />
-
-  <!-- 音频播放 -->
-  <audio ref="audioRef"></audio>
 </template>
 
 <script setup>
@@ -276,20 +273,19 @@ const fromReadLoading = ref(false) // 原文发音按钮的Loading
 const toReadLoading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
-const audioRef = ref()
+
 // 发音按钮行为分发
 async function readAloud(type = 'from') {
-  console.log('type: ', type === 'from' ? '原文发音' : '译文发音')
   let voice
   if (type === 'from') {
     voice = voiceMap[translateFrom.value] || ''
     fromReadLoading.value = true
-    voicePlay(voice)
+    await voicePlay(voice)
     fromReadLoading.value = false
   } else if (type === 'to') {
     voice = voiceMap[translateTo.value] || ''
     toReadLoading.value = true
-    voicePlay(voice)
+    await voicePlay(voice)
     toReadLoading.value = false
   }
 }
@@ -298,28 +294,31 @@ async function readAloud(type = 'from') {
 let lastAudioId = ''
 async function voicePlay(voice) {
   // #region mp3文件
-  const { code, data, errmsg } = await voiceReading(
-    resultObj.data?.resultText,
-    voice,
-    lastAudioId
-  )
-  if (code === 200) {
-    lastAudioId = data
-    audioRef.value.src = data
-    audioRef.value.play()
-  } else {
-    Message.error('啊哦，播放出错了，请再试一次吧！')
-    console.log(errmsg)
-  }
-  // #endregion
-
-  // #region base64
-  // audioRef.value.src = await voiceReadingToBase64(
+  // const { code, data, errmsg } = await voiceReading(
   //   resultObj.data?.resultText,
   //   voice,
   //   lastAudioId
   // )
-  // audioRef.value.play()
+  // if (code === 200) {
+  //   lastAudioId = data
+  //   audioRef.value.src = data
+  //   audioRef.value.play()
+  // } else {
+  //   Message.error('啊哦，播放出错了，请再试一次吧！')
+  //
+  // }
+  // #endregion
+
+  // #region base64
+  const originBlob = await voiceReadingToBase64(
+    resultObj.data?.resultText,
+    voice,
+    lastAudioId
+  )
+  const url = window.URL.createObjectURL(originBlob)
+  const audio = new Audio()
+  audio.src = url
+  audio.play()
   // #endregion
 }
 
