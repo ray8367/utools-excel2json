@@ -148,7 +148,7 @@
             <transition v-if="!codeMode" name="fade-in-standard">
               <div
                 v-show="shouldShowCopyBtn"
-                class="absolute left-10px bottom-8px z-1 flex space-x-4px"
+                class="absolute left-10px bottom-8px z-1 flex space-x-8px"
               >
                 <!-- 播放按钮 -->
                 <MimicryBtn :loading="toReadLoading" @click="readAloud">
@@ -276,12 +276,17 @@ const utools = window?.utools
 
 // 发音按钮
 async function readAloud() {
-  playing.value = false
-  audioUrl.value = ''
+  resetAudio()
   const voice = voiceMap[translateTo.value] || ''
   toReadLoading.value = true
   await voicePlay(voice)
   toReadLoading.value = false
+}
+
+// 重置音频
+function resetAudio() {
+  playing.value = false
+  audioUrl.value = ''
 }
 
 // 播放语音
@@ -356,6 +361,7 @@ function changeRadioHandler() {
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
 async function startTranslation(val = currentTranslation.value, isRefresh) {
+  resetAudio()
   // 如果没输入内容，则不翻译
   if ([undefined, null, ''].includes(userInput.value)) {
     resultObj.data.resultText = ''
