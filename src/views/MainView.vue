@@ -290,16 +290,18 @@ function resetAudio() {
 }
 
 // 播放语音
-let lastAudioId = ''
 async function voicePlay(voice) {
   const params = {
     voice,
-    lastAudioId,
     text: resultObj.data?.resultText
   }
   const originBlob = await voiceReadingToBase64(params)
-  audioUrl.value = window.URL.createObjectURL(originBlob)
-  playing.value = true
+  if (originBlob.type === 'audio/mp3') {
+    audioUrl.value = window.URL.createObjectURL(originBlob)
+    playing.value = true
+  } else {
+    Message.error('啊哦，播放出错了，请再试一次吧！')
+  }
 }
 
 // 清空输入框

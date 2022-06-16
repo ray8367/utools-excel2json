@@ -19,7 +19,7 @@ const baseUrl = import.meta.env.VITE_UNIAPI_BASEURL
  * @param {*} lastAudioId 上一次的语音id
  * @returns
  */
-export async function voiceReading (text, voice, lastAudioId) {
+export async function voiceReading(text, voice, lastAudioId) {
   const res = await fetch(baseUrl + '/mstts/file', {
     method: 'POST',
     body: JSON.stringify({
@@ -33,20 +33,17 @@ export async function voiceReading (text, voice, lastAudioId) {
 
 /**
  * 语音朗读 直接生成base64
- * TODO: 返回的base64格式不能直接播放，或许是需要GET请求+链接播放，但是这样没有办法异常处理
  * @param {*} text 要朗读的文本
  * @param {*} voice 朗读文本的角色信息
- * @param {*} lastAudioId 上一次的语音id
  * @returns
  */
-export async function voiceReadingToBase64 ({ text, voice, lastAudioId }) {
+export async function voiceReadingToBase64({ text, voice }) {
   const res = await fetch(baseUrl + '/mstts/base64', {
     method: 'POST',
     responseType: 'blob',
     body: JSON.stringify({
       text,
-      voice,
-      lastAudioId
+      voice
     })
   })
   return res.blob()
