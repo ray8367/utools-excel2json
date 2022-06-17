@@ -236,7 +236,7 @@ const utools = window?.utools
 
 function formatCascader(options) {
   const labels = options.map(option => option.label)
-  return labels.join(' ➡️ ')
+  return labels.join(`\u3000\u3000 → \u3000\u3000`)
 }
 // 发音按钮
 async function readAloud() {
@@ -321,10 +321,12 @@ const changeMode = throttle(() => {
   }, 0)
 }, 1000)
 
-// 修改选中翻译 保存当前选中并翻译
+// 修改翻译服务，同时保存当前选中的服务作为默认，并翻译
 function changeRadioHandler() {
   store.setDefaultStorage(currentTranslation.value)
-  startTranslation()
+  setTimeout(() => {
+    startTranslation()
+  }, 0)
 }
 
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
