@@ -715,6 +715,10 @@ onKeyStroke('Tab', e => {
 }
 
 .tools_wrapper {
+  ::v-deep(.arco-select-view-value) {
+    display: grid;
+    text-align: center;
+  }
   @media (prefers-color-scheme: dark) {
     ::v-deep(.arco-radio-checked) {
       color: #fff;
