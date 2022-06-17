@@ -236,7 +236,7 @@ const utools = window?.utools
 
 function formatCascader(options) {
   const labels = options.map(option => option.label)
-  return labels.join(' → ')
+  return labels.join(' ➡️ ')
 }
 // 发音按钮
 async function readAloud() {
