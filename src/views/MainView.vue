@@ -79,39 +79,15 @@
           </template>
 
           <template v-else>
-            <!-- 翻译From的select -->
-            <a-select
-              v-model="translateFrom"
-              :style="{ width: '130px' }"
+            <a-cascader
+              v-model:model-value="fromToArr"
+              path-mode
+              :options="translateTreeData"
+              :style="{ width: '240px' }"
+              value-key="id"
+              :format-label="formatCascader"
               @change="changeTranslateType"
-            >
-              <a-option
-                v-for="item in translateFromOptions"
-                :key="item.value"
-                :value="item.value"
-                :disabled="item.disabled"
-              >
-                {{ item.label }}
-              </a-option>
-            </a-select>
-
-            <icon-arrow-right />
-
-            <!-- 翻译To的select -->
-            <a-select
-              v-model="translateTo"
-              :style="{ width: '130px' }"
-              @change="changeTranslateType"
-            >
-              <a-option
-                v-for="item in translateToOptions"
-                :key="item.value"
-                :value="item.value"
-                :disabled="item.disabled"
-              >
-                {{ item.label }}
-              </a-option>
-            </a-select>
+            />
           </template>
         </div>
       </section>
@@ -199,11 +175,10 @@
 </template>
 
 <script setup>
-import { debounce, throttle, cloneDeep } from 'lodash-es'
+import { debounce, throttle } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 import {
-  IconArrowRight,
   IconSettings,
   IconCopy,
   IconCode,
@@ -222,9 +197,12 @@ import { userSettingStore } from '@/store/userSetting'
 import { showGuide, clearGuide } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 import { changeCaseArr } from '@/assets/changeCaseMap.js'
+import { translateTree, apiNotSupport } from '@/assets/translateApiOption.js'
 import { voiceReadingToBase64 } from '@/apis/mstts/index.js'
 import { voiceMap } from '@/apis/mstts/data.js'
 
+const translateTreeData = ref(translateTree())
+const fromToArr = ref(['auto', 'zh'])
 const audioRef = ref()
 const audioUrl = ref('')
 const { playing } = useMediaControls(audioRef, { src: audioUrl })
@@ -249,37 +227,21 @@ const resultObj = reactive({
 const { copy } = useClipboard() // 复制结果功能
 const keys = useMagicKeys()
 const currentTranslation = ref('') // 当前翻译api
-const translateFrom = ref('auto') // 当前翻译From
-const translateTo = ref('zh') // 当前翻译to
 const codeSelect = ref('camelCase') // 当前翻译to
 const settingModalRef = ref() // 设置弹窗的ref
 const inputRef = ref() // 输入textarea的dom
-// 翻译方式From参数的选项
-const translateFromOptions = ref([
-  { label: '自动检测', value: 'auto', disabled: false },
-  { label: '中文-简体', value: 'zh', disabled: false },
-  { label: '英语', value: 'en', disabled: false },
-  { label: '日语', value: 'jp', disabled: false },
-  { label: '俄语', value: 'ru', disabled: false },
-  { label: '韩语', value: 'kor', disabled: false },
-  { label: '德语', value: 'de', disabled: false },
-  { label: '法语', value: 'fra', disabled: false },
-  { label: '中文-繁体', value: 'cht', disabled: false },
-  { label: '文言文-百度', value: 'wyw', disabled: false }
-])
-// 翻译方式To参数的选项(过滤掉“自动检测”)
-const translateToOptions = ref(
-  cloneDeep(translateFromOptions.value).filter(i => i.value !== 'auto')
-)
-
 const toReadLoading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
 
+function formatCascader(options) {
+  const labels = options.map(option => option.label)
+  return labels.join(' → ')
+}
 // 发音按钮
 async function readAloud() {
   resetAudio()
-  const voiceObj = voiceMap[translateTo.value] || voiceMap['zh']
+  const voiceObj = voiceMap[fromToArr.value[1]] || voiceMap['zh']
   // TODO: 读取发音配置
   const voice = voiceObj['default']
   toReadLoading.value = true
@@ -377,8 +339,8 @@ async function startTranslation(val = currentTranslation.value, isRefresh) {
   pageLoading.value = true
   const obj = {
     q: userInput.value,
-    from: translateFrom.value,
-    to: translateTo.value,
+    from: fromToArr.value[0],
+    to: fromToArr.value[1],
     isRefresh
   }
   const { text, code } = await translationCommon(val, obj)
@@ -529,6 +491,11 @@ function resetHandler() {
   readSetting()
 }
 
+// 重置From和To
+function resetFromTo() {
+  fromToArr.value = ['auto', 'zh']
+}
+
 onMounted(() => {
   utools && utoolsInit()
   inputFocus()
@@ -566,80 +533,68 @@ watch(
   }
 )
 
-// api不支持的语言value声明
-const apiNotSupport = {
-  baidu: [],
-  tencent: ['wyw'],
-  google: ['wyw'],
-  ali: ['wyw'],
-  youdao: ['wyw'],
-  caiyun: ['wyw', 'de', 'fra', 'cht', 'kor'],
-  huoshan: ['wyw']
-}
-
-// 根据api动态变更选项的disabled属性
 watchEffect(() => {
-  // 当前翻译api的名字
-  const apiName = currentTranslation.value
-  // 当前翻译api不支持的语种value数组
-  const currentApiDisabledArr = apiNotSupport[apiName] || []
-  // 根据不支持语种数组，动态设置选项中的disabled，禁用掉不支持的选项
-  translateFromOptions.value.forEach(i => {
-    i.disabled = currentApiDisabledArr.includes(i.value)
+  const current = apiNotSupport?.[currentTranslation.value]
+  const customNotSupport = current?.customNotSupport
+  const toNotSupport = current?.toNotSupport
+  if (!current) return
+
+  translateTreeData.value.forEach(i => {
+    // 一层循环禁用掉api本身就不支持的语种
+    i.disabled = current?.fromNotSupport.includes(i.value)
+
+    // 如果存在customNotSupport这个对象，则为不支持任意互翻api，根据数据禁用对应的不支持互翻的语种
+    if (customNotSupport) {
+      i.children.forEach(j => {
+        j.disabled = customNotSupport[i.value].includes(j.value)
+      })
+    } else if (toNotSupport) {
+      // 如果存在toNotSupport，则代表该api支持任意互翻，禁用掉本就不支持的语种即可
+      i.children.forEach(j => {
+        j.disabled = toNotSupport.includes(j.value)
+      })
+    }
   })
-  // 彩云的选项单独处理，这里除开彩云
-  if (apiName !== 'caiyun') {
-    translateToOptions.value.forEach(i => {
-      i.disabled = currentApiDisabledArr.includes(i.value)
-    })
+})
+
+watchEffect(() => {
+  const currentApi = currentTranslation.value
+  const current = apiNotSupport?.[currentApi]
+  if (!current) return
+  const customNotSupport = current?.customNotSupport
+  const toNotSupport = current?.toNotSupport
+  const from = fromToArr.value[0]
+  const to = fromToArr.value[1]
+
+  // 判断from是否不支持
+  // 如果当前的翻译from，在当前api的fromNotSupport中不存在，就恢复默认
+  if (current?.fromNotSupport.includes(from)) {
+    console.log('因为from不兼容，触发重置')
+    resetFromTo()
+    return
   }
-  // Boolean: From或To是否现在的值，是否是当前翻译api不支持的翻译语种
-  const paramsHasNoSupport =
-    currentApiDisabledArr.includes(translateFrom.value) ||
-    currentApiDisabledArr.includes(translateTo.value)
-  // 如果包含不支持的，则重置为自动 —— 中文-简体
-  if (paramsHasNoSupport) {
-    translateFrom.value = 'auto'
-    translateTo.value = 'zh'
+
+  // 判断to是否不支持
+
+  // 如果是不支持互翻的api，且当前from的对应to为不支持的，就恢复默认
+  if (customNotSupport && customNotSupport[from].includes(to)) {
+    console.log('不支持互翻的api，因为to不兼容，触发重置')
+    resetFromTo()
+  }
+
+  // 如果是支持互翻的，则取toNotSupport数组中进行判断
+  if (toNotSupport && toNotSupport.includes(to)) {
+    console.log('支持互翻的api，因为to不兼容，触发重置')
+    resetFromTo()
   }
 })
 
-// 单独处理彩云的选项
-watchEffect(() => {
-  // 如果不是彩云，直接return
-  if (currentTranslation.value !== 'caiyun') return
-  const fromIsAuto = translateFrom.value === 'auto' // From是否是自动
-  const fromIsZh = translateFrom.value === 'zh' // From是否是中文
-  const toIsZh = translateTo.value === 'zh' // To是否是中文
-  // 彩云不支持的语种value数组
-  const caiyunDisabledArr = apiNotSupport.caiyun
-  // 循环To的数组
-  translateToOptions.value.forEach(i => {
-    // 先禁用彩云不支持的
-    i.disabled = caiyunDisabledArr.includes(i.value)
-    // 如果From是中文，则禁用To选项的中文
-    if (fromIsZh && i.value === 'zh') {
-      i.disabled = true
-    }
-    // 如果From不是中文也不是自动（那就是外语），则禁用To选项中除了中文以外的，并自动设置为中文
-    if (!fromIsZh && !fromIsAuto) {
-      i.disabled = i.value !== 'zh'
-      translateTo.value = 'zh'
-    }
-  })
-  // 如果两边都是中文，则把后面的改成英文
-  if (fromIsZh && toIsZh) {
-    translateTo.value = 'en'
-  }
-})
-
+// 监听代码模式
 watchEffect(() => {
   if (codeMode.value) {
-    translateFrom.value = 'auto'
-    translateTo.value = 'en'
+    fromToArr.value = ['auto', 'en']
   } else {
-    translateFrom.value = 'auto'
-    translateTo.value = 'zh'
+    resetFromTo()
   }
 })
 
