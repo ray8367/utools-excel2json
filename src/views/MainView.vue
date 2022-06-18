@@ -216,7 +216,8 @@ const {
   getHomeFontSize: textFont,
   copyBtnBehavior,
   copyBtnShow,
-  readAloud
+  readAloud,
+  readingPreference
 } = storeToRefs(store)
 const codeMode = computed(() => store.codeMode) // 命名翻译模式
 const pageLoading = ref(false) // 是否正在翻译
@@ -246,8 +247,8 @@ function formatCascader(options) {
 async function tapReadAloudHandler() {
   resetAudio()
   const voiceObj = voiceMap[fromToArr.value[1]] || voiceMap['zh']
-  // TODO: 读取发音配置
-  const voice = voiceObj['default']
+  // 读取发音配置
+  const voice = voiceObj[readingPreference.value]
   toReadLoading.value = true
   await voicePlay(voice)
   toReadLoading.value = false
