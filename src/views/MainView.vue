@@ -47,11 +47,11 @@
           @change="切换翻译服务()"
         >
           <a-radio
-            v-for="item in (翻译服务选项 || []).slice(0, 4)"
-            :key="item.item"
-            :value="item.value"
+            v-for="项 in (翻译服务选项 || []).slice(0, 4)"
+            :key="项.item"
+            :value="项.value"
           >
-            {{ item.label }}
+            {{ 项.label }}
           </a-radio>
         </a-radio-group>
         <div
@@ -65,11 +65,11 @@
               @change="命名模式切换类型()"
             >
               <a-option
-                v-for="(item, index) in 切换类型数组"
-                :key="index"
-                :value="item.name"
+                v-for="(项, 索引) in 切换类型数组"
+                :key="索引"
+                :value="项.name"
               >
-                {{ item.label }}
+                {{ 项.label }}
               </a-option>
             </a-select>
           </template>
@@ -115,7 +115,7 @@
               placeholder="翻译结果"
               readonly
             />
-            <transition v-if="readAloud && !命名模式" name="fade-in-standard">
+            <transition v-if="朗读功能 && !命名模式" name="fade-in-standard">
               <div
                 v-show="应该显示复制按钮"
                 class="absolute left-10px bottom-8px z-1 flex space-x-8px"
@@ -126,8 +126,8 @@
                 </MimicryBtn>
 
                 <!-- 开始暂停按钮 -->
-                <MimicryBtn v-show="音频Url" @click="playing = !playing">
-                  <component :is="playing ? IconPause : IconPlayArrowFill" />
+                <MimicryBtn v-show="音频Url" @click="正在播放 = !正在播放">
+                  <component :is="正在播放 ? IconPause : IconPlayArrowFill" />
                 </MimicryBtn>
               </div>
             </transition>
@@ -138,19 +138,19 @@
                 class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
               >
                 <ColorfulBtn
-                  v-if="copyBtnShow.includes(1)"
+                  v-if="复制按钮的显示.includes(1)"
                   @click="复制按钮(1)"
                 >
                   <icon-copy /> 仅复制
                 </ColorfulBtn>
                 <ColorfulBtn
-                  v-if="copyBtnShow.includes(2)"
+                  v-if="复制按钮的显示.includes(2)"
                   @click="复制按钮(2)"
                 >
                   <icon-fullscreen-exit /> 复制并隐藏
                 </ColorfulBtn>
                 <ColorfulBtn
-                  v-if="copyBtnShow.includes(3)"
+                  v-if="复制按钮的显示.includes(3)"
                   @click="复制按钮(3)"
                 >
                   <icon-edit /> 复制并输入
@@ -192,34 +192,34 @@ import {
   IconPause,
   IconPlayArrowFill
 } from '@arco-design/web-vue/es/icon'
-import { Message } from '@arco-design/web-vue'
+import { Message as 提示 } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
-import { delay } from 'lodash-es'
+import { delay as 延迟 } from 'lodash-es'
 import { translationCommon } from '@/apis/translation/index.js'
-import { userSettingStore } from '@/store/userSetting'
+import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
 import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
-import { getDbStorageItem } from '@/utils/storage.js'
+import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 import { 切换类型数组 } from '@/assets/changeCaseMap.js'
 import { 语种树, 服务不支持的对象 } from '@/assets/translateApiOption.js'
-import { voiceReadingToBase64 } from '@/apis/mstts/index.js'
-import { voiceMap } from '@/apis/mstts/data.js'
+import { voiceReadingToBase64 as 朗读base64 } from '@/apis/mstts/index.js'
+import { voiceMap as 声音映射 } from '@/apis/mstts/data.js'
 
 const 语种树的数据 = ref(语种树())
 const 源语言目标语言数组 = ref(['auto', 'zh'])
 const 音频Ref = ref()
 const 音频Url = ref('')
-const { playing } = useMediaControls(音频Ref, { src: 音频Url })
-const store = userSettingStore()
+const { playing: 正在播放 } = useMediaControls(音频Ref, { src: 音频Url })
+const 存储 = 用户设置存储()
 const {
-  homeOption,
+  homeOption: 首页选项,
   getHomeApiOptions: 翻译服务选项,
-  getHomeFontSize: textFont,
-  copyBtnBehavior,
-  copyBtnShow,
-  readAloud,
-  readingPreference
-} = storeToRefs(store)
-const 命名模式 = computed(() => store.codeMode) // 命名翻译模式
+  getHomeFontSize: 文字尺寸,
+  copyBtnBehavior: 复制按钮行为,
+  copyBtnShow: 复制按钮的显示,
+  readAloud: 朗读功能,
+  readingPreference: 朗读性别偏好
+} = storeToRefs(存储)
+const 命名模式 = computed(() => 存储.codeMode) // 命名翻译模式
 const 翻译加载 = ref(false) // 是否正在翻译
 const 用户输入 = ref('') // 输入的内容
 const 结果对象 = reactive({
@@ -229,7 +229,7 @@ const 结果对象 = reactive({
     结果编号: nanoid()
   }
 })
-const { copy } = useClipboard() // 复制结果功能
+const { copy: 复制 } = useClipboard() // 复制结果功能
 const keys = useMagicKeys()
 const 当前翻译服务 = ref('') // 当前翻译api
 const 命名模式类型 = ref('camelCase') // 命名模式要转换的类型
@@ -246,9 +246,9 @@ function 格式化级联内容(options) {
 // 发音按钮
 async function 点击朗读() {
   重置音频()
-  const 声音对象 = voiceMap[源语言目标语言数组.value[1]] || voiceMap['zh']
+  const 声音对象 = 声音映射[源语言目标语言数组.value[1]] || 声音映射['zh']
   // 读取发音配置
-  const 声音 = 声音对象[readingPreference.value]
+  const 声音 = 声音对象[朗读性别偏好.value]
   朗读加载.value = true
   await 播放音频(声音)
   朗读加载.value = false
@@ -256,7 +256,7 @@ async function 点击朗读() {
 
 // 重置音频
 function 重置音频() {
-  playing.value = false
+  正在播放.value = false
   音频Url.value = ''
 }
 
@@ -266,12 +266,12 @@ async function 播放音频(voice) {
     voice,
     text: 结果对象.数据?.结果文字
   }
-  const 原始文件流 = await voiceReadingToBase64(params)
+  const 原始文件流 = await 朗读base64(params)
   if (原始文件流.type === 'audio/mp3') {
     音频Url.value = window.URL.createObjectURL(原始文件流)
-    playing.value = true
+    正在播放.value = true
   } else {
-    Message.error('啊哦，播放出错了，请再试一次吧！')
+    提示.error('啊哦，播放出错了，请再试一次吧！')
   }
 }
 
@@ -310,7 +310,7 @@ function 打开模态框() {
 
 // 变更模式
 const 切换模式 = throttle(() => {
-  Message.success({
+  提示.success({
     content: `命名翻译模式${命名模式.value ? '关闭' : '开启'}`,
     duration: 1000
   })
@@ -319,7 +319,7 @@ const 切换模式 = throttle(() => {
   // 如果连续翻译，结果码从200 => 200并不会触发Code动画，符合预期
   结果对象.数据.结果码 = !用户输入.value ? -1 : 0
 
-  store.setCodeMode(!命名模式.value)
+  存储.setCodeMode(!命名模式.value)
   输入框获取焦点()
   setTimeout(() => {
     开始翻译()
@@ -328,7 +328,7 @@ const 切换模式 = throttle(() => {
 
 // 修改翻译服务，同时保存当前选中的服务作为默认，并翻译
 function 切换翻译服务() {
-  store.setDefaultStorage(当前翻译服务.value)
+  存储.setDefaultStorage(当前翻译服务.value)
   setTimeout(() => {
     开始翻译()
   }, 0)
@@ -350,13 +350,13 @@ async function 开始翻译(val = 当前翻译服务.value, isRefresh) {
     to: 源语言目标语言数组.value[1],
     isRefresh
   }
-  const { text, code } = await translationCommon(val, obj)
-  const calcText = 命名模式.value
-    ? 获取翻译模式对应类型数据(text, 命名模式类型.value)
-    : text
+  const { text: 返回的文字, code: 状态码 } = await translationCommon(val, obj)
+  const 处理后的文字 = 命名模式.value
+    ? 获取翻译模式对应类型数据(返回的文字, 命名模式类型.value)
+    : 返回的文字
   结果对象.数据 = {
-    结果文字: calcText,
-    结果码: code,
+    结果文字: 处理后的文字,
+    结果码: 状态码,
     结果编号: nanoid()
   }
   翻译加载.value = false
@@ -364,11 +364,11 @@ async function 开始翻译(val = 当前翻译服务.value, isRefresh) {
 }
 // 切换命名翻译模式的方式select
 function 命名模式切换类型() {
-  const result = 获取翻译模式对应类型数据(
+  const 结果 = 获取翻译模式对应类型数据(
     结果对象.数据.结果文字,
     命名模式类型.value
   )
-  结果对象.数据.结果文字 = result
+  结果对象.数据.结果文字 = 结果
 }
 
 // 获取命名翻译模式的翻译结果
@@ -405,8 +405,8 @@ function 首次引导() {
 // 读取配置
 function 读取设置() {
   //  首次加载设置当前选中为设置的默认翻译
-  if (!homeOption.value.includes(当前翻译服务.value)) {
-    当前翻译服务.value = store.defaultApi
+  if (!首页选项.value.includes(当前翻译服务.value)) {
+    当前翻译服务.value = 存储.defaultApi
   }
 }
 
@@ -415,11 +415,11 @@ function 改变命名模式类型(code) {
   // codeMode&xx
   const reg = /^codeMode__/
   if (reg.test(code)) {
-    store.setCodeMode(true)
+    存储.setCodeMode(true)
     const modeName = code.split('__')[1]
     命名模式类型.value = modeName
   } else {
-    store.setCodeMode(false)
+    存储.setCodeMode(false)
   }
 }
 
@@ -437,7 +437,7 @@ function utools初始化() {
 const 快捷键复制 = throttle(async () => {
   await 仅复制()
   if (!utools) return
-  const 行为 = copyBtnBehavior.value
+  const 行为 = 复制按钮行为.value
   if (行为 === 'close') {
     await 延迟关闭utools()
   } else if (行为 === 'closeInput') {
@@ -450,7 +450,7 @@ const 快捷键复制 = throttle(async () => {
 function 延迟关闭utools(delayTime = 300) {
   if (!utools) return
   return new Promise(resolve => {
-    delay(function () {
+    延迟(function () {
       utools.hideMainWindow()
       resolve()
     }, delayTime)
@@ -474,8 +474,8 @@ const 复制按钮 = throttle((val = 1) => {
 
 // 仅复制
 async function 仅复制() {
-  await copy(结果对象.数据.结果文字)
-  Message.success({ content: '复制成功', duration: 2500 })
+  await 复制(结果对象.数据.结果文字)
+  提示.success({ content: '复制成功', duration: 2500 })
 }
 
 // 复制并隐藏
@@ -513,7 +513,7 @@ onMounted(() => {
   输入框获取焦点()
   读取设置()
 
-  !getDbStorageItem('firstUseMain') && 首次引导()
+  !获取存储项('firstUseMain') && 首次引导()
 })
 
 // 监听用户输入，防抖翻译
@@ -682,7 +682,7 @@ onKeyStroke('Tab', e => {
     height: 100%;
     padding-right: 26px;
     padding-bottom: 50px;
-    font-size: v-bind(textFont);
+    font-size: v-bind(文字尺寸);
     resize: none;
   }
 
