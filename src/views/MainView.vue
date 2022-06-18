@@ -145,13 +145,16 @@
               placeholder="翻译结果"
               readonly
             />
-            <transition v-if="!codeMode" name="fade-in-standard">
+            <transition v-if="readAloud && !codeMode" name="fade-in-standard">
               <div
                 v-show="shouldShowCopyBtn"
                 class="absolute left-10px bottom-8px z-1 flex space-x-8px"
               >
                 <!-- 播放按钮 -->
-                <MimicryBtn :loading="toReadLoading" @click="readAloud">
+                <MimicryBtn
+                  :loading="toReadLoading"
+                  @click="tapReadAloudHandler"
+                >
                   <icon-sound />
                 </MimicryBtn>
 
@@ -234,7 +237,9 @@ const {
   getHomeApiOptions: translateApiOptions,
   getHomeFontSize: textFont,
   copyBtnBehavior,
-  copyBtnShow
+  copyBtnShow,
+  readAloud,
+  readingPreference
 } = storeToRefs(store)
 const codeMode = computed(() => store.codeMode) // 命名翻译模式
 const pageLoading = ref(false) // 是否正在翻译
@@ -277,11 +282,11 @@ const toReadLoading = ref(false) // 译文发音按钮的Loading
 const utools = window?.utools
 
 // 发音按钮
-async function readAloud() {
+async function tapReadAloudHandler() {
   resetAudio()
   const voiceObj = voiceMap[translateTo.value] || voiceMap['zh']
-  // TODO: 读取发音配置
-  const voice = voiceObj['default']
+  // 读取发音配置
+  const voice = voiceObj[readingPreference.value]
   toReadLoading.value = true
   await voicePlay(voice)
   toReadLoading.value = false

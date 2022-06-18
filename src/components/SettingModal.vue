@@ -110,6 +110,25 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
+              <a-form-item label="语音朗读">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>语音朗读</span>
+                    <a-popover position="right">
+                      <icon-question-circle />
+                      <template #content>
+                        <p>
+                          该选项处于实验性，并可能长期处于实验性，在此期间可能出现一些朗读失败等一些奇怪的bug（不影响翻译），如果开启，则表示你可以接受朗读功能的这些bug
+                        </p>
+                      </template>
+                    </a-popover>
+                  </div>
+                </template>
+
+                <a-switch v-model="formData.readAloud" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
               <a-form-item label="朗读偏好">
                 <template #label>
                   <div class="space-x-4px">
@@ -124,10 +143,13 @@
                     </a-popover>
                   </div>
                 </template>
-                <a-radio-group v-model="formData.readingPreference">
+                <a-radio-group
+                  v-model="formData.readingPreference"
+                  :disabled="!formData.readAloud"
+                >
                   <a-radio value="default">系统默认</a-radio>
-                  <a-radio value="close"> 仅男声 </a-radio>
-                  <a-radio value="closeInput"> 仅女声 </a-radio>
+                  <a-radio value="male"> 仅男声 </a-radio>
+                  <a-radio value="female"> 仅女声 </a-radio>
                 </a-radio-group>
               </a-form-item>
             </a-col>
@@ -312,6 +334,7 @@ const formData = reactive({
   textFont: 16, // 文本框字号
   copyBtnBehavior: 'open', // 快捷键的行为
   copyBtnShow: [1, 2, 3], // 首页显示的按钮
+  readAloud: true, // 语音朗读
   readingPreference: 'default', // 朗读偏好
   codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
@@ -405,6 +428,9 @@ function modalOk() {
   settingStore.setCopyBtnBehavior(formData.copyBtnBehavior)
   settingStore.setCodeMode(formData.codeMode)
   settingStore.setCopyBtnShow(formData.copyBtnShow)
+  settingStore.setCopyBtnShow(formData.copyBtnShow)
+  settingStore.setReadAloud(formData.readAloud)
+  settingStore.setReadingPreference(formData.readingPreference)
   Message.success({ content: '设置成功', duration: 1000 })
   emit('ok')
   closeSettingModal()
