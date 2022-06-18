@@ -9,82 +9,107 @@ import {
 } from '@/utils/storage'
 import { apiOptions } from '@/assets/translateApiOption'
 
-// 配置项键名
-const CONFIG_KEYS = {
-  KEY_SETTING: 'keyConfig', // 密钥配置
-  HOME_OPTION: 'homeOption', // 首页选择
-  DEFAULT_API: 'defaultApi', // 默认使用api
-  FONT_SIZE: 'fontSize', // 输入框文本大小
-  COPY_BTN_BEHAVIOR: 'copyBtnBehavior', // 复制快捷键行为
-  COPY_BTN_SHOW: 'copyBtnShow', // 显示的复制按钮
-  CODE_MODE: 'codeMode', // 命名翻译模式
-  READ_ALOUD: 'readAloud', // 语音朗读
-  READING_PREFERENCE: 'readingPreference' // 朗读偏好
+/** 获取默认的首页api */
+const getDefaultHomeApi = () => {
+  return apiOptions.slice(0, 4).map(i => i.value)
+}
+
+const CONFIG = {
+  // 密钥配置
+  KEY_SETTING: {
+    key: 'keyConfig',
+    type: Object,
+    defaultState: {}
+  },
+  // 首页选择
+  HOME_OPTION: {
+    key: 'homeOption',
+    type: Array,
+    defaultState: getDefaultHomeApi()
+  },
+  // 默认使用api
+  DEFAULT_API: {
+    key: 'defaultApi',
+    type: String,
+    defaultState: getDefaultHomeApi()[0]
+  },
+  // 输入框文本大小
+  FONT_SIZE: {
+    key: 'fontSize',
+    type: Number,
+    defaultState: 16
+  },
+  // 复制快捷键行为
+  COPY_BTN_BEHAVIOR: {
+    key: 'copyBtnBehavior',
+    type: String,
+    defaultState: 'open'
+  },
+  // 显示的复制按钮
+  COPY_BTN_SHOW: {
+    key: 'copyBtnShow',
+    type: Array,
+    defaultState: [1, 2, 3]
+  },
+  // 命名翻译模式
+  CODE_MODE: {
+    key: 'codeMode',
+    type: Boolean,
+    defaultState: false
+  },
+  // 语音朗读
+  READ_ALOUD: {
+    key: 'readAloud',
+    type: Boolean,
+    defaultState: false
+  },
+  // 朗读偏好
+  READING_PREFERENCE: {
+    key: 'readingPreference',
+    type: String,
+    defaultState: 'default'
+  }
 }
 
 /** 获取初始化初始值 */
 function getInitState() {
-  /** 获取默认的首页api */
-  const getDefaultHomeApi = () => {
-    return apiOptions.slice(0, 4).map(i => i.value)
-  }
+  // 获取存储的数据
+  const getStorageData = config => {
+    const { key, type, defaultState } = config
+    const strData = getDbStorageItem(key)
+    // if (defaultState === null || defaultState === undefined) {
+    //   return strData
+    // }
 
-  const initHomeOptionState = () => {
-    const strData = getDbStorageItem(CONFIG_KEYS.HOME_OPTION)
-    if (strData) {
-      try {
-        return JSON.parse(strData)
-      } catch (error) {
-        return getDefaultHomeApi()
-      }
-    } else {
-      return getDefaultHomeApi()
-    }
-  }
-
-  const initDefaultApiState = () => {
-    return getDbStorageItem(CONFIG_KEYS.DEFAULT_API) || getDefaultHomeApi()[0]
-  }
-
-  const initKeyConfigState = () => {
-    const strData = getDbStorageItem(CONFIG_KEYS.KEY_SETTING) || '{}'
+    // 根据默认值类型尝试对获取到的值做反序列化处理
+    let result
     try {
-      return JSON.parse(strData)
+      if (type === Number) {
+        result = Number.parseFloat(strData)
+      } else if (type === Object || type === Array) {
+        result = JSON.parse(strData)
+      } else if (type === Boolean) {
+        result = strData === 'true' || strData === true ? true : false
+      } else {
+        result = strData
+      }
     } catch (error) {
-      return {}
+      //
     }
-  }
 
-  const initFontSizeState = () => {
-    const fontSize = getDbStorageItem(CONFIG_KEYS.FONT_SIZE) || 16
-    return Number.parseInt(fontSize)
-  }
-
-  const getStorageBoolean = (key, defaultState) => {
-    const value = getDbStorageItem(key) || defaultState
-    return value === 'true' || value === true ? true : false
-  }
-
-  const getCopyBtnShow = () => {
-    const value = getDbStorageItem(CONFIG_KEYS.COPY_BTN_SHOW) || '[1,2,3]'
-    return JSON.parse(value)
-  }
-
-  const getReadingPreference = () => {
-    const value = getDbStorageItem(CONFIG_KEYS.READING_PREFERENCE) || 'default'
-    return value
+    return result || defaultState
   }
 
   return {
-    homeOption: initHomeOptionState(),
-    defaultApi: initDefaultApiState(),
-    keyConfig: initKeyConfigState(),
-    fontSize: initFontSizeState(),
-    copyBtnBehavior: getDbStorageItem(CONFIG_KEYS.COPY_BTN_BEHAVIOR) || 'open',
-    codeMode: getStorageBoolean(CONFIG_KEYS.CODE_MODE, false),
-    copyBtnShow: getCopyBtnShow(),
-    readAloud: getStorageBoolean(CONFIG_KEYS.READ_ALOUD, true),
-    readingPreference: getReadingPreference()
+    homeOption: getStorageData(CONFIG.HOME_OPTION),
+    defaultApi: getStorageData(CONFIG.DEFAULT_API),
+    keyConfig: getStorageData(CONFIG.KEY_SETTING),
+    fontSize: getStorageData(CONFIG.FONT_SIZE),
+    copyBtnBehavior: getStorageData(CONFIG.COPY_BTN_BEHAVIOR),
+    codeMode: getStorageData(CONFIG.CODE_MODE),
+    copyBtnShow: getStorageData(CONFIG.COPY_BTN_SHOW),
+    readAloud: getStorageData(CONFIG.READ_ALOUD),
+    readingPreference: getStorageData(CONFIG.READING_PREFERENCE)
   }
 }
 
@@ -145,61 +170,62 @@ export const userSettingStore = defineStore('settings', {
     /** 设置首页可见翻译 */
     setHomeOption(data) {
       this.homeOption = data
-      setDbStorageItem(CONFIG_KEYS.HOME_OPTION, JSON.stringify(data))
+      setDbStorageItem(CONFIG.HOME_OPTION.key, JSON.stringify(data))
     },
 
     /** 设置默认翻译 */
     setDefaultStorage(data) {
       this.defaultApi = data
-      setDbStorageItem(CONFIG_KEYS.DEFAULT_API, data)
+      setDbStorageItem(CONFIG.DEFAULT_API.key, data)
     },
 
     /** 设置密钥 */
     setKeyConfig(data) {
       this.keyConfig = data
-      setDbStorageItem(CONFIG_KEYS.KEY_SETTING, JSON.stringify(data))
+      setDbStorageItem(CONFIG.KEY_SETTING.key, JSON.stringify(data))
     },
 
     /** 设置字体大小 */
     setFontSize(data) {
       this.fontSize = data
-      setDbStorageItem(CONFIG_KEYS.FONT_SIZE, data)
+      setDbStorageItem(CONFIG.FONT_SIZE.key, data)
     },
 
     /** 设置复制快捷键行为 */
     setCopyBtnBehavior(data) {
       this.copyBtnBehavior = data
-      setDbStorageItem(CONFIG_KEYS.COPY_BTN_BEHAVIOR, data)
+      setDbStorageItem(CONFIG.COPY_BTN_BEHAVIOR.key, data)
     },
 
     /** 设置复制按钮 */
     setCopyBtnShow(data) {
       this.copyBtnShow = data
-      setDbStorageItem(CONFIG_KEYS.COPY_BTN_SHOW, JSON.stringify(data))
+      setDbStorageItem(CONFIG.COPY_BTN_SHOW.key, JSON.stringify(data))
     },
 
     /** 设置命名翻译模式 */
     setCodeMode(data) {
       this.codeMode = data
-      setDbStorageItem(CONFIG_KEYS.CODE_MODE, data)
+      setDbStorageItem(CONFIG.CODE_MODE.key.key, data)
     },
 
     /** 设置语音朗读开启 */
     setReadAloud(data) {
       this.readAloud = data
-      setDbStorageItem(CONFIG_KEYS.READ_ALOUD, data)
+      setDbStorageItem(CONFIG.READ_ALOUD.key, data)
     },
 
     /** 设置语音朗读偏好 */
     setReadingPreference(data) {
       this.readingPreference = data
-      setDbStorageItem(CONFIG_KEYS.READING_PREFERENCE, data)
+      setDbStorageItem(CONFIG.READING_PREFERENCE.key, data)
     },
 
     /** 重置设置 */
     reset() {
-      Object.keys(CONFIG_KEYS).forEach(key => {
-        removeDbStorageItem(CONFIG_KEYS[key])
+      Object.keys(CONFIG).forEach(configKey => {
+        const { key } = CONFIG[configKey]
+        removeDbStorageItem(key)
       })
       this.$reset()
     },
