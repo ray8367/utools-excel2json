@@ -321,7 +321,7 @@ import { IconQuestionCircle, IconCode } from '@arco-design/web-vue/es/icon'
 import { Message } from '@arco-design/web-vue'
 import { apiOptions } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
-import { clearGuide, showGuide } from '@/utils/showGuide.js'
+import { 清除引导, 显示引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem } from '@/utils/storage.js'
 
 // 从pinia读取设置
@@ -449,7 +449,7 @@ function calcShortcutKey() {
 
 // 点击弹框取消
 function modalCancel() {
-  clearGuide()
+  清除引导()
   emit('cancel')
   closeSettingModal()
 }
@@ -472,13 +472,13 @@ function firstGuide() {
     },
     classes: 'guide_wrapper'
   }
-  showGuide(option, 'firstUseSetting')
+  显示引导(option, 'firstUseSetting')
 }
 
 // 关闭设置弹框回调
 // function modalClose() {
 //
-//   clearGuide()
+//   清除引导()
 // }
 
 // 获取设置

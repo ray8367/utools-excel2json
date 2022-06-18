@@ -3,7 +3,7 @@ import { getDbStorageItem, setDbStorageItem } from '@/utils/storage.js'
 
 let tour
 
-export function showGuide (params, localName) {
+export function 显示引导 (params, localName) {
   tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
@@ -38,7 +38,7 @@ export function showGuide (params, localName) {
   tour.start()
 }
 
-export function clearGuide () {
+export function 清除引导 () {
   tour?.cancel()
 }
 

@@ -11,7 +11,7 @@ import {
   pathCase
 } from 'change-case'
 
-export const changeCaseArr = [
+export const 切换类型数组 = [
   { name: 'camelCase', handle: camelCase, label: '驼峰(小)' },
   { name: 'pascalCase', handle: pascalCase, label: '驼峰(大)' },
   { name: 'snakeCase', handle: snakeCase, label: '下划线' },

@@ -31,18 +31,18 @@ export const apiOptions = [
   }
 ]
 
-export const apiNotSupport = {
+export const 服务不支持的对象 = {
   google: {
-    fromNotSupport: ['wyw'],
+    源语言不支持: ['wyw'],
     toNotSupport: ['wyw']
   },
   baidu: {
-    fromNotSupport: [],
+    源语言不支持: [],
     toNotSupport: []
   },
   tencent: {
-    fromNotSupport: ['wyw'],
-    customNotSupport: {
+    源语言不支持: ['wyw'],
+    自定义不支持: {
       auto: ['wyw'],
       zh: ['wyw'],
       en: ['wyw'],
@@ -56,8 +56,8 @@ export const apiNotSupport = {
     }
   },
   ali: {
-    fromNotSupport: ['wyw'],
-    customNotSupport: {
+    源语言不支持: ['wyw'],
+    自定义不支持: {
       auto: ['wyw'],
       zh: ['wyw'],
       en: ['cht', 'wyw'],
@@ -71,12 +71,12 @@ export const apiNotSupport = {
     }
   },
   youdao: {
-    fromNotSupport: ['wyw'],
+    源语言不支持: ['wyw'],
     toNotSupport: ['wyw']
   },
   caiyun: {
-    fromNotSupport: ['kor', 'de', 'fra', 'cht', 'wyw'],
-    customNotSupport: {
+    源语言不支持: ['kor', 'de', 'fra', 'cht', 'wyw'],
+    自定义不支持: {
       auto: ['kor', 'de', 'fra', 'cht', 'wyw'],
       zh: ['zh', 'kor', 'de', 'fra', 'cht', 'wyw'],
       en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 只有中文
@@ -90,7 +90,7 @@ export const apiNotSupport = {
     }
   },
   huoshan: {
-    fromNotSupport: ['wyw'],
+    源语言不支持: ['wyw'],
     toNotSupport: ['wyw']
   }
 }
@@ -108,7 +108,7 @@ const translateFromOptions = [
   { label: '文言文', value: 'wyw', disabled: false, id: nanoid() }
 ]
 
-export function translateTree (arr = translateFromOptions) {
+export function 语种树 (arr = translateFromOptions) {
   const tmpArr = cloneDeep(arr)
   tmpArr.forEach(i => {
     i.children = arr
