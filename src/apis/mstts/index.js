@@ -1,31 +1,20 @@
-export const voiceMap = {
-  auto: 'zh-CN-XiaoxiaoNeural',
-  zh: 'zh-CN-XiaoxiaoNeural',
-  en: 'en-GB-LibbyNeural',
-  jp: 'ja-JP-NanamiNeural',
-  ru: 'ru-RU-SvetlanaNeural',
-  de: 'de-AT-IngridNeural',
-  fra: 'fr-FR-DeniseNeural',
-  cht: 'zh-TW-HsiaoChenNeural',
-  kor: 'ko-KR-SunHiNeural'
-}
 const baseUrl = import.meta.env.VITE_UNIAPI_BASEURL
 
 /**
  * 语音朗读 生成mp3文件
  * TODO: 暂未找到较合适的文件删除方案,会导致云存储空间浪费;文件到云函数解析后再次经过上传，加长了请求周期
- * @param {*} text 要朗读的文本
- * @param {*} voice 朗读文本的角色信息
- * @param {*} lastAudioId 上一次的语音id
+ * @param {*} 文本 要朗读的文本
+ * @param {*} 角色声音 朗读文本的角色信息
+ * @param {*} 上次发音 上一次的语音id
  * @returns
  */
-export async function voiceReading(text, voice, lastAudioId) {
+export async function 语音朗读生成mp3(文本, 角色声音, 上次发音) {
   const res = await fetch(baseUrl + '/mstts/file', {
     method: 'POST',
     body: JSON.stringify({
-      text,
-      voice,
-      lastAudioId
+      text: 文本,
+      voice: 角色声音,
+      lastAudioId: 上次发音
     })
   }).then(res => res.json())
   return res
@@ -37,7 +26,7 @@ export async function voiceReading(text, voice, lastAudioId) {
  * @param {*} voice 朗读文本的角色信息
  * @returns
  */
-export async function voiceReadingToBase64({ text, voice }) {
+export async function 语音朗读生成base64({ text, voice }) {
   const res = await fetch(baseUrl + '/mstts/base64', {
     timeout: 300000,
     method: 'POST',

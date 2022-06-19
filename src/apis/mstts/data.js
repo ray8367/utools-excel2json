@@ -1,4 +1,4 @@
-const nameMap = new Map([
+const 发音人映射 = new Map([
   ['云健', 'zh-CN-YunjianNeural'],
   ['晓秋', 'zh-CN-XiaoqiuNeural'],
   ['Jane', 'en-US-JaneNeural'],
@@ -15,49 +15,49 @@ const nameMap = new Map([
   ['Denise', 'fr-FR-DeniseNeural']
 ])
 
-function getShortName (str = '') {
-  return nameMap.get(str) || 'zh-CN-XiaoxiaoNeural'
+function 获取发音人(str = '') {
+  return 发音人映射.get(str) || 'zh-CN-XiaoxiaoNeural'
 }
 
-export const voiceMap = {
+export const 声音映射 = {
   zh: {
-    male: getShortName('云健'),
-    female: getShortName('晓秋'),
-    default: getShortName('云健')
+    male: 获取发音人('云健'),
+    female: 获取发音人('晓秋'),
+    default: 获取发音人('云健')
   },
   en: {
-    male: getShortName('Christopher'),
-    female: getShortName('Jane'),
-    default: getShortName('Jane')
+    male: 获取发音人('Christopher'),
+    female: 获取发音人('Jane'),
+    default: 获取发音人('Jane')
   },
   jp: {
-    male: getShortName('圭太'),
-    female: getShortName('七海'),
-    default: getShortName('圭太')
+    male: 获取发音人('圭太'),
+    female: 获取发音人('七海'),
+    default: 获取发音人('圭太')
   },
   ru: {
-    male: getShortName('Dmitry'),
-    female: getShortName('Svetlana'),
-    default: getShortName('Svetlana')
+    male: 获取发音人('Dmitry'),
+    female: 获取发音人('Svetlana'),
+    default: 获取发音人('Svetlana')
   },
   de: {
-    male: getShortName('Conrad'),
-    female: getShortName('Elke'),
-    default: getShortName('Conrad')
+    male: 获取发音人('Conrad'),
+    female: 获取发音人('Elke'),
+    default: 获取发音人('Conrad')
   },
   fra: {
-    male: getShortName('Maurice'),
-    female: getShortName('Denise'),
-    default: getShortName('Maurice')
+    male: 获取发音人('Maurice'),
+    female: 获取发音人('Denise'),
+    default: 获取发音人('Maurice')
   },
   cht: {
-    male: getShortName('云健'),
-    female: getShortName('晓秋'),
-    default: getShortName('云健')
+    male: 获取发音人('云健'),
+    female: 获取发音人('晓秋'),
+    default: 获取发音人('云健')
   },
   kor: {
-    male: getShortName('inJoon'),
-    female: getShortName('Sun-Hi'),
-    default: getShortName('inJoon')
+    male: 获取发音人('inJoon'),
+    female: 获取发音人('Sun-Hi'),
+    default: 获取发音人('inJoon')
   }
 }

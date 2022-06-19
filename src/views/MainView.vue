@@ -201,8 +201,8 @@ import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 import { 切换类型数组 } from '@/assets/changeCaseMap.js'
 import { 语种树, 服务不支持的对象 } from '@/assets/translateApiOption.js'
-import { voiceReadingToBase64 as 朗读base64 } from '@/apis/mstts/index.js'
-import { voiceMap as 声音映射 } from '@/apis/mstts/data.js'
+import { 语音朗读生成base64 } from '@/apis/mstts/index.js'
+import { 声音映射 } from '@/apis/mstts/data.js'
 
 const 语种树的数据 = ref(语种树())
 const 源语言目标语言数组 = ref(['auto', 'zh'])
@@ -266,7 +266,7 @@ async function 播放音频(voice) {
     voice,
     text: 结果对象.数据?.结果文字
   }
-  const 原始文件流 = await 朗读base64(params)
+  const 原始文件流 = await 语音朗读生成base64(params)
   if (原始文件流.type === 'audio/mp3') {
     音频Url.value = window.URL.createObjectURL(原始文件流)
     正在播放.value = true
