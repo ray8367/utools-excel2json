@@ -33,26 +33,27 @@ export const apiOptions = [
 
 export const api不支持的大对象 = {
   google: {
-    from不支持: ['wyw'],
-    to不支持: ['wyw']
+    from不支持: ['yue', 'wyw'],
+    to不支持: ['yue', 'wyw']
   },
   baidu: {
     from不支持: [],
     to不支持: []
   },
   tencent: {
-    from不支持: ['wyw'],
+    from不支持: ['yue', 'wyw'],
     自定义不支持: {
-      auto: ['wyw'],
-      zh: ['wyw'],
-      en: ['wyw'],
-      jp: ['ru', 'de', 'fra', 'wyw'],
-      ru: ['jp', 'kor', 'wyw'],
-      kor: ['ru', 'de', 'fra', 'wyw'],
-      de: ['jp', 'kor', 'wyw'],
-      fra: ['jp', 'kor', 'wyw'],
-      cht: ['wyw'],
-      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'] // 所有
+      auto: ['yue', 'wyw'],
+      zh: ['yue', 'wyw'],
+      en: ['yue', 'wyw'],
+      jp: ['ru', 'de', 'fra', 'yue', 'wyw'],
+      ru: ['jp', 'kor', 'yue', 'wyw'],
+      kor: ['ru', 'de', 'fra', 'yue', 'wyw'],
+      de: ['jp', 'kor', 'yue', 'wyw'],
+      fra: ['jp', 'kor', 'yue', 'wyw'],
+      yue: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      cht: ['yue', 'wyw'],
+      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 所有
     }
   },
   ali: {
@@ -66,6 +67,7 @@ export const api不支持的大对象 = {
       kor: ['cht', 'wyw'],
       de: ['cht', 'wyw'],
       fra: ['cht', 'wyw'],
+      yue: ['wyw'], // 所有
       cht: ['jp', 'ru', 'kor', 'de', 'fra', 'wyw'],
       wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'] // 所有
     }
@@ -75,23 +77,24 @@ export const api不支持的大对象 = {
     to不支持: ['wyw']
   },
   caiyun: {
-    from不支持: ['kor', 'de', 'fra', 'cht', 'wyw'],
+    from不支持: ['kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
     自定义不支持: {
-      auto: ['kor', 'de', 'fra', 'cht', 'wyw'],
-      zh: ['zh', 'kor', 'de', 'fra', 'cht', 'wyw'],
-      en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 只有中文
-      jp: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 只有中文
-      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 只有中文
-      kor: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
-      de: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
-      fra: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
-      cht: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
-      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'] // 所有
+      auto: ['kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
+      zh: ['zh', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
+      en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
+      jp: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
+      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
+      kor: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      de: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      fra: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      yue: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      cht: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
+      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 所有
     }
   },
   huoshan: {
-    from不支持: ['wyw'],
-    to不支持: ['wyw']
+    from不支持: ['yue', 'wyw'],
+    to不支持: ['yue', 'wyw']
   }
 }
 
@@ -104,6 +107,7 @@ const translateFromOptions = [
   { label: '韩语', value: 'kor', disabled: false, id: nanoid() },
   { label: '德语', value: 'de', disabled: false, id: nanoid() },
   { label: '法语', value: 'fra', disabled: false, id: nanoid() },
+  { label: '粤语', value: 'yue', disabled: false, id: nanoid() },
   { label: '中文-繁', value: 'cht', disabled: false, id: nanoid() },
   { label: '文言文', value: 'wyw', disabled: false, id: nanoid() }
 ]

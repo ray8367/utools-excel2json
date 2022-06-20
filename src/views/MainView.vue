@@ -553,6 +553,7 @@ watch(
 
 watchEffect(() => {
   const 当前api规则 = api不支持的大对象?.[当前翻译api.value]
+  console.log('当前api规则: ', 当前api规则)
   if (!当前api规则) return
   const 非互翻_不支持的obj = 当前api规则?.自定义不支持
   const 互翻_不支持的数组 = 当前api规则?.to不支持
@@ -589,7 +590,6 @@ watchEffect(() => {
   // 判断from是否不支持
   // 如果当前的翻译from，在当前api的源语言不支持中不存在，就恢复默认
   if (当前api规则?.from不支持.includes(源语言)) {
-    console.log('因为from不兼容，触发重置')
     重置from和to()
     return
   }
@@ -598,13 +598,11 @@ watchEffect(() => {
 
   // 如果是不支持互翻的api，且当前from的对应to为不支持的，就恢复默认
   if (非互翻_不支持的obj && 非互翻_不支持的obj[源语言].includes(目标语言)) {
-    console.log('不支持互翻的api，因为to不兼容，触发重置')
     重置from和to()
   }
 
   // 如果是支持互翻的，则取目标语言不支持数组中进行判断
   if (互翻_不支持的数组 && 互翻_不支持的数组.includes(目标语言)) {
-    console.log('支持互翻的api，因为to不兼容，触发重置')
     重置from和to()
   }
 })
