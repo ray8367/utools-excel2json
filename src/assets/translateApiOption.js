@@ -31,17 +31,17 @@ export const apiOptions = [
   }
 ]
 
-export const 服务不支持的对象 = {
+export const api不支持的大对象 = {
   google: {
-    源语言不支持: ['wyw'],
-    toNotSupport: ['wyw']
+    from不支持: ['wyw'],
+    to不支持: ['wyw']
   },
   baidu: {
-    源语言不支持: [],
-    toNotSupport: []
+    from不支持: [],
+    to不支持: []
   },
   tencent: {
-    源语言不支持: ['wyw'],
+    from不支持: ['wyw'],
     自定义不支持: {
       auto: ['wyw'],
       zh: ['wyw'],
@@ -56,7 +56,7 @@ export const 服务不支持的对象 = {
     }
   },
   ali: {
-    源语言不支持: ['wyw'],
+    from不支持: ['wyw'],
     自定义不支持: {
       auto: ['wyw'],
       zh: ['wyw'],
@@ -71,11 +71,11 @@ export const 服务不支持的对象 = {
     }
   },
   youdao: {
-    源语言不支持: ['wyw'],
-    toNotSupport: ['wyw']
+    from不支持: ['wyw'],
+    to不支持: ['wyw']
   },
   caiyun: {
-    源语言不支持: ['kor', 'de', 'fra', 'cht', 'wyw'],
+    from不支持: ['kor', 'de', 'fra', 'cht', 'wyw'],
     自定义不支持: {
       auto: ['kor', 'de', 'fra', 'cht', 'wyw'],
       zh: ['zh', 'kor', 'de', 'fra', 'cht', 'wyw'],
@@ -90,8 +90,8 @@ export const 服务不支持的对象 = {
     }
   },
   huoshan: {
-    源语言不支持: ['wyw'],
-    toNotSupport: ['wyw']
+    from不支持: ['wyw'],
+    to不支持: ['wyw']
   }
 }
 
