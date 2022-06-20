@@ -17,7 +17,7 @@ const 发音人映射 = new Map([
   ['Denise', 'fr-FR-DeniseNeural']
 ])
 
-function 获取发音人 (str = '') {
+function 获取发音人(str = '') {
   return 发音人映射.get(str) || 'zh-CN-XiaoxiaoNeural'
 }
 
@@ -55,7 +55,8 @@ export const 声音映射 = {
   yue: {
     male: 获取发音人('云龙'),
     female: 获取发音人('晓曼'),
-    default: 获取发音人('云龙')
+    default: 获取发音人('云龙'),
+    rate: 1.1
   },
   cht: {
     male: 获取发音人('云健'),

@@ -23,17 +23,21 @@ export async function 语音朗读生成mp3(文本, 角色声音, 上次发音) 
 /**
  * 语音朗读 直接生成base64
  * @param {*} text 要朗读的文本
- * @param {*} voice 朗读文本的角色信息
+ * @param {*} voice 朗读文本的角色信息 不传默认zh-CN-YunjianNeural
+ * @param {*} rate 语速 0.5 ~ 3.0 不传默认1
+ * @param {*} pitch 语调 0 ~ 2 不传默认1
  * @returns
  */
-export async function 语音朗读生成base64({ text, voice }) {
+export async function 语音朗读生成base64({ text, voice, rate, pitch }) {
   const res = await fetch(baseUrl + '/mstts/base64', {
     timeout: 300000,
     method: 'POST',
     responseType: 'blob',
     body: JSON.stringify({
       text,
-      voice
+      voice,
+      rate,
+      pitch
     })
   })
   return res.blob()

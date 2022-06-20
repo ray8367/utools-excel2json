@@ -255,8 +255,9 @@ async function 点击朗读() {
   const 声音对象 = 声音映射[form和to的数组.value[1]] || 声音映射['zh']
   // 读取发音配置
   const 声音 = 声音对象[朗读性别偏好.value]
+  const 语速 = 声音对象.rate || 1
   朗读加载.value = true
-  await 播放音频(声音)
+  await 播放音频(声音, 语速)
   朗读加载.value = false
 }
 
@@ -267,9 +268,10 @@ function 重置音频() {
 }
 
 // 播放语音
-async function 播放音频(voice) {
+async function 播放音频(声音, 语速) {
   const params = {
-    voice,
+    voice: 声音,
+    rate: 语速,
     text: 结果对象.数据?.结果文字
   }
   const 原始文件流 = await 语音朗读生成base64(params)
