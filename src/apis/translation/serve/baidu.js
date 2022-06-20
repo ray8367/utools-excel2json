@@ -4,7 +4,7 @@
  *  */
 import md5 from 'crypto-js/md5'
 import axios from 'axios'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 
 const errors = {
   // 52001: '请求超时，请重试',
@@ -68,11 +68,11 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
     let result
     if (error_code) {
       // 翻译失败
-      result = toResultData(500, null, errors[error_code])
+      result = 返回状态码及信息(500, null, errors[error_code])
 
       if (error_code === '54003') {
         // 访问频率受限，返回503
-        result = toResultData(503)
+        result = 返回状态码及信息(503)
       }
     } else {
       // 翻译成功
@@ -81,7 +81,7 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
         text += item.dst + '\n'
       })
 
-      result = toResultData(200, { text })
+      result = 返回状态码及信息(200, { text })
     }
     return result
   } catch (err) {
@@ -89,9 +89,9 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
     console.log('err:', err)
     // if (err.message === 'cancel') {
     if (err.code === 'ERR_CANCELED') {
-      return toResultData(204)
+      return 返回状态码及信息(204)
     } else {
-      return toResultData(500)
+      return 返回状态码及信息(500)
     }
   }
 }

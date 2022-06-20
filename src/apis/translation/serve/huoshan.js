@@ -5,7 +5,7 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 
 const errors = {
   // UndefinedError: '一般不出现这个问题，这是系统开发兜底的错误提示',
@@ -82,23 +82,23 @@ export default async function ({ q, from, to, keyConfig }) {
       let result
       const apiError = ResponseMetadata?.Error?.Code
       if (apiError) {
-        return toResultData(500, null, errors[apiError])
+        return 返回状态码及信息(500, null, errors[apiError])
       } else {
         let text = TranslationList[0].Translation
-        result = toResultData(200, { text })
+        result = 返回状态码及信息(200, { text })
       }
       return result
     } catch (err) {
       const apiError = err?.response?.data?.ResponseMetadata?.Error?.Code
       if (apiError) {
-        return toResultData(500, null, errors[apiError])
+        return 返回状态码及信息(500, null, errors[apiError])
       } else {
         console.error(err)
-        return toResultData(500)
+        return 返回状态码及信息(500)
       }
     }
   } else {
-    return toResultData(403)
+    return 返回状态码及信息(403)
   }
 }
 

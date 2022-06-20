@@ -201,7 +201,7 @@ import {
 import { Message as 提示 } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
 import { delay as 延迟 } from 'lodash-es'
-import { translationCommon } from '@/apis/translation/index.js'
+import { 通用翻译 } from '@/apis/translation/index.js'
 import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
 import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
@@ -358,7 +358,7 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
     to: form和to的数组.value[1],
     isRefresh
   }
-  const { text: 返回的文字, code: 状态码 } = await translationCommon(val, obj)
+  const { text: 返回的文字, code: 状态码 } = await 通用翻译(val, obj)
   const 处理后的文字 = 是命名模式.value
     ? 返回命名模式对应结果(返回的文字, 命名模式类型.value)
     : 返回的文字

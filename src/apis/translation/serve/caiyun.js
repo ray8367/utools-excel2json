@@ -4,7 +4,7 @@
  *  */
 
 import axios from 'axios'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 
 const last = {
   optionsStr: '',
@@ -43,15 +43,15 @@ export default function ({ q, from, to, keyConfig }) {
       let result
       if (target) {
         // 翻译成功
-        result = toResultData(200, { text: target })
+        result = 返回状态码及信息(200, { text: target })
       } else {
         // 翻译失败
-        result = toResultData(500)
+        result = 返回状态码及信息(500)
       }
       last.result = result
       return result
     })
     .catch(err => {
-      return toResultData(500, null, err)
+      return 返回状态码及信息(500, null, err)
     })
 }

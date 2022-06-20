@@ -7,7 +7,7 @@ import caiyun from './serve/caiyun'
 import huoshan from './serve/huoshan'
 import { getKeyByTag } from '@/store/userSetting'
 
-const applys = {
+const 翻译应用 = {
   baidu: {
     fn: baidu,
     label: '百度翻译',
@@ -46,8 +46,8 @@ const applys = {
 }
 
 /** 根据tag获取翻译方法 */
-export function getUseFnByTag(tag) {
-  return applys?.[tag]?.fn
+export function 获取指定的翻译方法(tag) {
+  return 翻译应用?.[tag]?.fn
 }
 
 /**
@@ -57,7 +57,7 @@ export function getUseFnByTag(tag) {
  * @param {String} customMsg 自定义信息值
  * @returns
  */
-export function toResultData(code, data, customMsg) {
+export function 返回状态码及信息(code, data, customMsg) {
   const codeOptions = {
     200: '成功',
     304: '成功(上次返回结果)',
@@ -88,8 +88,8 @@ export function toResultData(code, data, customMsg) {
 }
 
 /** 获取并检查key配置 */
-export function getAndCheckKeyConfig(tag) {
-  const serve = applys[tag]
+export function 读取并检查密钥配置(tag) {
+  const serve = 翻译应用[tag]
   const keyConfig = getKeyByTag(tag) || {}
   let flag = true
   let msg = ''

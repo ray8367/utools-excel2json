@@ -5,7 +5,7 @@
 import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import axios from 'axios'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 const errors = {
   101: '缺少必填的参数,首先确保必填参数齐全，然后确认参数书写是否正确。',
   102: '不支持的语言类型',
@@ -178,19 +178,19 @@ export default function ({ q, from, to, keyConfig }) {
         translation.map(item => {
           text += item + '\n'
         })
-        result = toResultData(200, { text })
+        result = 返回状态码及信息(200, { text })
       } else {
         // 翻译失败
-        result = toResultData(500, null, errors[errorCode])
+        result = 返回状态码及信息(500, null, errors[errorCode])
         if (errorCode === '411') {
-          result = toResultData(503)
+          result = 返回状态码及信息(503)
         }
       }
       last.result = result
       return result
     })
     .catch(err => {
-      return toResultData(500, null, err)
+      return 返回状态码及信息(500, null, err)
     })
 }
 

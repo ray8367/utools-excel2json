@@ -2,7 +2,7 @@
  * 谷歌翻译接口
  * https://github.com/vitalets/google-translate-api
  *  */
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 
 /**
  * 机器翻译
@@ -20,12 +20,12 @@ export default function ({ q, from, to }) {
         to
       })
       .then(res => {
-        return toResultData(200, { text: res.text })
+        return 返回状态码及信息(200, { text: res.text })
       })
       .catch(err => {
-        return toResultData(500, null, err)
+        return 返回状态码及信息(500, null, err)
       })
   } else {
-    return toResultData(403)
+    return 返回状态码及信息(403)
   }
 }

@@ -4,7 +4,7 @@
  *  */
 
 import google from '../serve/google'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 
 /**
  * 机器翻译
@@ -29,15 +29,15 @@ export default async function ({ q, from, to, keyConfig }) {
       .then(async res => {
         const { Code, Data, Message } = res
         if (Code === '200') {
-          return toResultData(200, { text: Data.Translated })
+          return 返回状态码及信息(200, { text: Data.Translated })
         } else {
-          // return toResultData(500, null, Message)
+          // return 返回状态码及信息(500, null, Message)
           let { code: gCode, text: gText } = await google({
             q: Message,
             from: 'auto',
             to: 'zh-CN'
           })
-          return toResultData(
+          return 返回状态码及信息(
             500,
             null,
             gCode === 200 && gText ? gText : Message
@@ -46,9 +46,9 @@ export default async function ({ q, from, to, keyConfig }) {
       })
       .catch(async err => {
         console.error(err)
-        return toResultData(500)
+        return 返回状态码及信息(500)
       })
   } else {
-    return toResultData(403)
+    return 返回状态码及信息(403)
   }
 }

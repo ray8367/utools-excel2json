@@ -6,7 +6,7 @@ import SHA256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import axios from 'axios'
-import { toResultData } from '../common'
+import { 返回状态码及信息 } from '../common'
 import dayjs from 'dayjs'
 
 const errors = {
@@ -112,14 +112,14 @@ export default async function ({ q, from, to, keyConfig }) {
     let result
     if (Error) {
       // 翻译失败
-      result = toResultData(500, null, errors[Error.Code])
+      result = 返回状态码及信息(500, null, errors[Error.Code])
     } else {
-      result = toResultData(200, { text: TargetText })
+      result = 返回状态码及信息(200, { text: TargetText })
     }
     return result
   } catch (err) {
     console.error(err)
-    return toResultData(500)
+    return 返回状态码及信息(500)
   }
 }
 
