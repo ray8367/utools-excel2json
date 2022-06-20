@@ -553,10 +553,9 @@ watch(
 
 watchEffect(() => {
   const 当前api规则 = api不支持的大对象?.[当前翻译api.value]
-
   if (!当前api规则) return
-  const 非互翻_自定义不支持 = 当前api规则?.自定义不支持
-  const 互翻_to不支持的数组 = 当前api规则?.to不支持
+  const 非互翻_自定义不支持 = 当前api规则?.自定义不支持 // 不支持互翻的才会有这个obj
+  const 互翻_to不支持的数组 = 当前api规则?.to不支持 // 支持互翻的会有这个数组
 
   语种树的数据.value.forEach(源语言项 => {
     // 一层循环禁用掉api本身就不支持的语种
@@ -583,8 +582,8 @@ watchEffect(() => {
 watchEffect(() => {
   const 当前api规则 = api不支持的大对象?.[当前翻译api.value]
   if (!当前api规则) return
-  const 非互翻_不支持的obj = 当前api规则?.自定义不支持
-  const 互翻_不支持的数组 = 当前api规则?.to不支持
+  const 非互翻_自定义不支持 = 当前api规则?.自定义不支持 // 不支持互翻的才会有这个obj
+  const 互翻_to不支持的数组 = 当前api规则?.to不支持 // 支持互翻的会有这个数组
   const 源语言 = form和to的数组.value[0]
   const 目标语言 = form和to的数组.value[1]
 
@@ -598,12 +597,12 @@ watchEffect(() => {
   // 判断to是否不支持
 
   // 如果是不支持互翻的api，且当前from的对应to为不支持的，就恢复默认
-  if (非互翻_不支持的obj && 非互翻_不支持的obj[源语言].includes(目标语言)) {
+  if (非互翻_自定义不支持 && 非互翻_自定义不支持[源语言].includes(目标语言)) {
     重置from和to()
   }
 
   // 如果是支持互翻的，则取目标语言不支持数组中进行判断
-  if (互翻_不支持的数组 && 互翻_不支持的数组.includes(目标语言)) {
+  if (互翻_to不支持的数组 && 互翻_to不支持的数组.includes(目标语言)) {
     重置from和to()
   }
 })

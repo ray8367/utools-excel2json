@@ -57,9 +57,9 @@ export const api不支持的大对象 = {
     自定义不支持: {
       auto: ['kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
       zh: ['zh', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
-      en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
-      jp: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
-      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 只有中文
+      en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只支持中文
+      jp: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只支持中文
+      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 只支持中文
     }
   },
   huoshan: {
