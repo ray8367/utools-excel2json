@@ -26,11 +26,11 @@ const props = defineProps({
   }
 })
 // 按钮点击放大的倍率
-const magnification = ref(1.2)
+const 放大倍率 = ref(1.2)
 
 // 按钮放大，文字同步缩小为14的倍率
-const minification = computed(() => {
-  const after = (magnification.value * 14).toFixed(3)
+const 缩小后的尺寸 = computed(() => {
+  const after = (放大倍率.value * 14).toFixed(3)
   return (14 / after).toFixed(3)
 })
 </script>
@@ -69,9 +69,9 @@ const minification = computed(() => {
   }
   &:active {
     box-shadow: 2px 2px 7px -2px #888, -5px -5px 12px #fff;
-    transform: scale(v-bind(magnification));
+    transform: scale(v-bind(放大倍率));
     .text_inner {
-      transform: scale(v-bind(minification));
+      transform: scale(v-bind(缩小后的尺寸));
     }
   }
 

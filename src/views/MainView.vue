@@ -311,7 +311,7 @@ function 设置取消() {
 
 // 打开设置模态框
 function 打开设置Modal() {
-  设置弹框Ref.value.openSettingModal()
+  设置弹框Ref.value.打开弹窗()
 }
 
 // 变更模式
@@ -432,7 +432,7 @@ function 改变命名模式类型(code) {
 // 初始化utools
 function utools初始化() {
   utools.onPluginEnter(({ code, payload }) => {
-    设置弹框Ref.value.closeSettingModal()
+    设置弹框Ref.value.关闭弹窗()
     用户输入.value = code === 'anyword' ? payload : ''
     改变命名模式类型(code)
   })
@@ -632,7 +632,7 @@ watchEffect(() => {
 
 // 设置弹窗的状态
 const 设置弹框正在活动 = computed(() => {
-  return 设置弹框Ref.value.modalVis
+  return 设置弹框Ref.value.modal可见
 })
 
 // Tab键切换翻译方式

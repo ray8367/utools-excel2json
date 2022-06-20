@@ -3,8 +3,8 @@
     ref="btnRef"
     ripple="ripple"
     class="btn_main"
-    @mousedown="showRipple($event)"
-    @mouseup="clearRipple"
+    @mousedown="显示波纹($event)"
+    @mouseup="清除波纹()"
   >
     <span class="relative z-20">
       <slot name="icon"></slot>
@@ -12,7 +12,7 @@
     </span>
     <div class="ripple_wrapper absolute top-0 right-0 bottom-0 left-0">
       <span
-        v-for="item in waveDomsArr"
+        v-for="item in 波纹数组"
         :key="item.key"
         dynamic="true"
         :style="{
@@ -31,33 +31,31 @@ import { delay } from 'lodash-es'
 import { nanoid } from 'nanoid'
 const btnRef = ref() // 按钮的DOM
 
-const waveDomsArr = ref([]) // 波纹DOM数组
+const 波纹数组 = ref([]) // 波纹DOM数组
 
 // 生成波纹DOM
-function showRipple(e) {
-  const btnMain = btnRef.value
-  const size = btnMain.offsetWidth
-  const pos = btnMain.getBoundingClientRect()
+function 显示波纹(e) {
+  const 按钮Dom = btnRef.value
+  const 按钮宽度 = 按钮Dom.offsetWidth
+  const 按钮位置 = 按钮Dom.getBoundingClientRect()
   const obj = {
-    left: e.pageX - pos.left - size / 2,
-    top: e.pageY - pos.top - size / 2,
-    width: size,
-    height: size,
+    left: e.pageX - 按钮位置.left - 按钮宽度 / 2,
+    top: e.pageY - 按钮位置.top - 按钮宽度 / 2,
+    width: 按钮宽度,
+    height: 按钮宽度,
     key: nanoid()
   }
-  waveDomsArr.value.push(obj)
+  波纹数组.value.push(obj)
 }
 
-const delayTime = ref(2000) // 延迟时间
-
 // 鼠标抬起时，清除波纹
-function clearRipple() {
-  delay(() => cleanFirst(), delayTime.value)
+function 清除波纹(delayTime = 1100) {
+  delay(() => 删除第一个波纹dom(), delayTime)
 }
 
 // 清除第一个波纹
-function cleanFirst() {
-  waveDomsArr.value?.length && waveDomsArr.value.shift()
+function 删除第一个波纹dom() {
+  波纹数组.value?.length && 波纹数组.value.shift()
 }
 </script>
 

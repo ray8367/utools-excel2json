@@ -1,12 +1,12 @@
 <template>
   <div class="">
     <a-modal
-      :visible="modalVis"
+      :visible="modal可见"
       fullscreen
       title-align="start"
       modal-animation-name="zoom-br"
-      @open="modalOpen"
-      @cancel="modalCancel"
+      @open="打开model()"
+      @cancel="modal取消()"
     >
       <template #title> 设置 </template>
       <div>
@@ -18,7 +18,7 @@
             id="guide-link"
             target="_blank"
             href="https://www.wolai.com/jtSV7oah6M7rErz2RMFzo"
-            @click="openWebUrl"
+            @click="打开url()"
           >
             大力点击这里，了解如何申请~
           </a-link>
@@ -32,17 +32,14 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>显示按钮</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>在首页您可以通过tab键快速切换翻译方式</p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>在首页您可以通过tab键快速切换翻译方式</p>
+                    </hover-answer>
                   </div>
                 </template>
                 <a-checkbox-group v-model="formData.homeHasApi">
                   <a-checkbox
-                    v-for="item in translateApiOptions"
+                    v-for="item in api列表"
                     :key="item.value"
                     :value="item.value"
                   >
@@ -69,15 +66,12 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>快捷键行为</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>
-                          {{ calcShortcutKey() + ' ' }}
-                          可进行快捷键复制，该选项可设置按下快捷键后会发生什么
-                        </p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>
+                        {{ 计算快捷键文案() + ' ' }}
+                        可进行快捷键复制，该选项可设置按下快捷键后会发生什么
+                      </p>
+                    </hover-answer>
                   </div>
                 </template>
                 <a-radio-group v-model="formData.copyBtnBehavior">
@@ -92,14 +86,11 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>显示按钮</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>
-                          翻译页底部会显示的按钮，请根据您的使用习惯勾选，勾选多个将会在翻译完成后，底部显示多个按钮，以应对不同的情况
-                        </p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>
+                        翻译页底部会显示的按钮，请根据您的使用习惯勾选，勾选多个将会在翻译完成后，底部显示多个按钮，以应对不同的情况
+                      </p>
+                    </hover-answer>
                   </div>
                 </template>
                 <a-checkbox-group v-model="formData.copyBtnShow">
@@ -114,14 +105,11 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>语音朗读</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>
-                          该选项处于实验性，并可能长期处于实验性，在此期间可能出现一些朗读失败等一些奇怪的bug（不影响翻译），如果开启，则表示你可以接受朗读功能的这些bug
-                        </p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>
+                        该选项处于实验性，并可能长期处于实验性，朗读功能可能出现如朗读失败等一些的bug（不影响翻译），此时你可以尝试减少要朗读的文字（100字以内），或改善网络环境尝试解决，如果开启，则表示你可以接受朗读功能的这些bug
+                      </p>
+                    </hover-answer>
                   </div>
                 </template>
 
@@ -133,14 +121,11 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>朗读偏好</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>
-                          可以指定翻译结果的朗读声音，如果你发现哪一个语种的朗读非常生硬，可以联系我们
-                        </p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>
+                        可以指定翻译结果的朗读声音，如果你发现哪一个语种的朗读非常生硬，可以联系我们
+                      </p>
+                    </hover-answer>
                   </div>
                 </template>
                 <a-radio-group
@@ -158,21 +143,18 @@
                 <template #label>
                   <div class="space-x-4px">
                     <span>命名翻译模式</span>
-                    <a-popover position="right">
-                      <icon-question-circle />
-                      <template #content>
-                        <p>
-                          命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
-                          <icon-code class="text-16px" />
-                          图标进行快速切换。
-                        </p>
-                        <p class="font-bold text-red-500">
-                          如果你看不懂这句话，那么请不要打开这个选项，也请保持首页左下角的
-                          <icon-code class="text-16px" />
-                          按钮为灰色状态，以免影响使用！
-                        </p>
-                      </template>
-                    </a-popover>
+                    <hover-answer>
+                      <p>
+                        命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
+                        <icon-code class="text-16px" />
+                        图标进行快速切换。
+                      </p>
+                      <p class="font-bold text-red-500">
+                        如果你看不懂这句话，那么请不要打开这个选项，也请保持首页左下角的
+                        <icon-code class="text-16px" />
+                        按钮为灰色状态，以免影响使用！
+                      </p>
+                    </hover-answer>
                   </div>
                 </template>
                 <a-switch v-model="formData.codeMode" />
@@ -301,14 +283,14 @@
               content="确定要重置本插件的数据吗？重置可以解决大部分问题，但在此之前请备份好相关服务的信息哦~"
               ok-text="取消"
               cancel-text="确定"
-              @cancel="resetData"
+              @cancel="重置数据()"
             >
               <a-button type="outline" status="danger">重置插件数据</a-button>
             </a-popconfirm>
           </div>
           <div class="space-x-12px">
-            <a-button @click="modalCancel">取消</a-button>
-            <a-button type="primary" @click="modalOk">确定</a-button>
+            <a-button @click="modal取消()">取消</a-button>
+            <a-button type="primary" @click="modal确定()">确定</a-button>
           </div>
         </div>
       </template>
@@ -317,17 +299,17 @@
 </template>
 
 <script setup>
-import { IconQuestionCircle, IconCode } from '@arco-design/web-vue/es/icon'
-import { Message } from '@arco-design/web-vue'
-import { apiOptions } from '@/assets/translateApiOption.js'
+import { IconCode } from '@arco-design/web-vue/es/icon'
+import { Message as 提示 } from '@arco-design/web-vue'
+import { apiOptions as api选项 } from '@/assets/translateApiOption.js'
 import { userSettingStore } from '@/store/userSetting'
 import { 清除引导, 显示引导 } from '@/utils/showGuide.js'
-import { getDbStorageItem } from '@/utils/storage.js'
+import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 
 // 从pinia读取设置
 const settingStore = userSettingStore()
 
-const modalVis = ref(false) // 弹框的显隐
+const modal可见 = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
@@ -351,45 +333,43 @@ const formData = reactive({
   huoshanSecretAccessKey: undefined // 火山
 })
 const utools = window?.utools
-const translateApiOptions = ref(apiOptions) // 翻译方式选项
+const api列表 = ref(api选项) // 翻译方式选项
 
 // 默认翻译方式的下拉选项
 const defaultOptions = computed(() => {
-  return translateApiOptions.value.filter(i =>
-    currentHomeHas.value.includes(i.value)
-  )
+  return api列表.value.filter(i => 首页的api数组.value.includes(i.value))
 })
 
-const currentHomeHas = ref([]) // 当前首页展示的翻译方式
+const 首页的api数组 = ref([]) // 当前首页展示的翻译方式
 
 // 监听首页翻译方式的checkbox勾选数量
 watchEffect(() => {
   if (formData.homeHasApi?.length > 4) {
-    formData.homeHasApi = currentHomeHas.value
-    Message.warning({ content: '最多只能选择4个翻译方式哦~', duration: 2500 })
+    formData.homeHasApi = 首页的api数组.value
+    提示.warning({ content: '最多只能选择4个翻译方式哦~', duration: 2500 })
     return
   }
   if (formData.homeHasApi?.length < 1) {
-    formData.homeHasApi = currentHomeHas.value
-    Message.warning({
+    formData.homeHasApi = 首页的api数组.value
+    提示.warning({
       content: '还是至少留下1个翻译方式吧！',
       duration: 2500
     })
     return
   }
-  currentHomeHas.value = formData.homeHasApi
+  首页的api数组.value = formData.homeHasApi
 })
 
 // 监听默认翻译方式的下拉选项
 // 如果选择了"默认翻译方式"为"首页翻译方式"不准在的，则把可用的翻译方式第一个赋值给默认
 watchEffect(() => {
-  if (!currentHomeHas.value.includes(formData.defaultApi)) {
+  if (!首页的api数组.value.includes(formData.defaultApi)) {
     formData.defaultApi = defaultOptions.value[0].value
   }
 })
 
 // 点击弹框确定
-function modalOk() {
+function modal确定() {
   // 密钥格式转换
   const keyDatas = {
     baidu: {
@@ -431,13 +411,13 @@ function modalOk() {
   settingStore.setCopyBtnShow(formData.copyBtnShow)
   settingStore.setReadAloud(formData.readAloud)
   settingStore.setReadingPreference(formData.readingPreference)
-  Message.success({ content: '设置成功', duration: 1000 })
+  提示.success({ content: '设置成功', duration: 1000 })
   emit('ok')
-  closeSettingModal()
+  关闭弹窗()
 }
 
 // 动态快捷键文案
-function calcShortcutKey() {
+function 计算快捷键文案() {
   if (!utools) {
     return 'Ctrl+Shift+C / Command+Shift+C'
   } else if (utools.isMacOs()) {
@@ -448,20 +428,20 @@ function calcShortcutKey() {
 }
 
 // 点击弹框取消
-function modalCancel() {
+function modal取消() {
   清除引导()
   emit('cancel')
-  closeSettingModal()
+  关闭弹窗()
 }
 
 // 打开设置弹框回调
-function modalOpen() {
+function 打开model() {
   // abcd:这里改成从utools取值
-  !getDbStorageItem('firstUseSetting') && firstGuide()
+  !获取存储项('firstUseSetting') && 首次引导()
 }
 
 // 首次提示链接位置
-function firstGuide() {
+function 首次引导() {
   const option = {
     id: 'firstUseSetting',
     title: '这里有一些提示',
@@ -482,7 +462,7 @@ function firstGuide() {
 // }
 
 // 获取设置
-function getSetting() {
+function 获取设置() {
   const tempFormData = settingStore.getSetingFormData
   Object.keys(formData).forEach(key => {
     formData[key] = tempFormData[key]
@@ -490,39 +470,39 @@ function getSetting() {
 }
 
 // 打开弹窗
-function openSettingModal() {
-  modalVis.value = true
-  getSetting()
+function 打开弹窗() {
+  modal可见.value = true
+  获取设置()
 }
 
 // 关闭弹窗
-function closeSettingModal() {
-  modalVis.value = false
+function 关闭弹窗() {
+  modal可见.value = false
 }
 
 // 打开url
-function openWebUrl(e) {
+function 打开url(e) {
   if (!utools) return
   utools.shellOpenExternal(e.target.getAttribute('href'))
 }
 
 // 重置数据
-function resetData() {
+function 重置数据() {
   // 重置设置
   settingStore.reset()
-  Message.success({ content: '已重置', duration: 300 })
+  提示.success({ content: '已重置', duration: 300 })
   // 关闭弹窗并通知重置
   setTimeout(() => {
-    closeSettingModal()
+    关闭弹窗()
     emit('reset')
   }, 300)
 }
 
 // 暴露打开弹窗的函数，供父组件调用
 defineExpose({
-  openSettingModal,
-  closeSettingModal,
-  modalVis
+  打开弹窗,
+  关闭弹窗,
+  modal可见
 })
 </script>
 
