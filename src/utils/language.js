@@ -18,7 +18,8 @@ export const optionsData = {
     de: 'de',
     fra: 'fr',
     cht: 'zh-tw',
-    kor: 'ko'
+    kor: 'ko',
+    yue: 'yue'
   },
   youdao: {
     zh: 'zh-CHS',
@@ -28,7 +29,8 @@ export const optionsData = {
     de: 'de',
     fra: 'fr',
     cht: 'zh-CHT',
-    kor: 'ko'
+    kor: 'ko',
+    yue: 'yue'
   },
   google: {
     zh: 'zh-CN',

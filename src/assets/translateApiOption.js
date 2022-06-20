@@ -59,16 +59,16 @@ export const api不支持的大对象 = {
   ali: {
     from不支持: ['wyw'],
     自定义不支持: {
-      auto: ['wyw'],
+      auto: ['wyw', 'yue'],
       zh: ['wyw'],
-      en: ['cht', 'wyw'],
-      jp: ['cht', 'wyw'],
-      ru: ['cht', 'wyw'],
-      kor: ['cht', 'wyw'],
-      de: ['cht', 'wyw'],
-      fra: ['cht', 'wyw'],
-      yue: ['wyw'], // 所有
-      cht: ['jp', 'ru', 'kor', 'de', 'fra', 'wyw'],
+      en: ['cht', 'wyw', 'yue'],
+      jp: ['cht', 'wyw', 'yue'],
+      ru: ['cht', 'wyw', 'yue'],
+      kor: ['cht', 'wyw', 'yue'],
+      de: ['cht', 'wyw', 'yue'],
+      fra: ['cht', 'wyw', 'yue'],
+      yue: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
+      cht: ['jp', 'ru', 'kor', 'de', 'fra', 'wyw', 'yue'],
       wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'] // 所有
     }
   },
@@ -112,7 +112,7 @@ const translateFromOptions = [
   { label: '文言文', value: 'wyw', disabled: false, id: nanoid() }
 ]
 
-export function 语种树 (arr = translateFromOptions) {
+export function 语种树(arr = translateFromOptions) {
   const tmpArr = cloneDeep(arr)
   tmpArr.forEach(i => {
     i.children = arr
