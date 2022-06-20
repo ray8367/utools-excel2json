@@ -1,34 +1,13 @@
 import { cloneDeep } from 'lodash-es'
 import { nanoid } from 'nanoid'
 export const apiOptions = [
-  {
-    label: '谷歌翻译',
-    value: 'google'
-  },
-  {
-    label: '百度翻译',
-    value: 'baidu'
-  },
-  {
-    label: '腾讯翻译',
-    value: 'tencent'
-  },
-  {
-    label: '阿里翻译',
-    value: 'ali'
-  },
-  {
-    label: '有道翻译',
-    value: 'youdao'
-  },
-  {
-    label: '彩云小译',
-    value: 'caiyun'
-  },
-  {
-    label: '火山翻译',
-    value: 'huoshan'
-  }
+  { label: '谷歌翻译', value: 'google' },
+  { label: '百度翻译', value: 'baidu' },
+  { label: '腾讯翻译', value: 'tencent' },
+  { label: '阿里翻译', value: 'ali' },
+  { label: '有道翻译', value: 'youdao' },
+  { label: '彩云小译', value: 'caiyun' },
+  { label: '火山翻译', value: 'huoshan' }
 ]
 
 export const api不支持的大对象 = {
@@ -51,9 +30,7 @@ export const api不支持的大对象 = {
       kor: ['ru', 'de', 'fra', 'yue', 'wyw'],
       de: ['jp', 'kor', 'yue', 'wyw'],
       fra: ['jp', 'kor', 'yue', 'wyw'],
-      yue: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      cht: ['yue', 'wyw'],
-      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 所有
+      cht: ['yue', 'wyw']
     }
   },
   ali: {
@@ -67,9 +44,8 @@ export const api不支持的大对象 = {
       kor: ['cht', 'wyw', 'yue'],
       de: ['cht', 'wyw', 'yue'],
       fra: ['cht', 'wyw', 'yue'],
-      yue: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'], // 所有
-      cht: ['jp', 'ru', 'kor', 'de', 'fra', 'wyw', 'yue'],
-      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'] // 所有
+      yue: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'wyw'],
+      cht: ['jp', 'ru', 'kor', 'de', 'fra', 'wyw', 'yue']
     }
   },
   youdao: {
@@ -83,13 +59,7 @@ export const api不支持的大对象 = {
       zh: ['zh', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'],
       en: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
       jp: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
-      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 只有中文
-      kor: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      de: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      fra: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      yue: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      cht: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'], // 所有
-      wyw: ['zh', 'en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 所有
+      ru: ['en', 'jp', 'ru', 'kor', 'de', 'fra', 'cht', 'yue', 'wyw'] // 只有中文
     }
   },
   huoshan: {
@@ -112,7 +82,7 @@ const translateFromOptions = [
   { label: '文言文', value: 'wyw', disabled: false, id: nanoid() }
 ]
 
-export function 语种树(arr = translateFromOptions) {
+export function 语种树 (arr = translateFromOptions) {
   const tmpArr = cloneDeep(arr)
   tmpArr.forEach(i => {
     i.children = arr

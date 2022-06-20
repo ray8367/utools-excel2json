@@ -553,26 +553,27 @@ watch(
 
 watchEffect(() => {
   const 当前api规则 = api不支持的大对象?.[当前翻译api.value]
-  console.log('当前api规则: ', 当前api规则)
+
   if (!当前api规则) return
-  const 非互翻_不支持的obj = 当前api规则?.自定义不支持
-  const 互翻_不支持的数组 = 当前api规则?.to不支持
+  const 非互翻_自定义不支持 = 当前api规则?.自定义不支持
+  const 互翻_to不支持的数组 = 当前api规则?.to不支持
 
   语种树的数据.value.forEach(源语言项 => {
     // 一层循环禁用掉api本身就不支持的语种
     源语言项.disabled = 当前api规则?.from不支持.includes(源语言项.value)
 
     // 如果存在「自定义不支持」这个对象，则为不支持任意互翻api，根据数据禁用对应的不支持互翻的语种
-    if (非互翻_不支持的obj) {
+    if (非互翻_自定义不支持) {
       源语言项.children.forEach(目标语言项 => {
-        目标语言项.disabled = 非互翻_不支持的obj[源语言项.value].includes(
-          目标语言项.value
-        )
+        const 不支持的数组 = 非互翻_自定义不支持[源语言项.value]
+        目标语言项.disabled = 不支持的数组
+          ? 不支持的数组.includes(目标语言项.value)
+          : true
       })
-    } else if (互翻_不支持的数组) {
+    } else if (互翻_to不支持的数组) {
       // 如果存在目标语言不支持，则代表该api支持任意互翻，禁用掉本就不支持的语种即可
       源语言项.children.forEach(目标语言项 => {
-        目标语言项.disabled = 互翻_不支持的数组.includes(目标语言项.value)
+        目标语言项.disabled = 互翻_to不支持的数组.includes(目标语言项.value)
       })
     }
   })
