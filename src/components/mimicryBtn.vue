@@ -94,7 +94,6 @@ const 缩小后的尺寸 = computed(() => {
 
 // 禁用的样式
 .mimicry_btn_disabled {
-  opacity: 0.65;
   cursor: not-allowed;
   &:hover,
   &:active {
