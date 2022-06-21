@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.12",
-    "@vueuse/core": "^8.6.0",
+    "@vueuse/core": "^8.7.4",
     "axios": "^0.27.2",
     "change-case": "^4.1.2",
     "crypto-js": "^4.1.1",
@@ -23,7 +23,7 @@
     "vue": "^3.2.37"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.30.1",
+    "@arco-design/web-vue": "^2.31.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -35,7 +35,7 @@
     "unplugin-auto-import": "^0.8.8",
     "unplugin-vue-components": "^0.19.6",
     "vite": "^2.9.12",
-    "vite-plugin-chunk-split": "^0.2.2",
+    "vite-plugin-chunk-split": "^0.2.4",
     "vite-plugin-windicss": "^1.8.4",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",

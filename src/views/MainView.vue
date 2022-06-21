@@ -176,11 +176,6 @@
     @cancel="设置取消()"
     @reset="resetHandler()"
   />
-
-  <audio ref="音频Ref" style="display: none">
-    <source :src="音频Url" type="audio/mpeg" />
-    <source :src="音频Url" type="audio/ogg" />
-  </audio>
 </template>
 
 <script setup>
@@ -212,9 +207,9 @@ import { 声音映射 } from '@/apis/mstts/data.js'
 
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
-const 音频Ref = ref()
+const audio本体 = ref(new Audio())
 const 音频Url = ref('')
-const { playing: 正在播放 } = useMediaControls(音频Ref, { src: 音频Url })
+const { playing: 正在播放 } = useMediaControls(audio本体, { src: 音频Url })
 const 存储 = 用户设置存储()
 const {
   homeOption: 首页选项,
