@@ -1,10 +1,10 @@
-const 发音人映射 = new Map([
+const 发音角色Map = new Map([
   ['云健', 'zh-CN-YunjianNeural'],
   ['晓秋', 'zh-CN-XiaoqiuNeural'],
   ['云龙', 'zh-HK-WanLungNeural'],
   ['晓佳', 'zh-HK-HiuGaaiNeural'],
   ['Jenny', 'en-US-JennyNeural'],
-  ['Christopher', 'en-US-ChristopherNeural'],
+  ['Guy', 'en-US-GuyNeural'],
   ['圭太', 'ja-JP-KeitaNeural'],
   ['七海', 'ja-JP-NanamiNeural'],
   ['Svetlana', 'ru-RU-SvetlanaNeural'],
@@ -18,7 +18,7 @@ const 发音人映射 = new Map([
 ])
 
 function 获取发音人 (str = '') {
-  return 发音人映射.get(str) || 'zh-CN-XiaoxiaoNeural'
+  return 发音角色Map.get(str) || 'zh-CN-XiaoxiaoNeural'
 }
 
 export const 声音映射 = {
@@ -28,7 +28,7 @@ export const 声音映射 = {
     default: 获取发音人('云健')
   },
   en: {
-    male: 获取发音人('Christopher'),
+    male: 获取发音人('Guy'),
     female: 获取发音人('Jenny'),
     default: 获取发音人('Jenny')
   },
