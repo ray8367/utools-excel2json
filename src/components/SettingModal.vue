@@ -121,7 +121,7 @@
             <a-divider orientation="left">
               实验性功能
               <hover-answer>
-                这些功能处于实验性，可以尝鲜使用但不保证其稳定性
+                这些功能处于实验性，可以尝鲜使用，但不保证其稳定性
               </hover-answer>
             </a-divider>
             <a-col :span="18">
@@ -130,11 +130,7 @@
                   <div class="space-x-4px">
                     <span>语音朗读</span>
                     <hover-answer>
-                      如果出现朗读失败，你可以尝试:
-                      <ul class="list-decimal pl-16px">
-                        <li>减少需要朗读的文字（100字以内）</li>
-                        <li>换一个科学的网络环境</li>
-                      </ul>
+                      如果出现朗读失败，你可以尝试减少需要朗读的文字（100字以内），字多了基本都会失败
                     </hover-answer>
                   </div>
                 </template>
