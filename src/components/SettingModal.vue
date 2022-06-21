@@ -97,6 +97,15 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
+              <a-form-item label="插件外观">
+                <a-radio-group v-model="formData.theme">
+                  <a-radio value="默认">跟随utools</a-radio>
+                  <a-radio value="浅色"> 浅色 </a-radio>
+                  <a-radio value="深色"> 深色 </a-radio>
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
               <a-form-item label="命名翻译模式">
                 <template #label>
                   <div class="space-x-4px">
@@ -118,6 +127,7 @@
                 <a-switch v-model="formData.codeMode" />
               </a-form-item>
             </a-col>
+
             <a-divider orientation="left">
               实验性功能
               <hover-answer>
@@ -317,6 +327,7 @@ const formData = reactive({
   readingPreference: 'default', // 朗读偏好
   codeMode: false, // 命名翻译模式
   defaultApi: undefined, // 默认翻译方式
+  theme: '默认',
   appid: undefined, // 百度
   token: undefined, // 百度
   secretId: undefined, // 腾讯
