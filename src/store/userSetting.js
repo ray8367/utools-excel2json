@@ -68,6 +68,12 @@ const CONFIG = {
     key: 'readingPreference',
     type: String,
     defaultState: 'default'
+  },
+  // 插件外观
+  THEME: {
+    key: 'theme',
+    type: String,
+    defaultState: '默认'
   }
 }
 
@@ -109,7 +115,8 @@ function getInitState() {
     codeMode: getStorageData(CONFIG.CODE_MODE),
     copyBtnShow: getStorageData(CONFIG.COPY_BTN_SHOW),
     readAloud: getStorageData(CONFIG.READ_ALOUD),
-    readingPreference: getStorageData(CONFIG.READING_PREFERENCE)
+    readingPreference: getStorageData(CONFIG.READING_PREFERENCE),
+    theme: getStorageData(CONFIG.THEME)
   }
 }
 
@@ -139,7 +146,8 @@ export const userSettingStore = defineStore('settings', {
         codeMode,
         copyBtnShow,
         readAloud,
-        readingPreference
+        readingPreference,
+        theme
       } = state
 
       return {
@@ -161,7 +169,8 @@ export const userSettingStore = defineStore('settings', {
         copyBtnShow, // 首页显示复制按钮 []
         codeMode, // 命名翻译模式
         readAloud, // 语音朗读
-        readingPreference // 朗读偏好
+        readingPreference, // 朗读偏好
+        theme // 外观
       }
     }
   },
@@ -219,6 +228,12 @@ export const userSettingStore = defineStore('settings', {
     setReadingPreference(data) {
       this.readingPreference = data
       setDbStorageItem(CONFIG.READING_PREFERENCE.key, data)
+    },
+
+    /** 设置语音朗读偏好 */
+    setTheme(data) {
+      this.theme = data
+      setDbStorageItem(CONFIG.THEME.key, data)
     },
 
     /** 重置设置 */

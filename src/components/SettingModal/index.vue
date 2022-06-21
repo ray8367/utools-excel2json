@@ -309,13 +309,9 @@
 import { IconCode } from '@arco-design/web-vue/es/icon'
 import { Message as 提示 } from '@arco-design/web-vue'
 import { apiOptions as api选项 } from '@/assets/translateApiOption.js'
-import { userSettingStore } from '@/store/userSetting'
 import { 清除引导, 显示引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
-
-// 从pinia读取设置
-const settingStore = userSettingStore()
-
+import 设置存储 from './useSettingStore'
 const modal可见 = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
@@ -342,6 +338,7 @@ const formData = reactive({
 })
 const utools = window?.utools
 const api列表 = ref(api选项) // 翻译方式选项
+const { 获取设置, 保存设置, 重置设置 } = 设置存储(formData)
 
 // 默认翻译方式的下拉选项
 const defaultOptions = computed(() => {
@@ -378,47 +375,7 @@ watchEffect(() => {
 
 // 点击弹框确定
 function modal确定() {
-  // 密钥格式转换
-  const keyDatas = {
-    baidu: {
-      appid: formData.appid,
-      token: formData.token
-    },
-
-    tencent: {
-      secretId: formData.secretId,
-      secretKey: formData.secretKey
-    },
-
-    youdao: {
-      appid: formData.youdaoId,
-      appkey: formData.youdaoSecret
-    },
-
-    ali: {
-      accessKeyId: formData.accessKeyId,
-      accessKeySecret: formData.accessKeySecret
-    },
-
-    caiyun: {
-      token: formData.caiyunToken
-    },
-
-    huoshan: {
-      accessKeyId: formData.huoshanAccessKeyId,
-      secretAccessKey: formData.huoshanSecretAccessKey
-    }
-  }
-  settingStore.setHomeOption(formData.homeHasApi)
-  settingStore.setDefaultStorage(formData.defaultApi)
-  settingStore.setKeyConfig(keyDatas)
-  settingStore.setFontSize(formData.textFont)
-  settingStore.setCopyBtnBehavior(formData.copyBtnBehavior)
-  settingStore.setCodeMode(formData.codeMode)
-  settingStore.setCopyBtnShow(formData.copyBtnShow)
-  settingStore.setCopyBtnShow(formData.copyBtnShow)
-  settingStore.setReadAloud(formData.readAloud)
-  settingStore.setReadingPreference(formData.readingPreference)
+  保存设置()
   提示.success({ content: '设置成功', duration: 1000 })
   emit('ok')
   关闭弹窗()
@@ -469,14 +426,6 @@ function 首次引导() {
 //   清除引导()
 // }
 
-// 获取设置
-function 获取设置() {
-  const tempFormData = settingStore.getSetingFormData
-  Object.keys(formData).forEach(key => {
-    formData[key] = tempFormData[key]
-  })
-}
-
 // 打开弹窗
 function 打开弹窗() {
   modal可见.value = true
@@ -497,7 +446,7 @@ function 打开url(e) {
 // 重置数据
 function 重置数据() {
   // 重置设置
-  settingStore.reset()
+  重置设置()
   提示.success({ content: '已重置', duration: 300 })
   // 关闭弹窗并通知重置
   setTimeout(() => {

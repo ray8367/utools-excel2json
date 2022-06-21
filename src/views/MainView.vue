@@ -129,19 +129,19 @@
               >
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(1)"
-                  @click="复制按钮(1)"
+                  @click="复制按钮事件(1)"
                 >
                   <icon-copy /> 仅复制
                 </ColorfulBtn>
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(2)"
-                  @click="复制按钮(2)"
+                  @click="复制按钮事件(2)"
                 >
                   <icon-fullscreen-exit /> 复制并隐藏
                 </ColorfulBtn>
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(3)"
-                  @click="复制按钮(3)"
+                  @click="复制按钮事件(3)"
                 >
                   <icon-edit /> 复制并输入
                 </ColorfulBtn>
@@ -180,7 +180,6 @@
 
 <script setup>
 import { debounce, throttle } from 'lodash-es'
-import { useClipboard } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 import {
   IconSettings,
@@ -195,30 +194,24 @@ import {
 } from '@arco-design/web-vue/es/icon'
 import { Message as 提示 } from '@arco-design/web-vue'
 import { storeToRefs } from 'pinia'
-import { delay as 延迟 } from 'lodash-es'
 import { 通用翻译 } from '@/apis/translation/index.js'
 import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
 import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 import { 切换类型数组 } from '@/assets/changeCaseMap.js'
 import { 语种树, api不支持的大对象 } from '@/assets/translateApiOption.js'
-import { 语音朗读生成base64 } from '@/apis/mstts/index.js'
-import { 声音映射 } from '@/apis/mstts/data.js'
+import useUtools from './useUtools'
+import use语音朗读模块 from './useVoice'
+import use复制模块 from './useCopy'
 
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
-const audio本体 = ref(new Audio())
-const 音频Url = ref('')
-const { playing: 正在播放 } = useMediaControls(audio本体, { src: 音频Url })
 const 存储 = 用户设置存储()
 const {
   homeOption: 首页选项,
   getHomeApiOptions: 翻译服务选项,
   getHomeFontSize: 文字尺寸,
-  copyBtnBehavior: 复制按钮行为,
-  copyBtnShow: 复制按钮显示的数组,
-  readAloud: 朗读功能,
-  readingPreference: 朗读性别偏好
+  copyBtnShow: 复制按钮显示的数组
 } = storeToRefs(存储)
 const 是命名模式 = computed(() => 存储.codeMode) // 命名翻译模式
 const 翻译加载 = ref(false) // 是否正在翻译
@@ -230,52 +223,21 @@ const 结果对象 = reactive({
     结果编号: nanoid()
   }
 })
-const { copy: 复制 } = useClipboard() // 复制结果功能
-const 组合键 = useMagicKeys()
 const 当前翻译api = ref('') // 当前翻译api
 const 命名模式类型 = ref('camelCase') // 命名模式要转换的类型
 const 设置弹框Ref = ref() // 设置弹窗的ref
 const 用户输入框Ref = ref() // 输入textarea的dom
-const 朗读loading = ref(false) // 译文发音按钮的Loading
 
-const utools = window?.utools
+const { utools, utools初始化 } = useUtools(命名模式类型, 设置弹框Ref, 用户输入)
+
+const { 朗读功能, 音频Url, 朗读loading, 正在播放, 点击朗读, 重置音频 } =
+  use语音朗读模块(form和to的数组, 结果对象)
+
+const { 要显示复制按钮, 复制按钮事件 } = use复制模块(结果对象)
 
 function 格式化级联显示内容(options) {
   const 文字 = options.map(option => option.label)
   return 文字.join(`\u3000\u3000 → \u3000\u3000`)
-}
-// 发音按钮
-async function 点击朗读() {
-  重置音频()
-  const 声音对象 = 声音映射[form和to的数组.value[1]] || 声音映射['zh']
-  // 读取发音配置
-  const 声音 = 声音对象[朗读性别偏好.value]
-  const 语速 = 声音对象.rate || 1
-  朗读loading.value = true
-  await 播放音频(声音, 语速)
-  朗读loading.value = false
-}
-
-// 重置音频
-function 重置音频() {
-  正在播放.value = false
-  音频Url.value = ''
-}
-
-// 播放语音
-async function 播放音频(声音, 语速) {
-  const params = {
-    voice: 声音,
-    rate: 语速,
-    text: 结果对象.数据?.结果文字
-  }
-  const 原始文件流 = await 语音朗读生成base64(params)
-  if (原始文件流.type === 'audio/mp3') {
-    音频Url.value = window.URL.createObjectURL(原始文件流)
-    正在播放.value = true
-  } else {
-    提示.error('啊哦，播放出错了，请再试一次吧！')
-  }
 }
 
 // 清空输入框
@@ -413,93 +375,6 @@ function 读取设置() {
   }
 }
 
-/** 根据关键字切换命名翻译模式 */
-function 改变命名模式类型(code) {
-  // codeMode&xx
-  const reg = /^codeMode__/
-  if (reg.test(code)) {
-    存储.setCodeMode(true)
-    const modeName = code.split('__')[1]
-    命名模式类型.value = modeName
-  } else {
-    存储.setCodeMode(false)
-  }
-}
-
-// 初始化utools
-function utools初始化() {
-  utools.onPluginEnter(({ code, payload }) => {
-    设置弹框Ref.value.关闭弹窗()
-    用户输入.value = code === 'anyword' ? payload : ''
-    改变命名模式类型(code)
-  })
-  utools.subInputBlur()
-}
-
-// 快捷键复制结果
-const 快捷键复制 = throttle(async () => {
-  await 仅复制()
-  if (!utools) return
-  const 行为 = 复制按钮行为.value
-  if (行为 === 'close') {
-    await 延迟关闭utools()
-  } else if (行为 === 'closeInput') {
-    await 延迟关闭utools()
-    await 粘贴()
-  }
-}, 300)
-
-// 延迟时间关闭utools
-function 延迟关闭utools(delayTime = 300) {
-  if (!utools) return
-  return new Promise(resolve => {
-    延迟(function () {
-      utools.hideMainWindow()
-      resolve()
-    }, delayTime)
-  })
-}
-
-// 复制按钮
-const 复制按钮 = throttle((val = 1) => {
-  switch (val) {
-    case 1:
-      仅复制()
-      break
-    case 2:
-      复制并隐藏()
-      break
-    case 3:
-      复制并输入()
-      break
-  }
-}, 300)
-
-// 仅复制
-async function 仅复制() {
-  await 复制(结果对象.数据.结果文字)
-  提示.success({ content: '复制成功', duration: 2500 })
-}
-
-// 复制并隐藏
-async function 复制并隐藏() {
-  await 仅复制()
-  await 延迟关闭utools()
-}
-
-// 复制并输入
-async function 复制并输入() {
-  await 复制并隐藏()
-  await 粘贴()
-}
-
-// 粘贴
-async function 粘贴() {
-  if (!utools) return
-  const key = utools.isMacOs() ? 'command' : 'ctrl'
-  await utools.simulateKeyboardTap('v', key)
-}
-
 // 重置后首页设置
 function resetHandler() {
   清空输入框()
@@ -515,7 +390,6 @@ onMounted(() => {
   utools && utools初始化()
   输入框focus()
   读取设置()
-
   !获取存储项('firstUseMain') && 首次引导()
 })
 
@@ -610,20 +484,6 @@ watchEffect(() => {
     form和to的数组.value = ['auto', 'en']
   } else {
     重置from和to()
-  }
-})
-
-// 是否应该显示复制按钮
-const 要显示复制按钮 = computed(() => {
-  return 结果对象.数据.结果文字?.trim() && 结果对象.数据.结果码 === 200
-})
-
-// 监听复制快捷键
-watchEffect(() => {
-  const windows快捷键 = 组合键['ctrl+shift+c']
-  const mac快捷键 = 组合键['command+shift+c']
-  if ((windows快捷键.value || mac快捷键.value) && 要显示复制按钮.value) {
-    快捷键复制()
   }
 })
 
