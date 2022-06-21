@@ -203,6 +203,7 @@ import { 语种树, api不支持的大对象 } from '@/assets/translateApiOption
 import useUtools from './useUtools'
 import use语音朗读模块 from './useVoice'
 import use复制模块 from './useCopy'
+import { setTheme } from '@/utils/setTheme.js'
 
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
@@ -211,7 +212,8 @@ const {
   homeOption: 首页选项,
   getHomeApiOptions: 翻译服务选项,
   getHomeFontSize: 文字尺寸,
-  copyBtnShow: 复制按钮显示的数组
+  copyBtnShow: 复制按钮显示的数组,
+  theme: 插件外观
 } = storeToRefs(存储)
 const 是命名模式 = computed(() => 存储.codeMode) // 命名翻译模式
 const 翻译加载 = ref(false) // 是否正在翻译
@@ -373,6 +375,7 @@ function 读取设置() {
   if (!首页选项.value.includes(当前翻译api.value)) {
     当前翻译api.value = 存储.defaultApi
   }
+  设置插件外观()
 }
 
 // 重置后首页设置
@@ -384,6 +387,17 @@ function resetHandler() {
 // 重置From和To
 function 重置from和to() {
   form和to的数组.value = ['auto', 'zh']
+}
+
+function 设置插件外观() {
+  const val = 插件外观.value === '深色' ? true : false
+  setTheme(val)
+  console.log('设置外观', val)
+  // if (插件外观.value !== '默认') {
+  //   const val = 插件外观.value === '深色' ? true : false
+  //   setTheme(val)
+  //   console.log('设置外观', val)
+  // }
 }
 
 onMounted(() => {
