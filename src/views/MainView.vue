@@ -2,22 +2,6 @@
   <div
     class="main_wrapper grid-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
-    <!-- 设置按钮 -->
-    <div
-      id="setting-wrapper"
-      class="icon setting_icon"
-      @click="打开设置Modal()"
-    >
-      <icon-settings />
-    </div>
-    <!-- 命名翻译模式按钮 -->
-    <div
-      class="icon code_icon"
-      :class="{ active: 是命名模式 }"
-      @click="切换模式()"
-    >
-      <icon-code />
-    </div>
     <div
       class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
@@ -166,6 +150,22 @@
           </div>
         </div>
       </a-resize-box>
+    </div>
+    <!-- 设置按钮 -->
+    <div
+      id="setting-wrapper"
+      class="icon setting_icon"
+      @click="打开设置Modal()"
+    >
+      <icon-settings />
+    </div>
+    <!-- 命名翻译模式按钮 -->
+    <div
+      class="icon code_icon"
+      :class="{ active: 是命名模式 }"
+      @click="切换模式()"
+    >
+      <icon-code />
     </div>
   </div>
 

@@ -33,7 +33,7 @@
                   <div class="space-x-4px">
                     <span>显示按钮</span>
                     <hover-answer>
-                      <p>在首页您可以通过tab键快速切换翻译方式</p>
+                      在首页您可以通过tab键快速切换翻译方式
                     </hover-answer>
                   </div>
                 </template>
@@ -67,10 +67,8 @@
                   <div class="space-x-4px">
                     <span>快捷键行为</span>
                     <hover-answer>
-                      <p>
-                        {{ 计算快捷键文案() + ' ' }}
-                        可进行快捷键复制，该选项可设置按下快捷键后会发生什么
-                      </p>
+                      {{ 计算快捷键文案() + ' ' }}
+                      可进行快捷键复制，该选项可设置按下快捷键后会发生什么
                     </hover-answer>
                   </div>
                 </template>
@@ -87,9 +85,7 @@
                   <div class="space-x-4px">
                     <span>显示按钮</span>
                     <hover-answer>
-                      <p>
-                        翻译页底部会显示的按钮，请根据您的使用习惯勾选，勾选多个将会在翻译完成后，底部显示多个按钮，以应对不同的情况
-                      </p>
+                      翻译页底部会显示的按钮，请根据您的使用习惯勾选，勾选多个将会在翻译完成后，底部显示多个按钮，以应对不同的情况
                     </hover-answer>
                   </div>
                 </template>
@@ -98,44 +94,6 @@
                   <a-checkbox :value="2">复制并隐藏</a-checkbox>
                   <a-checkbox :value="3">复制并输入</a-checkbox>
                 </a-checkbox-group>
-              </a-form-item>
-            </a-col>
-            <a-col :span="18">
-              <a-form-item label="语音朗读">
-                <template #label>
-                  <div class="space-x-4px">
-                    <span>语音朗读</span>
-                    <hover-answer>
-                      <p>
-                        该选项处于实验性，并可能长期处于实验性，朗读功能可能出现如朗读失败等一些的bug（不影响翻译），此时你可以尝试减少要朗读的文字（100字以内），或改善网络环境尝试解决，如果开启，则表示你可以接受朗读功能的这些bug
-                      </p>
-                    </hover-answer>
-                  </div>
-                </template>
-
-                <a-switch v-model="formData.readAloud" />
-              </a-form-item>
-            </a-col>
-            <a-col :span="18">
-              <a-form-item label="朗读偏好">
-                <template #label>
-                  <div class="space-x-4px">
-                    <span>朗读偏好</span>
-                    <hover-answer>
-                      <p>
-                        可以指定翻译结果的朗读声音，如果你发现哪一个语种的朗读非常生硬，可以联系我们
-                      </p>
-                    </hover-answer>
-                  </div>
-                </template>
-                <a-radio-group
-                  v-model="formData.readingPreference"
-                  :disabled="!formData.readAloud"
-                >
-                  <a-radio value="default">系统默认</a-radio>
-                  <a-radio value="male"> 仅男声 </a-radio>
-                  <a-radio value="female"> 仅女声 </a-radio>
-                </a-radio-group>
               </a-form-item>
             </a-col>
             <a-col :span="18">
@@ -158,6 +116,49 @@
                   </div>
                 </template>
                 <a-switch v-model="formData.codeMode" />
+              </a-form-item>
+            </a-col>
+            <a-divider orientation="left">
+              实验性功能
+              <hover-answer>
+                这些功能处于实验性，可以尝鲜使用但不保证其稳定性
+              </hover-answer>
+            </a-divider>
+            <a-col :span="18">
+              <a-form-item label="语音朗读">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>语音朗读</span>
+                    <hover-answer>
+                      如果出现朗读失败，你可以尝试:
+                      <ul class="list-decimal pl-16px">
+                        <li>减少需要朗读的文字（100字以内）</li>
+                        <li>换一个科学的网络环境</li>
+                      </ul>
+                    </hover-answer>
+                  </div>
+                </template>
+                <a-switch v-model="formData.readAloud" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="朗读偏好">
+                <template #label>
+                  <div class="space-x-4px">
+                    <span>朗读性别偏好</span>
+                    <hover-answer>
+                      系统默认为我们认为还不错的声音，不同的语种下有男声也有女声，你可以通过更改此选项，来指定朗读声音的性别
+                    </hover-answer>
+                  </div>
+                </template>
+                <a-radio-group
+                  v-model="formData.readingPreference"
+                  :disabled="!formData.readAloud"
+                >
+                  <a-radio value="default">系统默认</a-radio>
+                  <a-radio value="male"> 仅男声 </a-radio>
+                  <a-radio value="female"> 仅女声 </a-radio>
+                </a-radio-group>
               </a-form-item>
             </a-col>
             <a-divider orientation="left">百度翻译</a-divider>
