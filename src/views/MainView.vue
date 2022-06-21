@@ -127,7 +127,7 @@
                 class="absolute left-10px bottom-8px z-1 flex space-x-8px"
               >
                 <!-- 播放按钮 -->
-                <MimicryBtn :loading="朗读加载" @click="点击朗读()">
+                <MimicryBtn :loading="朗读loading" @click="点击朗读()">
                   <icon-sound />
                 </MimicryBtn>
 
@@ -241,7 +241,7 @@ const 当前翻译api = ref('') // 当前翻译api
 const 命名模式类型 = ref('camelCase') // 命名模式要转换的类型
 const 设置弹框Ref = ref() // 设置弹窗的ref
 const 用户输入框Ref = ref() // 输入textarea的dom
-const 朗读加载 = ref(false) // 译文发音按钮的Loading
+const 朗读loading = ref(false) // 译文发音按钮的Loading
 
 const utools = window?.utools
 
@@ -256,9 +256,9 @@ async function 点击朗读() {
   // 读取发音配置
   const 声音 = 声音对象[朗读性别偏好.value]
   const 语速 = 声音对象.rate || 1
-  朗读加载.value = true
+  朗读loading.value = true
   await 播放音频(声音, 语速)
-  朗读加载.value = false
+  朗读loading.value = false
 }
 
 // 重置音频
