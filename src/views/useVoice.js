@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { 用户设置存储 } from '@/store/userSetting'
 import { 语音朗读生成base64 } from '@/apis/mstts/index.js'
 import { 声音映射 } from '@/apis/mstts/data.js'
+import { updateLog } from '@/apis/log'
 import { Message as 提示 } from '@arco-design/web-vue'
 
 export default function (form和to的数组, 结果对象) {
@@ -46,6 +47,8 @@ export default function (form和to的数组, 结果对象) {
     } else {
       提示.error('啊哦，播放出错了，请再试一次吧！')
     }
+
+    updateLog('朗读')
   }
 
   return {

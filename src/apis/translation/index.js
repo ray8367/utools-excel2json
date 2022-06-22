@@ -4,7 +4,7 @@ import {
   读取并检查密钥配置
 } from './common'
 import { languageCorrectionByTag } from '@/utils/language'
-
+import { updateLog } from '../log'
 /**
  * 翻译
  * @param {String} tag 翻译标识
@@ -51,6 +51,7 @@ export async function 通用翻译(tag, options) {
     // 访问频率受限，再次发起翻译
     return await 通用翻译(tag, options)
   }
+  updateLog(tag)
 
   // last.result = result
   // last.optionsStr = optionsStr
