@@ -1,7 +1,7 @@
 /** 主题相关业务 */
 import { setTheme } from '@/utils/setTheme.js'
 import { storeToRefs } from 'pinia'
-import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 
 export default function () {
   const { theme: 主题 } = storeToRefs(用户设置存储())

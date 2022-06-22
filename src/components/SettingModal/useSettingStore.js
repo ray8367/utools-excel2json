@@ -2,11 +2,11 @@
  * 用户设置存储业务
  */
 
-import { userSettingStore } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 
 export default function (formData) {
   // 从pinia读取设置
-  const settingStore = userSettingStore()
+  const settingStore = 用户设置存储()
 
   // 获取设置
   function 获取设置() {

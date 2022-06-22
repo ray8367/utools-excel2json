@@ -9,7 +9,7 @@ import axios from 'axios'
 import { 返回状态码及信息 } from '../common'
 import dayjs from 'dayjs'
 
-const errors = {
+const 错误信息 = {
   ActionOffline: '接口已下线。',
   'AuthFailure.InvalidAuthorization':
     '请求头部的 Authorization 不符合腾讯云标准。',
@@ -112,7 +112,7 @@ export default async function ({ q, from, to, keyConfig }) {
     let result
     if (Error) {
       // 翻译失败
-      result = 返回状态码及信息(500, null, errors[Error.Code])
+      result = 返回状态码及信息(500, null, 错误信息[Error.Code])
     } else {
       result = 返回状态码及信息(200, { text: TargetText })
     }

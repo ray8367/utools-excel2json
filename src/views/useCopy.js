@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { throttle } from 'lodash-es'
 import { useClipboard } from '@vueuse/core'
 import useUtools from './useUtools'
-import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 import { Message as 提示 } from '@arco-design/web-vue'
 
 export default function (结果对象) {

@@ -3,7 +3,7 @@
  * https://help.aliyun.com/document_detail/97592.html
  *  */
 
-import google from '../serve/google'
+import 谷歌翻译 from '../serve/google'
 import { 返回状态码及信息 } from '../common'
 
 /**
@@ -32,7 +32,7 @@ export default async function ({ q, from, to, keyConfig }) {
           return 返回状态码及信息(200, { text: Data.Translated })
         } else {
           // return 返回状态码及信息(500, null, Message)
-          let { code: gCode, text: gText } = await google({
+          let { code: gCode, text: gText } = await 谷歌翻译({
             q: Message,
             from: 'auto',
             to: 'zh-CN'

@@ -78,7 +78,7 @@ const CONFIG = {
 }
 
 /** 获取初始化初始值 */
-function getInitState () {
+function getInitState() {
   // 获取存储的数据
   const getStorageData = config => {
     const { key, type, defaultState } = config
@@ -120,7 +120,7 @@ function getInitState () {
   }
 }
 
-export const userSettingStore = defineStore('settings', {
+export const 用户设置存储 = defineStore('settings', {
   state: () => getInitState(),
 
   getters: {
@@ -177,67 +177,67 @@ export const userSettingStore = defineStore('settings', {
 
   actions: {
     /** 设置首页可见翻译 */
-    setHomeOption (data) {
+    setHomeOption(data) {
       this.homeOption = data
       setDbStorageItem(CONFIG.HOME_OPTION.key, JSON.stringify(data))
     },
 
     /** 设置默认翻译 */
-    setDefaultStorage (data) {
+    setDefaultStorage(data) {
       this.defaultApi = data
       setDbStorageItem(CONFIG.DEFAULT_API.key, data)
     },
 
     /** 设置密钥 */
-    setKeyConfig (data) {
+    setKeyConfig(data) {
       this.keyConfig = data
       setDbStorageItem(CONFIG.KEY_SETTING.key, JSON.stringify(data))
     },
 
     /** 设置字体大小 */
-    setFontSize (data) {
+    setFontSize(data) {
       this.fontSize = data
       setDbStorageItem(CONFIG.FONT_SIZE.key, data)
     },
 
     /** 设置复制快捷键行为 */
-    setCopyBtnBehavior (data) {
+    setCopyBtnBehavior(data) {
       this.copyBtnBehavior = data
       setDbStorageItem(CONFIG.COPY_BTN_BEHAVIOR.key, data)
     },
 
     /** 设置复制按钮 */
-    setCopyBtnShow (data) {
+    setCopyBtnShow(data) {
       this.copyBtnShow = data
       setDbStorageItem(CONFIG.COPY_BTN_SHOW.key, JSON.stringify(data))
     },
 
     /** 设置命名翻译模式 */
-    setCodeMode (data) {
+    setCodeMode(data) {
       this.codeMode = data
       setDbStorageItem(CONFIG.CODE_MODE.key.key, data)
     },
 
     /** 设置语音朗读开启 */
-    setReadAloud (data) {
+    setReadAloud(data) {
       this.readAloud = data
       setDbStorageItem(CONFIG.READ_ALOUD.key, data)
     },
 
     /** 设置语音朗读偏好 */
-    setReadingPreference (data) {
+    setReadingPreference(data) {
       this.readingPreference = data
       setDbStorageItem(CONFIG.READING_PREFERENCE.key, data)
     },
 
     /** 设置语音朗读偏好 */
-    setTheme (data) {
+    setTheme(data) {
       this.theme = data
       setDbStorageItem(CONFIG.THEME.key, data)
     },
 
     /** 重置设置 */
-    reset () {
+    reset() {
       Object.keys(CONFIG).forEach(configKey => {
         const { key } = CONFIG[configKey]
         removeDbStorageItem(key)
@@ -249,14 +249,14 @@ export const userSettingStore = defineStore('settings', {
      * 获取指定密钥
      * @param {String} tag 第三方api标识
      */
-    getKeyByTag (tag) {
+    getKeyByTag(tag) {
       return this.keyConfig[tag] || {}
     }
   }
 })
 
-export function getKeyByTag (tag) {
-  const settingStore = userSettingStore()
+export function getKeyByTag(tag) {
+  const settingStore = 用户设置存储()
   const { keyConfig } = settingStore
   return keyConfig[tag] || {}
 }

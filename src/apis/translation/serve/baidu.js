@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5'
 import axios from 'axios'
 import { 返回状态码及信息 } from '../common'
 
-const errors = {
+const 错误信息 = {
   // 52001: '请求超时，请重试',
   // 52002: '系统错误，请重试',
   52003: '未授权用户，请检查appid是否正确或者服务是否开通',
@@ -68,7 +68,7 @@ export default async function baiduTranslator({ q, from, to, keyConfig }) {
     let result
     if (error_code) {
       // 翻译失败
-      result = 返回状态码及信息(500, null, errors[error_code])
+      result = 返回状态码及信息(500, null, 错误信息[error_code])
 
       if (error_code === '54003') {
         // 访问频率受限，返回503

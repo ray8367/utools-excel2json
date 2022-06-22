@@ -196,7 +196,7 @@ import { Message as 提示 } from '@arco-design/web-vue'
 
 import { storeToRefs } from 'pinia'
 import { 通用翻译 } from '@/apis/translation/index.js'
-import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 import { 语种树, api不支持的大对象 } from '@/assets/translateApiOption.js'

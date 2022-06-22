@@ -1,6 +1,6 @@
 /** 语音朗读相关业务 */
 import { storeToRefs } from 'pinia'
-import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 import { 语音朗读生成base64 } from '@/apis/mstts/index.js'
 import { 声音映射 } from '@/apis/mstts/data.js'
 import { Message as 提示 } from '@arco-design/web-vue'

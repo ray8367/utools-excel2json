@@ -1,45 +1,45 @@
-import baidu from './serve/baidu'
-import tencent from './serve/tencent'
-import google from './serve/google'
-import youdao from './serve/youdao'
-import ali from './serve/ali'
-import caiyun from './serve/caiyun'
-import huoshan from './serve/huoshan'
+import 百度翻译 from './serve/baidu'
+import 腾讯翻译 from './serve/tencent'
+import 谷歌翻译 from './serve/google'
+import 有道翻译 from './serve/youdao'
+import 阿里翻译 from './serve/ali'
+import 彩云翻译 from './serve/caiyun'
+import 火山翻译 from './serve/huoshan'
 import { getKeyByTag } from '@/store/userSetting'
 
 const 翻译应用 = {
   baidu: {
-    fn: baidu,
+    fn: 百度翻译,
     label: '百度翻译',
     keys: ['appid', 'token']
   },
   tencent: {
-    fn: tencent,
+    fn: 腾讯翻译,
     label: '腾讯翻译',
     keys: ['secretId', 'secretKey']
   },
   google: {
-    fn: google,
+    fn: 谷歌翻译,
     label: '谷歌翻译',
     keys: []
   },
   youdao: {
-    fn: youdao,
+    fn: 有道翻译,
     label: '有道翻译',
     keys: ['appid', 'appkey']
   },
   ali: {
-    fn: ali,
+    fn: 阿里翻译,
     label: '阿里翻译',
     keys: ['accessKeyId', 'accessKeySecret']
   },
   caiyun: {
-    fn: caiyun,
+    fn: 彩云翻译,
     label: '彩云小译',
     keys: ['token']
   },
   huoshan: {
-    fn: huoshan,
+    fn: 火山翻译,
     label: '火山翻译',
     keys: ['accessKeyId', 'secretAccessKey']
   }

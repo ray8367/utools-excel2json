@@ -7,7 +7,7 @@ import encHex from 'crypto-js/enc-hex'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import { 返回状态码及信息 } from '../common'
 
-const errors = {
+const 错误信息 = {
   // UndefinedError: '一般不出现这个问题，这是系统开发兜底的错误提示',
   MissingParameter: '关键参数缺失，例如Action, Version参数',
   MissingAuthenticationToken: '缺少身份认证的必要信息，例如Auth信息',
@@ -82,7 +82,7 @@ export default async function ({ q, from, to, keyConfig }) {
       let result
       const apiError = ResponseMetadata?.Error?.Code
       if (apiError) {
-        return 返回状态码及信息(500, null, errors[apiError])
+        return 返回状态码及信息(500, null, 错误信息[apiError])
       } else {
         let text = TranslationList[0].Translation
         result = 返回状态码及信息(200, { text })
@@ -91,7 +91,7 @@ export default async function ({ q, from, to, keyConfig }) {
     } catch (err) {
       const apiError = err?.response?.data?.ResponseMetadata?.Error?.Code
       if (apiError) {
-        return 返回状态码及信息(500, null, errors[apiError])
+        return 返回状态码及信息(500, null, 错误信息[apiError])
       } else {
         console.error(err)
         return 返回状态码及信息(500)

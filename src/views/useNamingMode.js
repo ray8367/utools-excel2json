@@ -1,5 +1,5 @@
 /** 命名翻译模式相关业务 */
-import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
+import { 用户设置存储 } from '@/store/userSetting'
 import { 切换类型数组 } from '@/assets/changeCaseMap.js'
 
 export default function (结果对象) {
