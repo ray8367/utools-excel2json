@@ -199,13 +199,15 @@ import { 通用翻译 } from '@/apis/translation/index.js'
 import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
 import { 显示引导, 清除引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
-import { 切换类型数组 } from '@/assets/changeCaseMap.js'
 import { 语种树, api不支持的大对象 } from '@/assets/translateApiOption.js'
 import useUtools from './useUtools'
 import use语音朗读模块 from './useVoice'
 import use复制模块 from './useCopy'
-import { setTheme } from '@/utils/setTheme.js'
-const 系统颜色 = usePreferredColorScheme()
+import use命名模式模块 from './useNamingMode'
+import use主题 from './useTheme'
+
+// import { setTheme } from '@/utils/setTheme.js'
+// const 系统颜色 = usePreferredColorScheme()
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
 const 存储 = 用户设置存储()
@@ -213,10 +215,9 @@ const {
   homeOption: 首页选项,
   getHomeApiOptions: 翻译api数组,
   getHomeFontSize: 文字尺寸,
-  copyBtnShow: 复制按钮显示的数组,
-  theme: 主题
+  copyBtnShow: 复制按钮显示的数组
+  // theme: 主题
 } = storeToRefs(存储)
-const 是命名模式 = computed(() => 存储.codeMode) // 命名翻译模式
 const 翻译加载 = ref(false) // 是否正在翻译
 const 用户输入 = ref('') // 输入的内容
 const 结果对象 = reactive({
@@ -227,16 +228,30 @@ const 结果对象 = reactive({
   }
 })
 const 当前翻译api = ref('') // 当前翻译api
-const 命名模式类型 = ref('camelCase') // 命名模式要转换的类型
 const 设置弹框Ref = ref() // 设置弹窗的ref
 const 用户输入框Ref = ref() // 输入textarea的dom
-
-const { utools, utools初始化 } = useUtools(命名模式类型, 设置弹框Ref, 用户输入)
 
 const { 朗读功能, 音频Url, 朗读loading, 正在播放, 点击朗读, 重置音频 } =
   use语音朗读模块(form和to的数组, 结果对象)
 
 const { 要显示复制按钮, 复制按钮事件 } = use复制模块(结果对象)
+
+const {
+  是命名模式,
+  命名模式类型,
+  切换类型数组,
+  命名模式切换类型,
+  返回命名模式对应结果,
+  改变命名模式类型
+} = use命名模式模块(结果对象)
+
+use主题()
+
+const { utools, utools初始化 } = useUtools(
+  设置弹框Ref,
+  用户输入,
+  改变命名模式类型
+)
 
 function 格式化级联显示内容(options) {
   const 文字 = options.map(option => option.label)
@@ -330,22 +345,6 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
   翻译加载.value = false
   nextTick(() => 输入框focus())
 }
-// 切换命名翻译模式的方式select
-function 命名模式切换类型() {
-  const result = 返回命名模式对应结果(
-    结果对象.数据.结果文字,
-    命名模式类型.value
-  )
-  结果对象.数据.结果文字 = result
-}
-
-// 获取命名翻译模式的翻译结果
-function 返回命名模式对应结果(文字 = '', type = 'camelCase') {
-  const 当前模式对象 = 切换类型数组.find(item => item.name === type)
-  if (!文字) return 文字
-  if (!当前模式对象) return 文字
-  return 当前模式对象.handle(文字)
-}
 
 // 切换翻译的From和To
 function 切换from和to() {
@@ -388,11 +387,11 @@ function 重置from和to() {
   form和to的数组.value = ['auto', 'zh']
 }
 
-// 自动设置主题
-watchEffect(() => {
-  const theme = 主题.value === 'auto' ? 系统颜色.value : 主题.value
-  setTheme(theme)
-})
+// // 自动设置主题
+// watchEffect(() => {
+//   const theme = 主题.value === 'auto' ? 系统颜色.value : 主题.value
+//   setTheme(theme)
+// })
 
 onMounted(() => {
   utools && utools初始化()
