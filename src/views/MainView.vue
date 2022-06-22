@@ -214,7 +214,7 @@ const {
   getHomeApiOptions: 翻译服务选项,
   getHomeFontSize: 文字尺寸,
   copyBtnShow: 复制按钮显示的数组,
-  theme: 插件外观
+  theme: 主题
 } = storeToRefs(存储)
 const 是命名模式 = computed(() => 存储.codeMode) // 命名翻译模式
 const 翻译加载 = ref(false) // 是否正在翻译
@@ -376,7 +376,6 @@ function 读取设置() {
   if (!首页选项.value.includes(当前翻译api.value)) {
     当前翻译api.value = 存储.defaultApi
   }
-  设置插件外观()
 }
 
 // 重置后首页设置
@@ -385,21 +384,14 @@ function resetHandler() {
   读取设置()
 }
 
-// 重置From和To
 function 重置from和to() {
   form和to的数组.value = ['auto', 'zh']
 }
 
-function 设置插件外观() {
-  if (插件外观.value === 'auto') {
-    setTheme(系统颜色.value)
-  } else {
-    setTheme(插件外观.value)
-  }
-}
-
+// 自动设置主题
 watchEffect(() => {
-  插件外观.value === 'auto' && setTheme(系统颜色.value)
+  const theme = 主题.value === 'auto' ? 系统颜色.value : 主题.value
+  setTheme(theme)
 })
 
 onMounted(() => {

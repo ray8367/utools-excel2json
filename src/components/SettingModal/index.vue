@@ -153,7 +153,7 @@
                   <div class="space-x-4px">
                     <span>朗读性别偏好</span>
                     <hover-answer>
-                      系统默认为我们认为还不错的声音，不同的语种下有男声也有女声，你可以通过更改此选项，来指定朗读声音的性别
+                      系统默认是我们认为还不错的声音，不同的语种下有男声也有女声，你可以通过更改此选项，来指定朗读声音的性别
                     </hover-answer>
                   </div>
                 </template>
@@ -349,24 +349,22 @@ const 首页的api数组 = ref([]) // 当前首页展示的翻译方式
 
 // 监听首页翻译方式的checkbox勾选数量
 watchEffect(() => {
-  if (formData.homeHasApi?.length > 4) {
+  const 已选择的api长度 = formData.homeHasApi?.length
+  if (已选择的api长度 > 4) {
     formData.homeHasApi = 首页的api数组.value
     提示.warning({ content: '最多只能选择4个翻译方式哦~', duration: 2500 })
-    return
-  }
-  if (formData.homeHasApi?.length < 1) {
+  } else if (已选择的api长度 < 1) {
     formData.homeHasApi = 首页的api数组.value
     提示.warning({
       content: '还是至少留下1个翻译方式吧！',
       duration: 2500
     })
-    return
   }
   首页的api数组.value = formData.homeHasApi
 })
 
 // 监听默认翻译方式的下拉选项
-// 如果选择了"默认翻译方式"为"首页翻译方式"不准在的，则把可用的翻译方式第一个赋值给默认
+// 如果选择了"默认翻译方式"为"首页翻译方式"不存在的，则把可用的翻译方式第一个赋值给默认
 watchEffect(() => {
   if (!首页的api数组.value.includes(formData.defaultApi)) {
     formData.defaultApi = defaultOptions.value[0].value
@@ -383,13 +381,8 @@ function modal确定() {
 
 // 动态快捷键文案
 function 计算快捷键文案() {
-  if (!utools) {
-    return 'Ctrl+Shift+C / Command+Shift+C'
-  } else if (utools.isMacOs()) {
-    return 'Command+Shift+C'
-  } else {
-    return 'Ctrl+Shift+C'
-  }
+  if (!utools) return 'Ctrl+Shift+C / Command+Shift+C'
+  return utools.isMacOs() ? 'Command+Shift+C' : 'Ctrl+Shift+C'
 }
 
 // 点击弹框取消
@@ -401,7 +394,6 @@ function modal取消() {
 
 // 打开设置弹框回调
 function 打开model() {
-  // abcd:这里改成从utools取值
   !获取存储项('firstUseSetting') && 首次引导()
 }
 
@@ -419,12 +411,6 @@ function 首次引导() {
   }
   显示引导(option, 'firstUseSetting')
 }
-
-// 关闭设置弹框回调
-// function modalClose() {
-//
-//   清除引导()
-// }
 
 // 打开弹窗
 function 打开弹窗() {
