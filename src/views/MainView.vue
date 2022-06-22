@@ -193,6 +193,7 @@ import {
   IconPlayArrowFill
 } from '@arco-design/web-vue/es/icon'
 import { Message as 提示 } from '@arco-design/web-vue'
+
 import { storeToRefs } from 'pinia'
 import { 通用翻译 } from '@/apis/translation/index.js'
 import { userSettingStore as 用户设置存储 } from '@/store/userSetting'
@@ -204,7 +205,7 @@ import useUtools from './useUtools'
 import use语音朗读模块 from './useVoice'
 import use复制模块 from './useCopy'
 import { setTheme } from '@/utils/setTheme.js'
-
+const isDark = useDark() // 响应式：是否为暗色
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
 const 存储 = 用户设置存储()
@@ -390,14 +391,14 @@ function 重置from和to() {
 }
 
 function 设置插件外观() {
-  const val = 插件外观.value === '深色' ? true : false
-  setTheme(val)
-  console.log('设置外观', val)
-  // if (插件外观.value !== '默认') {
-  //   const val = 插件外观.value === '深色' ? true : false
-  //   setTheme(val)
-  //   console.log('设置外观', val)
-  // }
+  console.log('插件外观.value: ', 插件外观.value)
+  if (插件外观.value === '自动') {
+    console.log('走自动')
+    setTheme(isDark.value)
+  } else {
+    console.log('走自定义')
+    setTheme(插件外观.value === '深色')
+  }
 }
 
 onMounted(() => {
@@ -570,48 +571,17 @@ onKeyStroke('Tab', e => {
   ::v-deep(.arco-textarea-focus) {
     border-color: $primary-color;
   }
-
-  // 深色模式
-  @media (prefers-color-scheme: dark) {
-    ::v-deep(.arco-textarea-wrapper) {
-      background-color: transparent;
-      border-color: #00000000;
-    }
-
-    ::v-deep(.arco-textarea-focus) {
-      border-color: #777;
-    }
-    ::v-deep(.arco-textarea) {
-      background-color: #242425a6;
-    }
-  }
 }
 
 // 下面的文本域样式
 .text_readonly {
   position: relative;
-  ::v-deep(.arco-textarea-focus) {
-    border-color: #e9e9e9;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    ::v-deep(.arco-textarea-focus) {
-      border-color: transparent;
-    }
-  }
 }
 
 .tools_wrapper {
   ::v-deep(.arco-select-view-value) {
     display: grid;
     text-align: center;
-  }
-  @media (prefers-color-scheme: dark) {
-    ::v-deep(.arco-radio-checked) {
-      color: #fff;
-      text-shadow: 0 3px 15px #ffffffb8;
-      background-color: #222 !important;
-    }
   }
 }
 </style>

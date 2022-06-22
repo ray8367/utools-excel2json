@@ -74,21 +74,6 @@ const 缩小后的尺寸 = computed(() => {
       transform: scale(v-bind(缩小后的尺寸));
     }
   }
-
-  @media (prefers-color-scheme: dark) {
-    --houdini-colorA: #333;
-    --houdini-colorB: #333;
-    box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
-    border: 1px solid #444;
-    &:hover,
-    &:active {
-      --houdini-colorA: #222;
-      --houdini-colorB: #222;
-    }
-    &:active {
-      box-shadow: 1px 1px 6px #112, -3px -3px 6px #333;
-    }
-  }
   @apply p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-400 select-none;
 }
 
@@ -105,17 +90,6 @@ const 缩小后的尺寸 = computed(() => {
     transform: scale(1);
     .text_inner {
       transform: scale(1);
-    }
-  }
-  @media (prefers-color-scheme: dark) {
-    box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
-    &:hover,
-    &:active {
-      --houdini-colorA: #333;
-      --houdini-colorB: #333;
-    }
-    &:active {
-      box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
     }
   }
 }

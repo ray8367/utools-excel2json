@@ -22,17 +22,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .code_bg {
-    svg {
-      text {
-        animation: stroke_dark 2s ease;
-        animation-fill-mode: both;
-      }
-    }
-  }
-}
-
 // 浅色模式下的动画
 @keyframes stroke_light {
   0% {
@@ -55,35 +44,6 @@
   90%,
   100% {
     fill: #f5f6f7;
-    stroke: #0000;
-    stroke-dashoffset: -25%;
-    stroke-dasharray: 50% 0;
-    stroke-width: 0;
-  }
-}
-
-// 暗色模式下的动画
-@keyframes stroke_dark {
-  0% {
-    fill: #0000;
-    stroke: rgba(#fff, $alpha: 1);
-    stroke-dashoffset: 25%;
-    stroke-dasharray: 0 50%;
-    stroke-width: 0.8;
-  }
-  50% {
-    fill: #0000;
-    stroke: rgba(#777, $alpha: 0.9);
-    stroke-width: 1.2;
-  }
-  70% {
-    fill: #0000;
-    stroke: rgba(#393939, $alpha: 0.9);
-    stroke-width: 1.5;
-  }
-  90%,
-  100% {
-    fill: #393939;
     stroke: #0000;
     stroke-dashoffset: -25%;
     stroke-dasharray: 50% 0;
