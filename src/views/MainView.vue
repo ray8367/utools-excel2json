@@ -205,7 +205,7 @@ import useUtools from './useUtools'
 import use语音朗读模块 from './useVoice'
 import use复制模块 from './useCopy'
 import { setTheme } from '@/utils/setTheme.js'
-const isDark = useDark() // 响应式：是否为暗色
+const 系统颜色 = usePreferredColorScheme()
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
 const 存储 = 用户设置存储()
@@ -391,15 +391,16 @@ function 重置from和to() {
 }
 
 function 设置插件外观() {
-  console.log('插件外观.value: ', 插件外观.value)
-  if (插件外观.value === '自动') {
-    console.log('走自动')
-    setTheme(isDark.value)
+  if (插件外观.value === 'auto') {
+    setTheme(系统颜色.value)
   } else {
-    console.log('走自定义')
-    setTheme(插件外观.value === '深色')
+    setTheme(插件外观.value)
   }
 }
+
+watchEffect(() => {
+  插件外观.value === 'auto' && setTheme(系统颜色.value)
+})
 
 onMounted(() => {
   utools && utools初始化()
