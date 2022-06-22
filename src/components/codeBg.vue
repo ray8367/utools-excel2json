@@ -21,33 +21,4 @@
     }
   }
 }
-
-// 浅色模式下的动画
-@keyframes stroke_light {
-  0% {
-    fill: #0000;
-    stroke: rgba($primary-color, $alpha: 1);
-    stroke-dashoffset: 25%;
-    stroke-dasharray: 0 50%;
-    stroke-width: 0.8;
-  }
-  50% {
-    fill: #0000;
-    stroke: rgba($primary-color, $alpha: 0.6);
-    stroke-width: 1.2;
-  }
-  70% {
-    fill: #0000;
-    stroke: #f5f6f7;
-    stroke-width: 1.5;
-  }
-  90%,
-  100% {
-    fill: #f5f6f7;
-    stroke: #0000;
-    stroke-dashoffset: -25%;
-    stroke-dasharray: 50% 0;
-    stroke-width: 0;
-  }
-}
 </style>

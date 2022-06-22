@@ -35,7 +35,7 @@
           @change="切换翻译服务()"
         >
           <a-radio
-            v-for="项 in (翻译服务选项 || []).slice(0, 4)"
+            v-for="项 in (翻译api数组 || []).slice(0, 4)"
             :key="项.item"
             :value="项.value"
           >
@@ -211,7 +211,7 @@ const form和to的数组 = ref(['auto', 'zh'])
 const 存储 = 用户设置存储()
 const {
   homeOption: 首页选项,
-  getHomeApiOptions: 翻译服务选项,
+  getHomeApiOptions: 翻译api数组,
   getHomeFontSize: 文字尺寸,
   copyBtnShow: 复制按钮显示的数组,
   theme: 主题
@@ -510,12 +510,14 @@ const 设置弹框正在活动 = computed(() => {
 onKeyStroke('Tab', e => {
   if (设置弹框正在活动.value) return
   e.preventDefault()
-  let 当前api的index = 翻译服务选项.value.findIndex(
+  let 当前api的index = 翻译api数组.value.findIndex(
     i => i.value === 当前翻译api.value
   )
   当前api的index += 1
-  当前api的index > 翻译服务选项.value.length - 1 && (当前api的index = 0)
-  const 下一个api = 翻译服务选项.value[当前api的index]?.value
+  if (当前api的index > 翻译api数组.value.length - 1) {
+    当前api的index = 0
+  }
+  const 下一个api = 翻译api数组.value[当前api的index]?.value
   当前翻译api.value = 下一个api
   setTimeout(() => {
     防抖翻译()

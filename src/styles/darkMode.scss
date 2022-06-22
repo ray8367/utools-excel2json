@@ -91,39 +91,8 @@ html {
       }
     }
 
-    // 深色下的<code/>背景
-    // 暗色模式下的动画
-    @keyframes stroke_dark {
-      0% {
-        fill: #0000;
-        stroke: rgba(#fff, $alpha: 1);
-        stroke-dashoffset: 25%;
-        stroke-dasharray: 0 50%;
-        stroke-width: 0.8;
-      }
 
-      50% {
-        fill: #0000;
-        stroke: rgba(#777, $alpha: 0.9);
-        stroke-width: 1.2;
-      }
-
-      70% {
-        fill: #0000;
-        stroke: rgba(#393939, $alpha: 0.9);
-        stroke-width: 1.5;
-      }
-
-      90%,
-      100% {
-        fill: #393939;
-        stroke: #0000;
-        stroke-dashoffset: -25%;
-        stroke-dasharray: 50% 0;
-        stroke-width: 0;
-      }
-    }
-
+    // 深色下的<code/>动画
     .code_bg {
       svg {
         text {
