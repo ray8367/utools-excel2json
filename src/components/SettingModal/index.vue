@@ -97,7 +97,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="插件外观">
+              <a-form-item label="插件主题">
                 <a-radio-group v-model="formData.theme">
                   <a-radio value="auto">跟随utools</a-radio>
                   <a-radio value="light"> 浅色 </a-radio>

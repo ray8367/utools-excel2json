@@ -69,7 +69,7 @@ const CONFIG = {
     type: String,
     defaultState: 'default'
   },
-  // 插件外观
+  // 插件主题
   THEME: {
     key: 'theme',
     type: String,
@@ -170,7 +170,7 @@ export const userSettingStore = defineStore('settings', {
         codeMode, // 命名翻译模式
         readAloud, // 语音朗读
         readingPreference, // 朗读偏好
-        theme // 外观
+        theme // 主题
       }
     }
   },
