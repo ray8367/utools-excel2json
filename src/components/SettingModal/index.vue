@@ -124,7 +124,7 @@
                     </hover-answer>
                   </div>
                 </template>
-                <a-switch v-model="formData.codeMode" type="round" />
+                <a-switch v-model="formData.codeMode" />
               </a-form-item>
             </a-col>
 
@@ -144,7 +144,7 @@
                     </hover-answer>
                   </div>
                 </template>
-                <a-switch v-model="formData.readAloud" type="round" />
+                <a-switch v-model="formData.readAloud" />
               </a-form-item>
             </a-col>
             <a-col :span="18">
