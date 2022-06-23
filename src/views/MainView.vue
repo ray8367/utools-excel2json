@@ -576,6 +576,9 @@ onKeyStroke('Tab', e => {
 // 下面的文本域样式
 .text_readonly {
   position: relative;
+  ::v-deep(.arco-textarea-focus) {
+    border-color: #e9e9e9;
+  }
 }
 
 .tools_wrapper {
