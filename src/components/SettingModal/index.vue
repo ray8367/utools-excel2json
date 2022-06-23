@@ -97,15 +97,6 @@
               </a-form-item>
             </a-col>
             <a-col :span="18">
-              <a-form-item label="插件主题">
-                <a-radio-group v-model="formData.theme">
-                  <a-radio value="auto">跟随utools</a-radio>
-                  <a-radio value="light"> 浅色 </a-radio>
-                  <a-radio value="dark"> 深色 </a-radio>
-                </a-radio-group>
-              </a-form-item>
-            </a-col>
-            <a-col :span="18">
               <a-form-item label="命名翻译模式">
                 <template #label>
                   <div class="space-x-4px">
@@ -125,6 +116,15 @@
                   </div>
                 </template>
                 <a-switch v-model="formData.codeMode" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="18">
+              <a-form-item label="插件主题">
+                <a-radio-group v-model="formData.theme">
+                  <a-radio value="auto">跟随utools</a-radio>
+                  <a-radio value="light"> 浅色 </a-radio>
+                  <a-radio value="dark"> 深色 </a-radio>
+                </a-radio-group>
               </a-form-item>
             </a-col>
 
