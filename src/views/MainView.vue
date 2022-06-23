@@ -1,9 +1,9 @@
 <template>
   <div
-    class="main_wrapper grid-c h-screen px-20px pb-20px relative overflow-hidden dark:(bg-dark-300 text-white)"
+    class="main_wrapper grid-c h-screen px-24px pb-24px relative overflow-hidden dark:(bg-dark-300 text-white)"
   >
     <div
-      class="p-20px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
+      class="p-16px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
     >
       <div class="text_wrapper flex flex-1 relative">
         <!-- 清除按钮 -->
@@ -530,7 +530,7 @@ onKeyStroke('Tab', e => {
   @apply text-20px text-[#999] cursor-pointer hover: text-[#666];
 }
 .code_icon {
-  @apply absolute left-3px bottom-3px;
+  @apply absolute left-4px bottom-4px;
   &:hover {
     transform: rotate(180deg);
   }
@@ -542,7 +542,7 @@ onKeyStroke('Tab', e => {
   }
 }
 .setting_icon {
-  @apply absolute right-3px bottom-3px;
+  @apply absolute right-4px bottom-4px;
 
   &:hover {
     transform: rotate(60deg);
