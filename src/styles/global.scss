@@ -16,17 +16,18 @@
   src: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-be392405-5b88-4143-ad6b-f155b106ab85/a79e6f39-cad5-42ff-9b6b-6440af613c01.woff2') format('woff2');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: 'NanumGothic';
+  src: url('../assets/font/NanumGothic-Regular.woff2') format('woff2');
+}
+
 html,
 body,
 .guide_wrapper {
-  font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', system-ui,
+  font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', 'NanumGothic', system-ui,
     —apple-system, Segoe UI, Rototo, Helvetica, Arial, sans-serif !important;
-    background-color: #fff;
-}
-
-
-.font-serif {
-  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+  background-color: #fff;
 }
 
 .code_font-family {
