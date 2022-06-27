@@ -425,8 +425,11 @@ function 关闭弹窗() {
 
 // 打开url
 function 打开url(e) {
+  // TODO: e 取不到值了？
+  console.log(e)
   if (!utools) return
-  utools.shellOpenExternal(e.target.getAttribute('href'))
+  // utools.shellOpenExternal(e.target.getAttribute('href'))
+  utools.shellOpenExternal('https://www.wolai.com/jtSV7oah6M7rErz2RMFzo')
 }
 
 // 重置数据
