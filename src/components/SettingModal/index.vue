@@ -116,7 +116,9 @@
                   </div>
                 </template>
                 <a-switch v-model="formData.codeMode" class="-mt-10px" />
-                <span class="inline-block text-gray-300 ml-16px">
+                <span
+                  class="inline-block text-gray-300 ml-16px dark:text-gray-500"
+                >
                   该选项已移除存储机制，设置项将在不久后删除，届时你可通过主页左下角的图标、或者mmxx关键字进入「命名翻译模式」
                 </span>
               </a-form-item>
