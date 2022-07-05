@@ -409,15 +409,15 @@ const 用户输入字数 = computed(() => {
 
 function changeFromTo() {
   let arr
-  if (用户输入字数.value <= 15) {
+  if (用户输入字数.value < 20) {
     const 第一个字是为汉字 = !!获取用户输入前几个字(1).match(reg)
     arr = ['auto', 第一个字是为汉字 ? 'en' : 'zh']
   } else {
-    const 前15个字 = 获取用户输入前几个字(15)
-    const 前十五个字汉字数 = replace(前15个字, reg, '◎').split('◎').length - 1
-    const 前15字的汉字比例 = parseFloat(前十五个字汉字数 / 15).toFixed(2)
-    const 前15字大多为汉字 = 前15字的汉字比例 > 0.5
-    arr = ['auto', 前15字大多为汉字 ? 'en' : 'zh']
+    const 前20个字 = 获取用户输入前几个字(20)
+    const 前20个字包含汉字数 = replace(前20个字, reg, '◎').split('◎').length - 1
+    const 前20字的汉字比例 = parseFloat(前20个字包含汉字数 / 20).toFixed(2)
+    const 前20字大多为汉字 = 前20字的汉字比例 > 0.4
+    arr = ['auto', 前20字大多为汉字 ? 'en' : 'zh']
   }
   重置from和to(arr)
 }
