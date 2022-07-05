@@ -413,11 +413,15 @@ function changeFromTo() {
     const 第一个字是为汉字 = !!获取用户输入前几个字(1).match(reg)
     arr = ['auto', 第一个字是为汉字 ? 'en' : 'zh']
   } else {
-    const 前20个字 = 获取用户输入前几个字(20)
-    const 前20个字包含汉字数 = replace(前20个字, reg, '◎').split('◎').length - 1
-    const 前20字的汉字比例 = parseFloat(前20个字包含汉字数 / 20).toFixed(2)
-    const 前20字大多为汉字 = 前20字的汉字比例 > 0.4
-    arr = ['auto', 前20字大多为汉字 ? 'en' : 'zh']
+    const 抽样数量 = 20
+    const 比例 = 0.35
+    const 一部分字 = 获取用户输入前几个字(抽样数量)
+    const 一部分字包含汉字数 = replace(一部分字, reg, '◎').split('◎').length - 1
+    const 汉字占一部分字的比例 = parseFloat(
+      一部分字包含汉字数 / 抽样数量
+    ).toFixed(2)
+    const 前一部分字大多汉字 = 汉字占一部分字的比例 >= 比例
+    arr = ['auto', 前一部分字大多汉字 ? 'en' : 'zh']
   }
   重置from和to(arr)
 }
