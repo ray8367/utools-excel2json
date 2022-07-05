@@ -179,7 +179,7 @@
 </template>
 
 <script setup>
-import { debounce, throttle } from 'lodash-es'
+import { debounce, throttle, replace } from 'lodash-es'
 import { nanoid } from 'nanoid'
 import {
   IconSettings,
@@ -384,8 +384,31 @@ function resetHandler() {
 }
 
 function 重置from和to() {
-  form和to的数组.value = ['auto', 'zh']
+  const to = 输入的是汉字.value ? 'en' : 'zh'
+  form和to的数组.value = ['auto', to]
 }
+
+function 获取用户输入(字数 = 0) {
+  return 用户输入.value.substring(0, 字数)
+}
+
+const reg =
+  /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5|[\u3400-\u4DB5\u4E00-\u9FEA\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]]/g
+
+const 输入的是汉字 = computed(() => {
+  if (用户输入字数.value <= 15) {
+    const 第一个字 = 获取用户输入(1)
+    return reg.test(第一个字)
+  } else {
+    const 前15个字 = 获取用户输入(15)
+    const 前十五个字汉字数 = replace(前15个字, reg, '◎').split('◎').length - 1
+    return parseFloat(前十五个字汉字数 / 15).toFixed(2) > 0.5
+  }
+})
+
+const 用户输入字数 = computed(() => {
+  return 用户输入.value.trim().match(/./gu)?.length || 0
+})
 
 // // 自动设置主题
 // watchEffect(() => {
