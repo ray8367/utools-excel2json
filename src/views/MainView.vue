@@ -325,7 +325,7 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
     结果对象.数据.结果文字 = ''
     return
   }
-  !手动模式.value && changeFromTo()
+  自动模式.value && changeFromTo()
 
   翻译加载.value = true
   const obj = {
@@ -347,11 +347,11 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
   nextTick(() => 输入框focus())
 }
 
-const 手动模式 = ref(false)
+const 自动模式 = ref(true)
 
 // 切换翻译的From和To
 function 切换from和to() {
-  手动模式.value = true
+  自动模式.value = false
   输入框focus()
   setTimeout(() => {
     开始翻译()
