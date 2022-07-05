@@ -205,6 +205,7 @@ import use语音朗读模块 from './useVoice'
 import use复制模块 from './useCopy'
 import use命名模式模块 from './useNamingMode'
 import use主题 from './useTheme'
+import 关闭窗口 from './useExit'
 
 // import { setTheme } from '@/utils/setTheme.js'
 // const 系统颜色 = usePreferredColorScheme()
@@ -235,7 +236,6 @@ const { 朗读功能, 音频Url, 朗读loading, 正在播放, 点击朗读, 重�
   use语音朗读模块(form和to的数组, 结果对象)
 
 const { 要显示复制按钮, 复制按钮事件 } = use复制模块(结果对象)
-
 const {
   是命名模式,
   命名模式类型,
@@ -252,6 +252,8 @@ const { utools, utools初始化 } = useUtools(
   用户输入,
   改变命名模式类型
 )
+
+关闭窗口(utools)
 
 function 格式化级联显示内容(options) {
   const 文字 = options.map(option => option.label)
