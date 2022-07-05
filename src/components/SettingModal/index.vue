@@ -96,8 +96,8 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
-              <a-form-item label="命名翻译模式">
+            <a-col :span="24">
+              <a-form-item label="命名翻译模式" class="flex items-start">
                 <template #label>
                   <div class="space-x-4px">
                     <span>命名翻译模式</span>
@@ -115,7 +115,10 @@
                     </hover-answer>
                   </div>
                 </template>
-                <a-switch v-model="formData.codeMode" />
+                <a-switch v-model="formData.codeMode" class="-mt-10px" />
+                <span class="inline-block text-gray-300 ml-16px">
+                  该选项已移除存储机制，设置项将在不久后删除，届时你可通过主页左下角的图标、或者mmxx关键字进入「命名翻译模式」
+                </span>
               </a-form-item>
             </a-col>
             <a-col :span="18">
