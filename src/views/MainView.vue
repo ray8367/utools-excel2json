@@ -252,6 +252,7 @@ const { utools, utools初始化 } = useUtools(
   用户输入,
   改变命名模式类型
 )
+const 自动模式 = ref(true)
 
 关闭窗口(utools)
 
@@ -295,8 +296,11 @@ function 打开设置Modal() {
 
 const 切换自动模式 = throttle(() => {
   自动模式.value = !自动模式.value
-  提示.success(`智能切换目标语种已${自动模式.value ? '开启' : '关闭'}`)
 }, 500)
+
+watch(自动模式, newVal => {
+  提示.success(`智能切换目标语种已${newVal ? '开启' : '关闭'}`)
+})
 
 // 变更模式
 const 切换模式 = throttle(() => {
@@ -355,8 +359,6 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
   翻译加载.value = false
   nextTick(() => 输入框focus())
 }
-
-const 自动模式 = ref(true)
 
 // 切换翻译的From和To
 function 切换from和to() {

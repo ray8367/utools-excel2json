@@ -10,10 +10,10 @@
       <p>智能切换目标语种「{{ props.modelValue ? '开' : '关' }}」</p>
     </template>
     <div
-      class="btn_wrapper p-4px w-29px grid-c cursor-pointer rounded-4px transition-all hover:(bg-[#99999933])"
+      class="btn_wrapper w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#99999935])"
     >
       <icon-star-fill
-        class="text-16px"
+        class="text-20px"
         :class="[props.modelValue ? 'active' : 'disabled']"
       />
     </div>
@@ -30,11 +30,14 @@ const props = defineProps({
     type: Boolean
   }
 })
+const starYellow = computed(() => {
+  return currentTheme.value === 'light' ? '#f4ce48' : '#ebbd3f'
+})
 </script>
 
 <style lang="scss" scoped>
 .active {
-  color: $primary-color;
+  color: v-bind(starYellow);
 }
 .disabled {
   @apply text-[#ccc];
