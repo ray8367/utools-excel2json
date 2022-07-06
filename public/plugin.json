@@ -16,13 +16,24 @@
       ]
     },
     {
-      "code": "anyword",
+      "code": "fanyi",
       "label": "易翻翻译",
-      "explain": "翻译当前文本",
+      "explain": "翻译文本：用于快速翻译复制的文本，也可结合全局快捷键使用",
       "cmds": [
         {
           "type": "over",
           "label": "翻译"
+        }
+      ]
+    },
+    {
+      "code": "anyword",
+      "label": "易翻翻译",
+      "explain": "翻译文本：用于快速翻译复制的文本，也可结合全局快捷键使用（如果上面那个已经绑过了那就试试这个吧🙈）",
+      "cmds": [
+        {
+          "type": "over",
+          "label": "fjyi"
         }
       ]
     },

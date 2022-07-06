@@ -8,7 +8,11 @@ export default function (设置弹框Ref, 用户输入, 改变命名模式类型
   function utools初始化() {
     utools.onPluginEnter(({ code, payload }) => {
       设置弹框Ref.value.关闭弹窗()
-      用户输入.value = code === 'anyword' ? payload : ''
+      let value = ''
+      if (code === 'anyword' || code === 'fanyi') {
+        value = payload
+      }
+      用户输入.value = value
       改变命名模式类型(code)
     })
     utools.subInputBlur()
