@@ -63,6 +63,7 @@
           </template>
 
           <template v-else>
+            <AutoBtn v-model="自动模式" @click="切换自动模式()" />
             <a-cascader
               v-model:model-value="form和to的数组"
               path-mode
@@ -207,8 +208,6 @@ import use命名模式模块 from './useNamingMode'
 import use主题 from './useTheme'
 import 关闭窗口 from './useExit'
 
-// import { setTheme } from '@/utils/setTheme.js'
-// const 系统颜色 = usePreferredColorScheme()
 const 语种树的数据 = ref(语种树())
 const form和to的数组 = ref(['auto', 'zh'])
 const 存储 = 用户设置存储()
@@ -293,6 +292,11 @@ function 打开设置Modal() {
   设置弹框Ref.value.打开弹窗()
 }
 
+const 切换自动模式 = throttle(() => {
+  自动模式.value = !自动模式.value
+  提示.success(`智能切换目标语种已${自动模式.value ? '开启' : '关闭'}`)
+}, 500)
+
 // 变更模式
 const 切换模式 = throttle(() => {
   提示.success({
@@ -327,7 +331,9 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
     结果对象.数据.结果文字 = ''
     return
   }
-  自动模式.value && changeFromTo()
+  if (自动模式.value && !是命名模式.value) {
+    changeFromTo()
+  }
 
   翻译加载.value = true
   const obj = {
@@ -411,6 +417,7 @@ const 用户输入字数 = computed(() => {
 })
 
 function changeFromTo() {
+  if (是命名模式.value) return
   let arr
   if (用户输入字数.value < 20) {
     const 第一个字是为汉字 = !!获取用户输入前几个字(1).match(ChineseReg)
@@ -622,6 +629,10 @@ onKeyStroke('Tab', e => {
   ::v-deep(.arco-select-view-value) {
     display: grid;
     text-align: center;
+    font-family: 'iconfont' !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 </style>

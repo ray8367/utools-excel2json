@@ -96,31 +96,46 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
-            <a-col :span="24">
-              <a-form-item label="命名翻译模式" class="flex items-start">
+            <a-col :span="18">
+              <a-form-item label="默认目标外语语种" class="flex items-start">
                 <template #label>
                   <div class="space-x-4px">
-                    <span>命名翻译模式</span>
+                    <span>默认目标外语语种</span>
                     <hover-answer>
-                      <p>
-                        命名翻译模式开启后，将支持一键翻译，并转换成常用大小驼峰、中划线、下划线、等格式，也可通过点击主页左下角的
-                        <icon-code class="text-16px" />
-                        图标进行快速切换。
-                      </p>
-                      <p class="font-bold text-red-500">
-                        如果你看不懂这句话，那么请不要打开这个选项，也请保持首页左下角的
-                        <icon-code class="text-16px" />
-                        按钮为灰色状态，以免影响使用！
-                      </p>
+                      <ul class="list-disc pl-16px space-y-10px">
+                        <li>
+                          如果在翻译界面开启了
+                          <span class="text_important">
+                            「智能切换目标语种」
+                          </span>
+                          ，此时将在翻译之前，会判断你的输入是否为中文，如果
+                          <span class="text_important"> 认定为中文 </span>
+                          ，将会自动切换 「目标语种」
+                          为一个外语，该选项用来指定这个外语默认是什么，若
+                          <span class="text_important"> 不是中文 </span>
+                          ，则会切换为 “自动 → 中文” 尽可能免去你
+                          手动调整目标语种的这一步骤
+                        </li>
+                        <li>
+                          如果
+                          <span class="text_important">手动切换了</span>
+                          「原语种」或「目标语种」，易翻会认为自己猜错了，将
+                          <span class="text_important"
+                            >自动关闭「智能切换目标语种」功能</span
+                          >
+                          ，直至
+                          <span class="text_important">插件退出</span>
+                          ，但是你依然可以在语种下拉选择的左侧手动开启
+                        </li>
+                      </ul>
                     </hover-answer>
                   </div>
                 </template>
-                <a-switch v-model="formData.codeMode" class="-mt-10px" />
-                <span
-                  class="inline-block text-gray-300 ml-16px dark:text-slate-500"
-                >
-                  该选项已移除存储机制，设置项将在不久后删除，届时你可通过主页左下角的图标、或者mmxx关键字进入「命名翻译模式」
-                </span>
+                <a-radio-group v-model="formData.defaultForeignLanguage">
+                  <a-radio value="en"> 英语 </a-radio>
+                  <a-radio value="jp"> 日语 </a-radio>
+                  <a-radio value="ru"> 俄语 </a-radio>
+                </a-radio-group>
               </a-form-item>
             </a-col>
             <a-col :span="18">
@@ -311,7 +326,6 @@
 </template>
 
 <script setup>
-import { IconCode } from '@arco-design/web-vue/es/icon'
 import { Message as 提示 } from '@arco-design/web-vue'
 import { apiOptions as api选项 } from '@/assets/translateApiOption.js'
 import { 清除引导, 显示引导 } from '@/utils/showGuide.js'
@@ -327,6 +341,7 @@ const formData = reactive({
   readAloud: true, // 语音朗读
   readingPreference: 'default', // 朗读偏好
   codeMode: false, // 命名翻译模式
+  defaultForeignLanguage: 'en', // 默认目标外语语种
   defaultApi: undefined, // 默认翻译方式
   theme: 'auto',
   appid: undefined, // 百度
@@ -457,4 +472,8 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.text_important {
+  @apply text-red-600 font-bold;
+}
+</style>
