@@ -1,5 +1,10 @@
 <template>
-  <a-tooltip content="" position="left" mini background-color="#333">
+  <a-tooltip
+    content=""
+    position="left"
+    mini
+    :background-color="currentTheme === 'light' ? '#333' : '#555'"
+  >
     <!-- TODO: 适配深色 -->
     <template #content>
       <p>智能切换目标语种「{{ props.modelValue ? '开' : '关' }}」</p>
@@ -16,7 +21,10 @@
 </template>
 
 <script setup>
+import { useGlobalStore } from '@/store/globalData.js'
 import { IconStarFill } from '@arco-design/web-vue/es/icon'
+const globalStore = useGlobalStore()
+const { currentTheme } = storeToRefs(globalStore)
 const props = defineProps({
   modelValue: {
     type: Boolean

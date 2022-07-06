@@ -30,7 +30,7 @@ export default defineConfig({
         filepath: './.eslintrc-auto-import.json',
         globalsPropValue: true
       },
-      imports: ['vue', '@vueuse/core']
+      imports: ['vue', '@vueuse/core', 'pinia']
     }),
     Components({
       resolvers: [ArcoResolver()]
