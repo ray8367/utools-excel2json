@@ -419,9 +419,11 @@ const 用户输入字数 = computed(() => {
 function changeFromTo() {
   if (是命名模式.value) return
   let arr
+  // 默认外语
+  const target = 'en'
   if (用户输入字数.value < 20) {
     const 第一个字是为汉字 = !!获取用户输入前几个字(1).match(ChineseReg)
-    arr = ['auto', 第一个字是为汉字 ? 'en' : 'zh']
+    arr = ['auto', 第一个字是为汉字 ? target : 'zh']
   } else {
     const 抽样数量 = 20
     const 比例 = 0.35
@@ -432,7 +434,7 @@ function changeFromTo() {
       一部分字包含汉字数 / 抽样数量
     ).toFixed(2)
     const 前一部分字大多汉字 = 汉字占一部分字的比例 >= 比例
-    arr = ['auto', 前一部分字大多汉字 ? 'en' : 'zh']
+    arr = ['auto', 前一部分字大多汉字 ? target : 'zh']
   }
   重置from和to(arr)
 }
