@@ -53,7 +53,6 @@ export default function (formData) {
     settingStore.setKeyConfig(keyDatas)
     settingStore.setFontSize(formData.textFont)
     settingStore.setCopyBtnBehavior(formData.copyBtnBehavior)
-    settingStore.setCodeMode(formData.codeMode)
     settingStore.setCopyBtnShow(formData.copyBtnShow)
     settingStore.setCopyBtnShow(formData.copyBtnShow)
     settingStore.setReadAloud(formData.readAloud)

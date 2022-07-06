@@ -118,7 +118,7 @@ function getInitState() {
     keyConfig: getStorageData(CONFIG.KEY_SETTING),
     fontSize: getStorageData(CONFIG.FONT_SIZE),
     copyBtnBehavior: getStorageData(CONFIG.COPY_BTN_BEHAVIOR),
-    codeMode: getStorageData(CONFIG.CODE_MODE),
+    codeMode: false,
     copyBtnShow: getStorageData(CONFIG.COPY_BTN_SHOW),
     readAloud: getStorageData(CONFIG.READ_ALOUD),
     readingPreference: getStorageData(CONFIG.READING_PREFERENCE),
@@ -224,7 +224,7 @@ export const 用户设置存储 = defineStore('settings', {
     /** 设置命名翻译模式 */
     setCodeMode(data) {
       this.codeMode = data
-      setDbStorageItem(CONFIG.CODE_MODE.key.key, data)
+      // setDbStorageItem(CONFIG.CODE_MODE.key.key, data)
     },
 
     /** 设置语音朗读开启 */
