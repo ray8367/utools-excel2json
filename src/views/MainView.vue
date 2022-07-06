@@ -256,7 +256,7 @@ const { utools, utools初始化 } = useUtools(
 
 function 格式化级联显示内容(options) {
   const 文字 = options.map(option => option.label)
-  return 文字.join(`\u3000\u3000 → \u3000\u3000`)
+  return 文字.join(`\u3000\u3000  \u3000\u3000`)
 }
 
 // 清空输入框
