@@ -59,6 +59,7 @@ export default function (formData) {
     settingStore.setReadAloud(formData.readAloud)
     settingStore.setReadingPreference(formData.readingPreference)
     settingStore.setTheme(formData.theme)
+    settingStore.setDefaultForeignLanguage(formData.defaultForeignLanguage)
   }
 
   function 重置设置() {

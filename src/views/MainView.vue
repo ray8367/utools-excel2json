@@ -215,7 +215,8 @@ const {
   homeOption: 首页选项,
   getHomeApiOptions: 翻译api数组,
   getHomeFontSize: 文字尺寸,
-  copyBtnShow: 复制按钮显示的数组
+  copyBtnShow: 复制按钮显示的数组,
+  defaultForeignLanguage: 默认目标外语语种
   // theme: 主题
 } = storeToRefs(存储)
 const 翻译加载 = ref(false) // 是否正在翻译
@@ -419,9 +420,10 @@ const 用户输入字数 = computed(() => {
 function changeFromTo() {
   if (是命名模式.value) return
   let arr
+  const 目标外语 = 默认目标外语语种.value
   if (用户输入字数.value < 20) {
     const 第一个字是为汉字 = !!获取用户输入前几个字(1).match(ChineseReg)
-    arr = ['auto', 第一个字是为汉字 ? 'en' : 'zh']
+    arr = ['auto', 第一个字是为汉字 ? 目标外语 : 'zh']
   } else {
     const 抽样数量 = 20
     const 比例 = 0.35
@@ -432,7 +434,7 @@ function changeFromTo() {
       一部分字包含汉字数 / 抽样数量
     ).toFixed(2)
     const 前一部分字大多汉字 = 汉字占一部分字的比例 >= 比例
-    arr = ['auto', 前一部分字大多汉字 ? 'en' : 'zh']
+    arr = ['auto', 前一部分字大多汉字 ? 目标外语 : 'zh']
   }
   重置from和to(arr)
 }
