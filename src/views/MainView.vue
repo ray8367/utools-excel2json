@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="main_wrapper grid-c h-screen px-24px pb-24px relative overflow-hidden dark:(bg-dark-300 text-white)"
-  >
-    <div
-      class="p-16px flex flex-col h-full w-full shadow-xl rounded-8px dark:(shadow-[#161616] shadow-lg bg-dark-300 )"
-    >
+  <div class="main_wrapper">
+    <div class="main">
       <div class="text_wrapper flex flex-1 relative">
         <!-- 清除按钮 -->
         <transition name="component-scale">
@@ -573,6 +569,12 @@ onKeyStroke('Tab', e => {
 </script>
 
 <style lang="scss" scoped>
+.main_wrapper {
+  @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-dark-300 text-white);
+  .main {
+    @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] shadow-lg bg-dark-300);
+  }
+}
 .icon {
   transition: all 250ms ease;
   @apply text-20px text-[#999] cursor-pointer hover: text-[#666];
@@ -633,7 +635,9 @@ onKeyStroke('Tab', e => {
   ::v-deep(.arco-select-view-value) {
     display: grid;
     text-align: center;
-    font-family: 'iconfont' !important;
+    font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', 'iconfont',
+      'NanumGothic', system-ui, —apple-system, Segoe UI, Rototo, Helvetica,
+      Arial, sans-serif !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
