@@ -1,12 +1,15 @@
 /** 退出插件 */
+import { useGlobalStore } from '@/store/globalData.js'
 
 export default function (utools) {
   const 组合键 = useMagicKeys()
+  const globalStore = useGlobalStore()
+  const { currentOS } = storeToRefs(globalStore)
 
   function 关闭当前窗口() {
-    if (utools.isWindows() || utools.isLinux()) {
+    if (['Windows', 'Linux'].includes(currentOS.value)) {
       utools.simulateKeyboardTap('f4', 'alt')
-    } else if (utools.isMacOs()) {
+    } else if (currentOS.value === 'MacOs') {
       utools.simulateKeyboardTap('w', 'commond', 'shfit')
     }
   }

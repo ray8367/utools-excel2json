@@ -343,6 +343,9 @@ import { apiOptions as api选项 } from '@/assets/translateApiOption.js'
 import { 清除引导, 显示引导 } from '@/utils/showGuide.js'
 import { getDbStorageItem as 获取存储项 } from '@/utils/storage.js'
 import 设置存储 from './useSettingStore'
+import { useGlobalStore } from '@/store/globalData.js'
+const globalStore = useGlobalStore()
+const { currentOS } = storeToRefs(globalStore)
 const modal可见 = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
@@ -413,8 +416,12 @@ function modal确定() {
 
 // 动态快捷键文案
 function 计算快捷键文案() {
-  if (!utools) return 'Ctrl+Shift+C / Command+Shift+C'
-  return utools.isMacOs() ? 'Command+Shift+C' : 'Ctrl+Shift+C'
+  const m = new Map([
+    ['Windows', 'Ctrl+Shift+C'],
+    ['Linux', 'Ctrl+Shift+C'],
+    ['Mac', 'Command+Shift+C']
+  ])
+  return m.get(currentOS.value) || 'Ctrl+Shift+C / Command+Shift+C'
 }
 
 // 点击弹框取消

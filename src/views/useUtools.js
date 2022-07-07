@@ -1,8 +1,11 @@
 /** utools 业务逻辑 */
 import { delay as 延迟 } from 'lodash-es'
+import { useGlobalStore } from '@/store/globalData.js'
 
 export default function (设置弹框Ref, 用户输入, 改变命名模式类型) {
   const utools = window?.utools
+  const globalStore = useGlobalStore()
+  const { currentOS } = storeToRefs(globalStore)
 
   // 初始化utools
   function utools初始化() {
@@ -21,7 +24,7 @@ export default function (设置弹框Ref, 用户输入, 改变命名模式类型
   // 粘贴
   async function 粘贴() {
     if (!utools) return
-    const key = utools.isMacOs() ? 'command' : 'ctrl'
+    const key = currentOS.value === 'MacOs' ? 'command' : 'ctrl'
     await utools.simulateKeyboardTap('v', key)
   }
 
