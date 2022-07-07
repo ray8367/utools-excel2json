@@ -1,10 +1,13 @@
 /** 退出插件 */
+
 export default function (utools) {
   const 组合键 = useMagicKeys()
 
   function 关闭当前窗口() {
-    if (utools.isWindows()) {
+    if (utools.isWindows() || utools.isLinux()) {
       utools.simulateKeyboardTap('f4', 'alt')
+    } else if (utools.isMacOs()) {
+      utools.simulateKeyboardTap('w', 'commond', 'shfit')
     }
   }
 
