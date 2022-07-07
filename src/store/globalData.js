@@ -4,11 +4,11 @@ const utools = window.utools
 
 const OSRules = [
   { condition: () => utools.isWindows(), OSName: 'Windows' },
-  { condition: () => utools.isMacOs(), OSName: 'MacOs' },
+  { condition: () => utools.isMacOs(), OSName: 'MacOS' },
   { condition: () => utools.isLinux(), OSName: 'Linux' }
 ]
 
-function getOS() {
+function getOS () {
   if (!utools) return 'browser'
   return OSRules.find(rule => rule.condition())?.OSName || 'unknown'
 }
