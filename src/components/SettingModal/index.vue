@@ -108,10 +108,10 @@
                           <span class="text_important">
                             「智能切换目标语种」
                           </span>
-                          ，此时将在翻译之前，会判断你的输入是否为中文，如果
+                          ，将在翻译之前判断输入是否为中文，如果
                           <span class="text_important"> 认定为中文 </span>
-                          ，将会自动切换 「目标语种」
-                          为一个外语，该选项用来指定这个外语默认是什么，若
+                          ，将会自动切换
+                          「目标语种」为一个外语，该选项用来指定这个外语默认是什么，若
                           <span class="text_important"> 不是中文 </span>
                           ，则会切换为 “自动 → 中文” 尽可能免去你
                           手动调整目标语种的这一步骤
@@ -125,7 +125,11 @@
                           >
                           ，直至
                           <span class="text_important">插件退出</span>
-                          ，但是你依然可以在语种下拉选择的左侧手动开启
+                          ，但是你依然可以在语种下拉选择的左侧
+                          <span class="text_important"> 手动开启 </span>
+                        </li>
+                        <li>
+                          智能切换目标语种的算法刚刚起步，如果经常不能正确识别，希望可以带着脱敏后的文字联系我们，我们会尽力优化😊
                         </li>
                       </ul>
                     </hover-answer>
@@ -474,6 +478,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .text_important {
-  @apply text-red-600 font-bold;
+  @apply text-red-500 font-bold;
 }
 </style>

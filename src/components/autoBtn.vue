@@ -1,28 +1,25 @@
 <template>
   <a-tooltip
     content=""
-    position="left"
+    position="top"
     mini
     :background-color="currentTheme === 'light' ? '#333' : '#555'"
   >
-    <!-- TODO: 适配深色 -->
     <template #content>
       <p>智能切换目标语种「{{ props.modelValue ? '开' : '关' }}」</p>
     </template>
-    <div
-      class="btn_wrapper w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#99999935])"
-    >
-      <icon-star-fill
-        class="text-20px"
+    <div class="btn_wrapper">
+      <i
+        class="iconfont !text-22px"
         :class="[props.modelValue ? 'active' : 'disabled']"
-      />
+        >&#xe605;
+      </i>
     </div>
   </a-tooltip>
 </template>
 
 <script setup>
 import { useGlobalStore } from '@/store/globalData.js'
-import { IconStarFill } from '@arco-design/web-vue/es/icon'
 const globalStore = useGlobalStore()
 const { currentTheme } = storeToRefs(globalStore)
 const props = defineProps({
@@ -30,19 +27,23 @@ const props = defineProps({
     type: Boolean
   }
 })
-const starYellow = computed(() => {
-  return currentTheme.value === 'light' ? '#f4ce48' : '#ebbd3f'
+const disabledColor = computed(() => {
+  return currentTheme.value === 'light' ? '#ccc' : '#555'
+})
+const enabledColor = computed(() => {
+  return currentTheme.value === 'light' ? '#165dff' : '#ffcc33'
 })
 </script>
 
 <style lang="scss" scoped>
 .active {
-  color: v-bind(starYellow);
+  color: v-bind(enabledColor);
 }
 .disabled {
-  @apply text-[#ccc];
+  color: v-bind(disabledColor);
 }
 .btn_wrapper {
   aspect-ratio: 1 / 1;
+  @apply select-none w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#f2f3f5] dark:bg-[#3d3d3d]);
 }
 </style>
