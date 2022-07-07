@@ -23,6 +23,12 @@
             大力点击这里，了解如何申请~
           </a-link>
         </p>
+        <p class="indent-4px">
+          Tips：如果你使用utools的全局快捷键功能，请将关键字请设置为 “<span
+            class="select-all text_important text-16px"
+            >fjyi</span
+          >” 以获得更好的体验
+        </p>
 
         <a-form auto-label-width :model="formData">
           <a-row>
