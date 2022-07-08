@@ -83,6 +83,8 @@
     "refThrottled": true,
     "refWithControl": true,
     "resolveComponent": true,
+    "resolveRef": true,
+    "resolveUnref": true,
     "setActivePinia": true,
     "setMapStoreSuffix": true,
     "shallowReactive": true,
@@ -246,6 +248,7 @@
     "watchPostEffect": true,
     "watchSyncEffect": true,
     "watchThrottled": true,
+    "watchTriggerable": true,
     "watchWithFilter": true,
     "whenever": true
   }
