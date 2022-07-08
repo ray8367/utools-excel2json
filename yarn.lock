@@ -102,10 +102,10 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@iconify/json@^2.1.73":
-  version "2.1.73"
-  resolved "https://registry.npmmirror.com/@iconify/json/-/json-2.1.73.tgz#77446f656193bead9a1e7088716bb76b9cea1b82"
-  integrity sha512-mRybH87M9TWNkXRbp4cncV3ZRt6JaQRnvMMFE+gokSA7xTOomxLCNBFn2lkBA1B4/0rQ9h/UffkS6XVd0gMYjQ==
+"@iconify/json@^2.1.74":
+  version "2.1.74"
+  resolved "https://registry.npmmirror.com/@iconify/json/-/json-2.1.74.tgz#f28a0f98348942fcf1bbbd1324488888dd246474"
+  integrity sha512-seqSL3IWw6e6Qy31GxZy479S1AyDSepv1kVU9yZlrsW5qn+iRlguS7Rl8Hl++Pb+RcnAAC930EHaxkI7GVPzKA==
   dependencies:
     "@iconify/types" "*"
     pathe "^0.3.0"
@@ -2314,10 +2314,10 @@ vite-plugin-windicss@^1.8.6:
     kolorist "^1.5.1"
     windicss "^3.5.6"
 
-vite@^2.9.13:
-  version "2.9.13"
-  resolved "https://registry.npmmirror.com/vite/-/vite-2.9.13.tgz#859cb5d4c316c0d8c6ec9866045c0f7858ca6abc"
-  integrity sha512-AsOBAaT0AD7Mhe8DuK+/kE4aWYFMx/i0ZNi98hJclxb4e0OhQcZYUrvLjIaQ8e59Ui7txcvKMiJC1yftqpQoDw==
+vite@^2.9.14:
+  version "2.9.14"
+  resolved "https://registry.npmmirror.com/vite/-/vite-2.9.14.tgz#c438324c6594afd1050df3777da981dee988bb1b"
+  integrity sha512-P/UCjSpSMcE54r4mPak55hWAZPlyfS369svib/gpmz8/01L822lMPOJ/RYW6tLCe1RPvMvOsJ17erf55bKp4Hw==
   dependencies:
     esbuild "^0.14.27"
     postcss "^8.4.13"
