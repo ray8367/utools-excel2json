@@ -442,6 +442,18 @@ onMounted(() => {
   输入框focus()
   读取设置()
   !获取存储项('firstUseMain') && 首次引导()
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      // 处于当前页面
+      document.title = '你去哪里了？'
+    } else {
+      document.title = '回来了？'
+      输入框focus()
+      setTimeout(() => {
+        document.title = '易翻翻译'
+      }, 2000)
+    }
+  })
 })
 
 // 监听用户输入，防抖翻译
