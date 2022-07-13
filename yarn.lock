@@ -33,10 +33,10 @@
   dependencies:
     color "^3.1.3"
 
-"@arco-design/web-vue@^2.32.1":
-  version "2.32.1"
-  resolved "https://registry.npmmirror.com/@arco-design/web-vue/-/web-vue-2.32.1.tgz#df3a859beaadf4928dde0488e56bc83e2afbcff3"
-  integrity sha512-dywxT9qNEwxMT8WdqErXI8Nv5kDZR5e1RpCFKiipU8RKx6aZMovm4JNZ3nCIQq/qrkOp+4h203quFEJ35PvomQ==
+"@arco-design/web-vue@^2.33.0":
+  version "2.33.0"
+  resolved "https://registry.npmmirror.com/@arco-design/web-vue/-/web-vue-2.33.0.tgz#8c809c96ebe56ced302c355724916ff1ca0b459c"
+  integrity sha512-TEaiGZMZxoTX7qpuy5PEBOMvKh3yFfBpsw2Fjg65ZhZJn1aUmmeLn0ioS7EhEel2/VKBCyEHLN8D0THhMwe9vw==
   dependencies:
     "@arco-design/color" "^0.4.0"
     b-tween "^0.3.3"
@@ -102,10 +102,10 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@iconify/json@^2.1.74":
-  version "2.1.74"
-  resolved "https://registry.npmmirror.com/@iconify/json/-/json-2.1.74.tgz#f28a0f98348942fcf1bbbd1324488888dd246474"
-  integrity sha512-seqSL3IWw6e6Qy31GxZy479S1AyDSepv1kVU9yZlrsW5qn+iRlguS7Rl8Hl++Pb+RcnAAC930EHaxkI7GVPzKA==
+"@iconify/json@^2.1.77":
+  version "2.1.77"
+  resolved "https://registry.npmmirror.com/@iconify/json/-/json-2.1.77.tgz#52116029c802dceeff598de5a95842f198e2cee4"
+  integrity sha512-jiKXdacGC3OQjxSKj4XR38+qR/3IlvW+OyS4FLzrDhFB6XExlVXPu2saWJmrbtoMLCg+pdNsI2Cy/eNTzUFlQw==
   dependencies:
     "@iconify/types" "*"
     pathe "^0.3.0"
@@ -1820,10 +1820,10 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.3.1:
   resolved "https://registry.npmmirror.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
-pinia@^2.0.14:
-  version "2.0.14"
-  resolved "https://registry.npmmirror.com/pinia/-/pinia-2.0.14.tgz#0837898c20291ebac982bbfca95c8d3c6099925f"
-  integrity sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA==
+pinia@^2.0.16:
+  version "2.0.16"
+  resolved "https://registry.npmmirror.com/pinia/-/pinia-2.0.16.tgz#0105db595f5f792e17c04692e36807d8ea62f5cc"
+  integrity sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg==
   dependencies:
     "@vue/devtools-api" "^6.1.4"
     vue-demi "*"
