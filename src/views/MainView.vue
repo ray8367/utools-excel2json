@@ -582,7 +582,7 @@ onKeyStroke('Tab', e => {
 
 <style lang="scss" scoped>
 .main_wrapper {
-  @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-dark-300 text-white);
+  @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
   .main {
     @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] shadow-lg bg-dark-300);
   }
