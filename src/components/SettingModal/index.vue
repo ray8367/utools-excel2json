@@ -176,7 +176,8 @@
                     </hover-answer>
                   </div>
                 </template>
-                <a-switch v-model="formData.readAloud" />
+                <!-- <a-checkbox v-model="formData.readAloud" /> -->
+                <cus-switch v-model="formData.readAloud" />
               </a-form-item>
             </a-col>
             <a-col :span="20">
