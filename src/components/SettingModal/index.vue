@@ -35,7 +35,7 @@
         <a-form auto-label-width :model="formData">
           <a-row>
             <a-divider orientation="left">基本设置</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="翻译方式">
                 <template #label>
                   <div class="space-x-4px">
@@ -56,7 +56,7 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="文本框字号">
                 <a-input-number
                   v-model="formData.textFont"
@@ -69,7 +69,7 @@
                 </a-input-number>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="快捷键行为">
                 <template #label>
                   <div class="space-x-4px">
@@ -87,7 +87,7 @@
                 </a-radio-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="显示按钮">
                 <template #label>
                   <div class="space-x-4px">
@@ -104,7 +104,7 @@
                 </a-checkbox-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="默认目标外语语种" class="flex items-start">
                 <template #label>
                   <div class="space-x-4px">
@@ -150,7 +150,7 @@
                 </a-radio-group>
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="插件主题">
                 <a-radio-group v-model="formData.theme">
                   <a-radio value="auto">跟随utools</a-radio>
@@ -166,7 +166,7 @@
                 这些功能处于实验性，可以尝鲜使用，但不保证其稳定性
               </hover-answer>
             </a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="语音朗读">
                 <template #label>
                   <div class="space-x-4px">
@@ -179,7 +179,7 @@
                 <a-switch v-model="formData.readAloud" />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="朗读偏好">
                 <template #label>
                   <div class="space-x-4px">
@@ -200,7 +200,7 @@
               </a-form-item>
             </a-col>
             <a-divider orientation="left">百度翻译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="APP ID">
                 <a-input
                   v-model.trim="formData.appid"
@@ -209,7 +209,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="密钥">
                 <a-input-password
                   v-model.trim="formData.token"
@@ -220,7 +220,7 @@
             </a-col>
 
             <a-divider orientation="left">腾讯翻译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="Secret Id">
                 <a-input
                   v-model.trim="formData.secretId"
@@ -229,7 +229,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="Secret Key">
                 <a-input-password
                   v-model.trim="formData.secretKey"
@@ -240,7 +240,7 @@
             </a-col>
 
             <a-divider orientation="left">阿里翻译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="Secret Id">
                 <a-input
                   v-model.trim="formData.accessKeyId"
@@ -249,7 +249,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="Secret Key">
                 <a-input-password
                   v-model.trim="formData.accessKeySecret"
@@ -260,7 +260,7 @@
             </a-col>
 
             <a-divider orientation="left">有道翻译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="应用ID">
                 <a-input
                   v-model.trim="formData.youdaoId"
@@ -269,7 +269,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="应用密钥">
                 <a-input-password
                   v-model.trim="formData.youdaoSecret"
@@ -280,7 +280,7 @@
             </a-col>
 
             <a-divider orientation="left">彩云小译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="令牌">
                 <a-input-password
                   v-model.trim="formData.caiyunToken"
@@ -291,7 +291,7 @@
             </a-col>
 
             <a-divider orientation="left">火山翻译</a-divider>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="AccessKeyID">
                 <a-input
                   v-model.trim="formData.huoshanAccessKeyId"
@@ -300,7 +300,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="18">
+            <a-col :span="20">
               <a-form-item label="SecretAccessKey">
                 <a-input-password
                   v-model.trim="formData.huoshanSecretAccessKey"
