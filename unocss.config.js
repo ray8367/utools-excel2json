@@ -22,9 +22,19 @@ export default defineConfig({
     presetUno(),
     presetAttributify(),
     presetIcons({
-      scale: 1.2,
-      warn: true
+      // scale: 1.15,
+      warn: true,
+      extraProperties: {
+        display: 'inline-block',
+        'vertical-align': 'middle',
+        'margin-top': '-1px'
+      }
     })
   ],
+  theme: {
+    colors: {
+      primary: '#165dff'
+    }
+  },
   transformers: [transformerDirectives(), transformerVariantGroup()]
 })

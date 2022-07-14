@@ -113,9 +113,7 @@
                       <ul class="list-disc pl-16px space-y-10px">
                         <li>
                           如果在翻译界面开启了
-                          <span class="text_important">
-                            「智能切换目标语种」
-                          </span>
+                          <span class="text_important"> 「智能切换语种」 </span>
                           ，将在翻译之前判断输入是否为中文，如果
                           <span class="text_important"> 认定为中文 </span>
                           ，将会自动切换
@@ -129,7 +127,7 @@
                           <span class="text_important">手动切换了</span>
                           「原语种」或「目标语种」，易翻会认为自己猜错了，将
                           <span class="text_important"
-                            >自动关闭「智能切换目标语种」功能</span
+                            >自动关闭「智能切换语种」功能</span
                           >
                           ，直至
                           <span class="text_important">插件退出</span>
@@ -137,7 +135,7 @@
                           <span class="text_important"> 手动开启 </span>
                         </li>
                         <li>
-                          智能切换目标语种的算法刚刚起步，如果经常不能正确识别，希望可以带着脱敏后的文字联系我们，我们会尽力优化😊
+                          智能切换语种的算法刚刚起步，如果经常不能正确识别，希望可以带着脱敏后的文字联系我们，我们会尽力优化😊
                         </li>
                       </ul>
                     </hover-answer>
