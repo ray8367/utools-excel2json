@@ -437,23 +437,26 @@ function changeFromTo() {
   重置from和to(arr)
 }
 
+const pageTitle = useTitle() // 网页下页面标题
+const 页面可见性 = useDocumentVisibility()
 onMounted(() => {
   utools && utools初始化()
   输入框focus()
   读取设置()
   !获取存储项('firstUseMain') && 首次引导()
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      // 处于当前页面
-      document.title = '你去哪里了？'
-    } else {
-      document.title = '回来了？'
-      输入框focus()
-      setTimeout(() => {
-        document.title = '易翻翻译'
-      }, 2000)
-    }
-  })
+})
+
+const 恢复标题 = useTimeoutFn(() => {
+  pageTitle.value = '易翻翻译'
+}, 3000)
+
+// 页面可见时自动聚焦
+watch(页面可见性, (current, previous) => {
+  if (current === 'visible' && previous === 'hidden') {
+    pageTitle.value = '欢迎回来🎉 - 易翻翻译'
+    输入框focus()
+    恢复标题.start()
+  }
 })
 
 // 监听用户输入，防抖翻译
