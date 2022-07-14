@@ -10,8 +10,7 @@
               class="absolute right-10px bottom-8px"
               @click="清空输入框()"
             >
-              <!-- <icon-close /> -->
-              <i class="i-line-md-close"></i>
+              <icon-close />
             </MimicryBtn>
           </template>
         </transition>
@@ -112,16 +111,12 @@
               >
                 <!-- 播放按钮 -->
                 <MimicryBtn :loading="朗读loading" @click="点击朗读()">
-                  <i class="i-akar-icons-sound-on"></i>
+                  <icon-sound />
                 </MimicryBtn>
 
                 <!-- 开始暂停按钮 -->
                 <MimicryBtn v-show="音频Url" @click="正在播放 = !正在播放">
-                  <i
-                    :class="[
-                      正在播放 ? 'i-ic-twotone-pause' : 'i-ri-play-fill'
-                    ]"
-                  ></i>
+                  <component :is="正在播放 ? IconPause : IconPlayArrowFill" />
                 </MimicryBtn>
               </div>
             </transition>
@@ -135,28 +130,19 @@
                   v-if="复制按钮显示的数组.includes(1)"
                   @click="复制按钮事件(1)"
                 >
-                  <template #icon>
-                    <i class="i-line-md-clipboard-arrow text-18px" />
-                  </template>
-                  仅复制
+                  <icon-copy /> 仅复制
                 </ColorfulBtn>
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(2)"
                   @click="复制按钮事件(2)"
                 >
-                  <template #icon>
-                    <i class="i-line-md-minus text-18px v-bottom" />
-                  </template>
-                  复制并隐藏
+                  <icon-fullscreen-exit /> 复制并隐藏
                 </ColorfulBtn>
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(3)"
                   @click="复制按钮事件(3)"
                 >
-                  <template #icon>
-                    <i class="i-line-md-edit-twotone text-18px" />
-                  </template>
-                  复制并输入
+                  <icon-edit /> 复制并输入
                 </ColorfulBtn>
               </div>
             </transition>
@@ -165,18 +151,21 @@
       </a-resize-box>
     </div>
     <!-- 设置按钮 -->
-    <i
+    <div
       id="setting-wrapper"
-      class="icon setting_icon i-carbon-settings"
+      class="icon setting_icon"
       @click="打开设置Modal()"
     >
-    </i>
+      <icon-settings />
+    </div>
     <!-- 命名翻译模式按钮 -->
     <div
       class="icon code_icon"
-      :class="[是命名模式 ? 'active i-carbon-code' : 'i-carbon-code-hide']"
+      :class="{ active: 是命名模式 }"
       @click="切换模式()"
-    ></div>
+    >
+      <icon-code />
+    </div>
   </div>
 
   <!-- 设置弹窗 -->
@@ -191,6 +180,17 @@
 <script setup>
 import { debounce, throttle, replace } from 'lodash-es'
 import { nanoid } from 'nanoid'
+import {
+  IconSettings,
+  IconCopy,
+  IconCode,
+  IconClose,
+  IconEdit,
+  IconFullscreenExit,
+  IconSound,
+  IconPause,
+  IconPlayArrowFill
+} from '@arco-design/web-vue/es/icon'
 import { Message as 提示 } from '@arco-design/web-vue'
 
 import { storeToRefs } from 'pinia'
@@ -297,7 +297,7 @@ const 切换自动模式 = throttle(() => {
 }, 500)
 
 watch(自动模式, newVal => {
-  提示.success(`智能切换语种已${newVal ? '开启' : '关闭'}`)
+  提示.success(`智能切换目标语种已${newVal ? '开启' : '关闭'}`)
 })
 
 // 变更模式
@@ -594,7 +594,7 @@ onKeyStroke('Tab', e => {
 }
 .icon {
   transition: all 250ms ease;
-  --at-apply: text-22px text-[#999] cursor-pointer hover: text-[#666];
+  --at-apply: text-20px text-[#999] cursor-pointer hover: text-[#666];
 }
 .code_icon {
   --at-apply: absolute left-4px bottom-4px;

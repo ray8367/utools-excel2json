@@ -2,6 +2,7 @@
 
 const google = require('./googleTranslateApi')
 const ali = require('./alicloudApi')
+const msttsTest = require('./test')
 
 const _setImmediate = setImmediate
 const _clearImmediate = clearImmediate
@@ -25,5 +26,9 @@ window.servers = {
   // 阿里翻译
   aliTextTranslate: (params, credential) => {
     return ali.textTranslate(params, credential)
+  },
+
+  hehehe() {
+    return msttsTest()
   }
 }

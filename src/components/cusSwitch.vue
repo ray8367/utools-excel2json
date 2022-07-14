@@ -38,14 +38,14 @@ function changeVal(e) {
 
 .cus_switch_label {
   --at-apply: cursor-pointer -indent-999 w-40px h-24px block rounded-full relative
-    bg-gray select-none dark:bg-[#3c3c3f];
+    bg-gray select-none;
   &::after {
     content: '';
     --at-apply: absolute top-4px left-4px w-16px h-16px bg-white rounded-12px
       transition-all;
   }
   &:active:after {
-    width: 50%;
+    width: 19px;
   }
 }
 </style>

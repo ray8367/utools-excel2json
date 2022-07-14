@@ -6,7 +6,7 @@
     :background-color="currentTheme === 'light' ? '#333' : '#555'"
   >
     <template #content>
-      <p>智能切换语种「{{ props.modelValue ? '开' : '关' }}」</p>
+      <p>智能切换目标语种「{{ props.modelValue ? '开' : '关' }}」</p>
     </template>
     <div class="btn_wrapper">
       <i

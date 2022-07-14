@@ -5,16 +5,17 @@
     :class="{ mimicry_btn_disabled: props.loading || props.disabled }"
   >
     <span class="text_inner">
-      <i v-if="props.loading" class="i-line-md-loading-loop"></i>
-
+      <icon-loading v-if="props.loading" />
       <slot v-else>
-        <i class="i-ep-more-filled"></i>
+        <icon-more />
       </slot>
     </span>
   </button>
 </template>
 
 <script setup>
+import { IconMore, IconLoading } from '@arco-design/web-vue/es/icon'
+
 const props = defineProps({
   loading: {
     type: Boolean,
