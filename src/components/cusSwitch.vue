@@ -15,7 +15,7 @@ const props = defineProps({
     type: Boolean
   }
 })
-const emit = defineEmits(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
 function changeVal(e) {
   emit('update:modelValue', e.target.checked)
