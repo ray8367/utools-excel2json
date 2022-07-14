@@ -14,12 +14,12 @@
   background: linear-gradient(0deg, #62a0d8 0%, #2178d1 50%, #085cb3 100%);
 }
 .sun {
-  @apply absolute z-1 w-full h-full rounded-full bg-[#ffcd47];
+  --at-apply: absolute z-1 w-full h-full rounded-full bg-[#ffcd47];
   box-shadow: 0 0 50px #ffff77;
   animation: sun 0.8s ease 0.5s both;
 }
 .sun_ray {
-  @apply w-full h-full rounded-full bg-white opacity-50 relative z-0;
+  --at-apply: w-full h-full rounded-full bg-white opacity-50 relative z-0;
   animation: sun-ray 0.8s ease 0.2s both;
 }
 

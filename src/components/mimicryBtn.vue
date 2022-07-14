@@ -60,7 +60,7 @@ const 缩小后的尺寸 = computed(() => {
     0.1s transform linear, 0.2s box-shadow;
   .text_inner {
     transition: all 0.1s linear;
-    @apply leading-0;
+    --at-apply: leading-0;
   }
   &:hover,
   &:active {
@@ -74,7 +74,8 @@ const 缩小后的尺寸 = computed(() => {
       transform: scale(v-bind(缩小后的尺寸));
     }
   }
-  @apply p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-400 select-none;
+  --at-apply: p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-4
+    select-none;
 }
 
 // 禁用的样式

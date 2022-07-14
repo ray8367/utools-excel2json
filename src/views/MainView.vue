@@ -39,7 +39,8 @@
           </a-radio>
         </a-radio-group>
         <div
-          class="border-solid border-[#f2f3f5] border-b-width-1px flex-1 flex justify-end items-center space-x-8px dark:border-[#3d3d3d]"
+          border="solid #f2f3f5 b-width-1px dark:#3d3d3d"
+          class="flex-1 flex justify-end items-center space-x-8px"
         >
           <!-- 命名翻译模式的select -->
           <template v-if="是命名模式">
@@ -89,7 +90,8 @@
           <transition name="fade-in-standard">
             <Loading
               v-if="翻译加载"
-              class="rounded-b-8px border-solid border-[#e9e9e9] border-width-1px absolute top-0 z-100"
+              border="solid #e9e9e9 width-1px"
+              class="rounded-b-8px absolute top-0 z-100"
             />
           </transition>
           <div
@@ -122,7 +124,7 @@
             <transition name="fade-in-standard" mode="out-in">
               <div
                 v-show="要显示复制按钮"
-                class="absolute bottom-8px left-1/2 transform -translate-x-1/2 z-1 flex space-x-8px"
+                class="bottom-8px absolute-x-center z-1 flex space-x-8px"
               >
                 <ColorfulBtn
                   v-if="复制按钮显示的数组.includes(1)"
@@ -585,17 +587,17 @@ onKeyStroke('Tab', e => {
 
 <style lang="scss" scoped>
 .main_wrapper {
-  @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
+  --at-apply: grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
   .main {
-    @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] shadow-lg bg-dark-300);
+    --at-apply: p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] bg-dark-3 shadow-lg );
   }
 }
 .icon {
   transition: all 250ms ease;
-  @apply text-20px text-[#999] cursor-pointer hover: text-[#666];
+  --at-apply: text-20px text-[#999] cursor-pointer hover: text-[#666];
 }
 .code_icon {
-  @apply absolute left-4px bottom-4px;
+  --at-apply: absolute left-4px bottom-4px;
   &:hover {
     transform: rotate(180deg);
   }
@@ -607,7 +609,7 @@ onKeyStroke('Tab', e => {
   }
 }
 .setting_icon {
-  @apply absolute right-4px bottom-4px;
+  --at-apply: absolute right-4px bottom-4px;
 
   &:hover {
     transform: rotate(60deg);
@@ -654,8 +656,7 @@ onKeyStroke('Tab', e => {
       'NanumGothic', system-ui, —apple-system, Segoe UI, Rototo, Helvetica,
       Arial, sans-serif !important;
     font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    --at-apply: antialiased ;
   }
 }
 </style>

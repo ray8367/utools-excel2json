@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="pl"
+    class="loading_main"
     viewBox="0 0 176 160"
     width="176px"
     height="160px"
@@ -14,15 +14,15 @@
       </linearGradient>
     </defs>
     <g fill="none" stroke-width="16" stroke-linecap="round">
-      <circle class="pl__ring" r="56" cx="88" cy="96" stroke="#1c17171a" />
+      <circle class="loading_ring" r="56" cx="88" cy="96" stroke="#1c17171a" />
       <path
-        class="pl__worm1"
+        class="loading_worm1"
         d="M144,96A56,56,0,0,1,32,96"
         stroke="url(#pl-grad)"
         stroke-dasharray="43.98 307.87"
       />
       <path
-        class="pl__worm2"
+        class="loading_worm2"
         d="M32,136V96s-.275-25.725,14-40"
         stroke="#25c7f4"
         stroke-dasharray="0 40 0 44"
@@ -30,7 +30,7 @@
         visibility="hidden"
       />
       <path
-        class="pl__worm3"
+        class="loading_worm3"
         d="M144,136V96s.275-25.725-14-40"
         stroke="#25c7f4"
         stroke-dasharray="0 40 0 44"
@@ -44,29 +44,29 @@
 <script setup></script>
 
 <style lang="scss" scoped>
-.pl {
+.loading_main {
   width: 70px;
   height: 63px;
 }
-.pl__ring,
-.pl__worm1,
-.pl__worm2,
-.pl__worm3 {
+.loading_ring,
+.loading_worm1,
+.loading_worm2,
+.loading_worm3 {
   animation-duration: 4s;
   animation-iteration-count: infinite;
 }
-.pl__ring {
+.loading_ring {
   stroke: #17181c26;
   transition: stroke 0.3s;
 }
-.pl__worm1 {
+.loading_worm1 {
   animation-name: worm1;
 }
-.pl__worm2 {
+.loading_worm2 {
   animation-name: worm2;
   transform-origin: 32px 88px;
 }
-.pl__worm3 {
+.loading_worm3 {
   animation-name: worm3;
   transform-origin: 144px 88px;
 }
