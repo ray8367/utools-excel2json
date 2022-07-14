@@ -329,6 +329,7 @@ function 切换翻译服务() {
 // 分发翻译请求，并开始翻译，默认根据Radio的值来确定翻译api
 async function 开始翻译(val = 当前翻译api.value, isRefresh) {
   重置音频()
+  输入框focus()
   // 如果没输入内容，则不翻译
   if ([undefined, null, ''].includes(用户输入.value.trim())) {
     结果对象.数据.结果文字 = ''
@@ -355,7 +356,6 @@ async function 开始翻译(val = 当前翻译api.value, isRefresh) {
     结果编号: nanoid()
   }
   翻译加载.value = false
-  nextTick(() => 输入框focus())
 }
 
 // 切换翻译的From和To
@@ -450,7 +450,7 @@ onMounted(() => {
 
 const 恢复标题 = useTimeoutFn(() => {
   pageTitle.value = '易翻翻译'
-}, 3000)
+}, 1000)
 
 // 页面可见时自动聚焦
 watch(页面可见性, (current, previous) => {
