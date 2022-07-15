@@ -30,7 +30,7 @@ function changeVal(e) {
       background: $primary-color;
       &:after {
         left: calc(100% - 4px);
-        transform: translateX(-100%);
+        transform: translate(-100%,-50%);
       }
     }
   }
@@ -41,11 +41,11 @@ function changeVal(e) {
     bg-gray select-none dark:bg-[#3c3c3f];
   &::after {
     content: '';
-    --at-apply: absolute top-4px left-4px w-16px h-16px bg-white rounded-12px
+    --at-apply: absolute-y-center left-4px h-70% aspect-ratio-square bg-white rounded-full
       transition-all;
   }
   &:active:after {
-    width: 50%;
+    aspect-ratio: 4/3;
   }
 }
 </style>
