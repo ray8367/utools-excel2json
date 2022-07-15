@@ -10,8 +10,7 @@
               class="absolute right-10px bottom-8px"
               @click="清空输入框()"
             >
-              <!-- <icon-close /> -->
-              <i class="i-line-md-close"></i>
+              <i i-line-md-close />
             </MimicryBtn>
           </template>
         </transition>
@@ -112,7 +111,7 @@
               >
                 <!-- 播放按钮 -->
                 <MimicryBtn :loading="朗读loading" @click="点击朗读()">
-                  <i class="i-akar-icons-sound-on"></i>
+                  <i i-akar-icons-sound-on />
                 </MimicryBtn>
 
                 <!-- 开始暂停按钮 -->
@@ -136,7 +135,7 @@
                   @click="复制按钮事件(1)"
                 >
                   <template #icon>
-                    <i class="i-line-md-clipboard-arrow text-18px" />
+                    <i i-line-md-clipboard-arrow class="text-18px" />
                   </template>
                   仅复制
                 </ColorfulBtn>
@@ -145,7 +144,7 @@
                   @click="复制按钮事件(2)"
                 >
                   <template #icon>
-                    <i class="i-line-md-minus text-18px v-bottom" />
+                    <i i-line-md-minus class="text-18px v-bottom" />
                   </template>
                   复制并隐藏
                 </ColorfulBtn>
@@ -154,7 +153,7 @@
                   @click="复制按钮事件(3)"
                 >
                   <template #icon>
-                    <i class="i-line-md-edit-twotone text-18px" />
+                    <i i-line-md-edit-twotone class="text-18px" />
                   </template>
                   复制并输入
                 </ColorfulBtn>
@@ -452,12 +451,14 @@ const 恢复标题 = useTimeoutFn(() => {
   pageTitle.value = '易翻翻译'
 }, 1000)
 
-// 页面可见时自动聚焦
+// 页面可见性逻辑
 watch(页面可见性, (current, previous) => {
   if (current === 'visible' && previous === 'hidden') {
     pageTitle.value = '欢迎回来🎉 - 易翻翻译'
     输入框focus()
     恢复标题.start()
+  } else if (current === 'hidden' && previous === 'visible') {
+    正在播放.value = false
   }
 })
 

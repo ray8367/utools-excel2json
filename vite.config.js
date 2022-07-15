@@ -3,8 +3,6 @@ import { resolve } from 'path'
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import { ArcoResolver } from 'unplugin-vue-components/resolvers'
@@ -33,10 +31,9 @@ export default defineConfig({
       },
       imports: ['vue', '@vueuse/core', 'pinia']
     }),
-    Icons(),
     Unocss(),
     Components({
-      resolvers: [ArcoResolver(), IconsResolver()]
+      resolvers: [ArcoResolver()]
     }),
     chunkSplitPlugin({
       strategy: 'default',

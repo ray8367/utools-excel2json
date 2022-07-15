@@ -5,10 +5,10 @@
     :class="{ mimicry_btn_disabled: props.loading || props.disabled }"
   >
     <span class="text_inner">
-      <i v-if="props.loading" class="i-line-md-loading-loop"></i>
+      <i v-if="props.loading" i-line-md-loading-loop />
 
       <slot v-else>
-        <i class="i-ep-more-filled"></i>
+        <i i-ep-more-filled />
       </slot>
     </span>
   </button>

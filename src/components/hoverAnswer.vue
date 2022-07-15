@@ -1,7 +1,7 @@
 <template>
   <!-- 鼠标悬浮在问号图标上，显示提示文字的组件 -->
   <a-popover position="right">
-    <i class="i-ph-question text-16px -mt-2px"></i>
+    <i i-ph-question class="text-16px -mt-2px" />
     <template #content>
       <slot></slot>
     </template>

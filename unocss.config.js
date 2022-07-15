@@ -22,7 +22,6 @@ export default defineConfig({
     presetUno(),
     presetAttributify(),
     presetIcons({
-      // scale: 1.15,
       warn: true,
       extraProperties: {
         display: 'inline-block',
