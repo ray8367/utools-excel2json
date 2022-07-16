@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@alicloud/pop-core': ^1.7.12
   '@arco-design/web-vue': ^2.33.0
-  '@iconify/json': ^2.1.77
+  '@iconify/json': ^2.1.78
   '@unocss/reset': ^0.44.2
   '@vitejs/plugin-vue': ^3.0.0
   '@vue/eslint-config-prettier': ^7.0.0
@@ -48,7 +48,7 @@ dependencies:
 
 devDependencies:
   '@arco-design/web-vue': 2.33.0_vue@3.2.37
-  '@iconify/json': 2.1.77
+  '@iconify/json': 2.1.78
   '@unocss/reset': 0.44.2
   '@vitejs/plugin-vue': 3.0.0_vite@3.0.0+vue@3.2.37
   '@vue/eslint-config-prettier': 7.0.0_fqyzhpusvewbsl54pqqbxqaegm
@@ -184,8 +184,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iconify/json/2.1.77:
-    resolution: {integrity: sha512-jiKXdacGC3OQjxSKj4XR38+qR/3IlvW+OyS4FLzrDhFB6XExlVXPu2saWJmrbtoMLCg+pdNsI2Cy/eNTzUFlQw==}
+  /@iconify/json/2.1.78:
+    resolution: {integrity: sha512-WxWKgVEsnnj6pQVO9zOCYq3kIDIIbAv+RDxfU66DJw16BjKjXxcUyCDEARFRbqodSFd1p7o6Uw4zJ5iggItaQg==}
     dependencies:
       '@iconify/types': 1.1.0
       pathe: 0.3.2

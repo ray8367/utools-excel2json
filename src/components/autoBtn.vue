@@ -10,10 +10,13 @@
     </template>
     <div class="btn_wrapper">
       <i
-        class="iconfont !text-22px"
-        :class="[props.modelValue ? 'active' : 'disabled']"
-        >&#xe605;
-      </i>
+        class="!text-20px rounded-2px overflow-hidden"
+        :class="[
+          props.modelValue
+            ? 'active i-file-icons-adobe-illustrator'
+            : 'disabled i-cib-adobe-illustrator'
+        ]"
+      />
     </div>
   </a-tooltip>
 </template>
