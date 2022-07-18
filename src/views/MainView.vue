@@ -255,7 +255,17 @@ const 自动模式 = ref(true)
 
 function 格式化级联显示内容(options) {
   const 文字 = options.map(option => option.label)
-  return 文字.join(`\u3000\u3000  \u3000\u3000`)
+  return h('div', { class: 'flex items-center justify-between relative' }, [
+    h('span', {}, 文字[0] + '\u3000'),
+    h(
+      'i',
+      {
+        class: 'i-system-uicons-arrow-right text-22px flex-1 absolute-center'
+      },
+      ''
+    ),
+    h('span', {}, '\u3000' + 文字[1])
+  ])
 }
 
 // 清空输入框
@@ -385,7 +395,7 @@ function 首次引导() {
 function 读取设置() {
   //  首次加载设置当前选中为设置的默认翻译
   if (!首页选项.value.includes(当前翻译api.value)) {
-    当前翻译api.value = 存储.defaultApi
+    当前翻译api.value = 存储.defaultApi || 首页选项.value?.[0]
   }
 }
 
@@ -652,12 +662,6 @@ onKeyStroke('Tab', e => {
 .tools_wrapper {
   ::v-deep(.arco-select-view-value) {
     display: grid;
-    text-align: center;
-    font-family: 'Inter', 'HarmonyOS Sans SC', 'HarmonyOS', 'iconfont',
-      'NanumGothic', system-ui, —apple-system, Segoe UI, Rototo, Helvetica,
-      Arial, sans-serif !important;
-    font-style: normal;
-    --at-apply: antialiased ;
   }
 }
 </style>
