@@ -51,9 +51,6 @@ html {
       &:active {
         --houdini-colorA: #222;
         --houdini-colorB: #222;
-      }
-
-      &:active {
         box-shadow: 1px 1px 6px #112, -3px -3px 6px #333;
       }
 
@@ -64,9 +61,6 @@ html {
         &:active {
           --houdini-colorA: #333;
           --houdini-colorB: #333;
-        }
-
-        &:active {
           box-shadow: 5px 5px 12px #112, -5px -5px 12px #333;
         }
       }
@@ -91,7 +85,6 @@ html {
       }
     }
 
-
     // 深色下的<code/>动画
     .code_bg {
       svg {
@@ -101,7 +94,5 @@ html {
         }
       }
     }
-
-
   }
 }

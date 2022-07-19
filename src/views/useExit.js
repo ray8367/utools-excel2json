@@ -6,7 +6,7 @@ export default function (utools) {
   const globalStore = useGlobalStore()
   const { currentOS } = storeToRefs(globalStore)
 
-  function 关闭当前窗口 () {
+  function 关闭当前窗口() {
     if (['Windows', 'Linux'].includes(currentOS.value)) {
       utools.simulateKeyboardTap('f4', 'alt')
     } else if (currentOS.value === 'MacOS') {

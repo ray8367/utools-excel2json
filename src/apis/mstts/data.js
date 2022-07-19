@@ -17,7 +17,7 @@ const 发音角色Map = new Map([
   ['Denise', 'fr-FR-DeniseNeural']
 ])
 
-function 获取发音人 (str = '') {
+function 获取发音人(str = '') {
   return 发音角色Map.get(str) || 'zh-CN-XiaoxiaoNeural'
 }
 

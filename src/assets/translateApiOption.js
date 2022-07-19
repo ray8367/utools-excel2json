@@ -82,7 +82,7 @@ const translateFromOptions = [
   { label: '文言文', value: 'wyw', disabled: false, id: nanoid() }
 ]
 
-export function 语种树 (arr = translateFromOptions) {
+export function 语种树(arr = translateFromOptions) {
   const tmpArr = cloneDeep(arr)
   tmpArr.forEach(i => {
     i.children = arr

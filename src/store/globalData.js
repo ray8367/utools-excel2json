@@ -8,7 +8,7 @@ const OSRules = [
   { condition: () => utools.isLinux(), OSName: 'Linux' }
 ]
 
-function getOS () {
+function getOS() {
   if (!utools) return 'browser'
   return OSRules.find(rule => rule.condition())?.OSName || 'unknown'
 }

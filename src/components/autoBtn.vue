@@ -10,11 +10,11 @@
     </template>
     <div class="btn_wrapper">
       <i
-        class="!text-20px rounded-2px overflow-hidden"
+        class="text-20px rounded-2px overflow-hidden"
         :class="[
           props.modelValue
-            ? 'active i-file-icons-adobe-illustrator'
-            : 'disabled i-cib-adobe-illustrator'
+            ? 'active i-simple-icons-adobeillustrator'
+            : 'disabled i-icon-park-outline-adobe-illustrate text-24px'
         ]"
       />
     </div>
@@ -23,6 +23,8 @@
 
 <script setup>
 import { useGlobalStore } from '@/store/globalData.js'
+import UnoConfig from '/unocss.config.js'
+const themeConfig = UnoConfig.theme
 const globalStore = useGlobalStore()
 const { currentTheme } = storeToRefs(globalStore)
 const props = defineProps({
@@ -34,7 +36,7 @@ const disabledColor = computed(() => {
   return currentTheme.value === 'light' ? '#ccc' : '#555'
 })
 const enabledColor = computed(() => {
-  return currentTheme.value === 'light' ? '#165dff' : '#ffcc33'
+  return currentTheme.value === 'light' ? themeConfig.colors.primary : '#ffcc33'
 })
 </script>
 

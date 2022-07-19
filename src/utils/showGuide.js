@@ -3,7 +3,7 @@ import { getDbStorageItem, setDbStorageItem } from '@/utils/storage.js'
 
 let tour
 
-export function 显示引导 (params, localName) {
+export function 显示引导(params, localName) {
   tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
@@ -24,7 +24,7 @@ export function 显示引导 (params, localName) {
     classes: params.classes,
     buttons: [
       {
-        action () {
+        action() {
           // 如果传了localName且存储中不存在，则存储
           if (localName && !getDbStorageItem(localName)) {
             setDbStorageItem(localName, new Date().getTime())
@@ -38,10 +38,10 @@ export function 显示引导 (params, localName) {
   tour.start()
 }
 
-export function 清除引导 () {
+export function 清除引导() {
   tour?.cancel()
 }
 
-export function resetGuide () {
+export function resetGuide() {
   tour = undefined
 }

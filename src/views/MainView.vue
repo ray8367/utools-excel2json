@@ -616,7 +616,7 @@ onKeyStroke('Tab', e => {
     transform: scale(0.8) rotate(180deg);
   }
   &.active {
-    color: $primary-color;
+    color: theme('colors.primary');
   }
 }
 .setting_icon {
@@ -626,7 +626,7 @@ onKeyStroke('Tab', e => {
     transform: rotate(60deg);
   }
   &:active {
-    color: $primary-color;
+    color: theme('colors.primary');
     transform: scale(0.8) rotate(60deg);
   }
 }
@@ -647,7 +647,7 @@ onKeyStroke('Tab', e => {
   }
 
   ::v-deep(.arco-textarea-focus) {
-    border-color: $primary-color;
+    border-color: theme('colors.primary');
   }
 }
 
