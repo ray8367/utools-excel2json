@@ -4,7 +4,7 @@ const utools = window.utools
 
 const OSRules = [
   { condition: () => utools.isWindows(), OSName: 'Windows' },
-  { condition: () => utools.isMacOs(), OSName: 'MacOS' },
+  { condition: () => utools.isMacOs(), OSName: 'macOS' },
   { condition: () => utools.isLinux(), OSName: 'Linux' }
 ]
 

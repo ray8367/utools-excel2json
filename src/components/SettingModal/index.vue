@@ -418,7 +418,7 @@ function 计算快捷键文案() {
   const m = new Map([
     ['Windows', 'Ctrl+Shift+C'],
     ['Linux', 'Ctrl+Shift+C'],
-    ['MacOS', 'Command+Shift+C']
+    ['macOS', 'Command+Shift+C']
   ])
   return m.get(currentOS.value) || 'Ctrl+Shift+C / Command+Shift+C'
 }

@@ -9,7 +9,7 @@ export default function (utools) {
   function 关闭当前窗口() {
     if (['Windows', 'Linux'].includes(currentOS.value)) {
       utools.simulateKeyboardTap('f4', 'alt')
-    } else if (currentOS.value === 'MacOS') {
+    } else if (currentOS.value === 'macOS') {
       utools.simulateKeyboardTap('w', 'commond', 'shfit')
     }
   }

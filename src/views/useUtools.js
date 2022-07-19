@@ -30,7 +30,7 @@ export default function (设置弹框Ref, 用户输入, 改变命名模式类型
   // 粘贴
   async function 粘贴() {
     if (!utools) return
-    const key = currentOS.value === 'MacOS' ? 'command' : 'ctrl'
+    const key = currentOS.value === 'macOS' ? 'command' : 'ctrl'
     await utools.simulateKeyboardTap('v', key)
   }
 

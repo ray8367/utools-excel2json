@@ -29,7 +29,7 @@ const 错误信息 = {
   InnerApiNeedAccountInfo: 'Service aksk请求内部服务时缺少了账号信息',
   // FlowLimitExceeded: '请求过于频繁，超出了基本限速',
   ServiceUnavailableTemp: '处于熔断状态的服务暂时不可访问，稍后重试',
-  MethodNotAllowed: 'Http method不合法',
+  MethodNotAllowed: 'HTTP method不合法',
   LackProjectPolicy: '请求需要验证Project的权限，当前Project权限验证不合法',
   ServiceNotFound: '请求的服务不存在。',
   InvalidAccessKey: '请求的Access Key不合法。',
