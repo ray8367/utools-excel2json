@@ -38,9 +38,8 @@ export default defineConfig({
     chunkSplitPlugin({
       strategy: 'default',
       customSplitting: {
-        utils: [/src\/utils/],
-        assets: [/src\/assets/],
-        'component-library': ['@arco-design/web-vue']
+        customize: [/src\/utils/, /src\/assets/],
+        componentLibrary: ['@arco-design/web-vue']
       }
     })
   ],
