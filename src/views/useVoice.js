@@ -59,43 +59,48 @@ export default function (form和to的数组, 结果对象) {
   }
 
   function websocketonmessage(e) {
-    console.log('websocketonmessage :', e)
+    // console.log('websocketonmessage :', e)
     const { data } = e
     if (typeof data === 'string') {
       if (data.indexOf('Path:turn.end') >= 0) {
-        console.log('已完成')
-        websock.value.close()
-        // resolve(final_data);
-        console.log('bufferData ', bufferData)
+        console.log('数据接受已完成')
+        console.log('bufferData ', u8Array)
         朗读loading.value = false
         朗读音频()
+        // setTimeout(() => {
+        // }, 0)
       }
     } else {
-      console.log(typeof data)
+      // console.log(typeof data) // object
       splicingData(data)
     }
   }
 
-  let bufferData = new Uint8Array([])
-  function splicingData(data) {
-    console.log('splicingData ', data)
-    data.arrayBuffer().then(buffer => {
-      // 返回类型为Blob的data
-      bufferData = new Uint8Array([...bufferData, ...new Uint8Array(buffer)])
-    })
+  let u8Array = new Uint8Array([])
+  // 拼接
+  async function splicingData(data) {
+    var buffer = await data.arrayBuffer()
+    console.log('buffer', buffer)
+    const u8Data = new Uint8Array(buffer)
+    // console.log('u8Array.length', u8Array.length)
+    // u8Array.set(u8Data, u8Array.length)
+
+    u8Array = concatenate(Uint8Array, u8Array, u8Data)
+    // u8Array = new Uint8Array([...u8Array, ...new Uint8Array(buffer)])
   }
 
-  function websocketonopen(e) {
-    console.log('websocketonopen :', e)
-    sendData()
-  }
-
-  function websocketonerror(e) {
-    console.log('websocketonerror :', e)
-  }
-
-  function websocketclose(e) {
-    console.log('websocketclose :', e)
+  function concatenate(constructor, ...arrays) {
+    let length = 0
+    for (let arr of arrays) {
+      length += arr.length
+    }
+    let result = new constructor(length)
+    let offset = 0
+    for (let arr of arrays) {
+      result.set(arr, offset)
+      offset += arr.length
+    }
+    return result
   }
 
   function getXTime() {
@@ -154,11 +159,18 @@ export default function (form和to的数组, 结果对象) {
     // 客户端接收服务端数据时触发
     websock.value.onmessage = websocketonmessage
     // 连接建立时触发
-    websock.value.onopen = websocketonopen
+    websock.value.onopen = e => {
+      console.log('websocketonopen :', e)
+      sendData()
+    }
     // 通信发生错误时触发
-    websock.value.onerror = websocketonerror
+    websock.value.onerror = e => {
+      console.log('websocketonerror :', e)
+    }
     // 连接关闭时触发
-    websock.value.onclose = websocketclose
+    websock.value.onclose = e => {
+      console.log('websocketclose :', e)
+    }
 
     sockConnentParams.value = {
       text,
@@ -178,7 +190,7 @@ export default function (form和to的数组, 结果对象) {
     const express = 'general' // 发音风格
     const pitch = 1 // 语调
 
-    bufferData = new Uint8Array([])
+    u8Array = new Uint8Array([])
 
     getTTSData(
       text,
@@ -192,15 +204,17 @@ export default function (form和to的数组, 结果对象) {
     updateLog('朗读')
   }
 
-  function bufToFile(buf, filename) {
-    return new File([buf], filename)
-  }
-
   function 朗读音频() {
-    const file = bufToFile(bufferData, 'a.mp3')
-    console.log('file', file)
-    音频Url.value = window.URL.createObjectURL(file)
+    // buffer 转为blob并播放
+    console.log('朗读音频')
+    const blob = new Blob([u8Array.buffer], {
+      type: 'audio/mp3'
+    })
+    console.log('blob', blob)
+    console.log('blob.size', blob.size)
+    音频Url.value = window.URL.createObjectURL(blob)
     正在播放.value = true
+    console.log('播完了...')
   }
 
   // // 播放语音 - preload 调用方法
@@ -220,13 +234,14 @@ export default function (form和to的数组, 结果对象) {
   //   updateLog('朗读')
   // }
 
-  // async function 发起朗读请求(声音, 语速) {
+  // async function 发起朗读请求0(声音, 语速) {
   //   const params = {
   //     voice: 声音,
   //     rate: 语速,
   //     text: 结果对象.数据?.结果文字
   //   }
   //   const 原始文件流 = await 语音朗读生成base64(params)
+  //   console.log('原始文件流', 原始文件流)
   //   if (原始文件流.type === 'audio/mp3') {
   //     音频Url.value = window.URL.createObjectURL(原始文件流)
   //     正在播放.value = true
