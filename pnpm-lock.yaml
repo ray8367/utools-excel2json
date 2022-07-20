@@ -17,7 +17,6 @@ specifiers:
   eslint-plugin-vue: ^9.2.0
   got: 11.8.5
   lodash-es: ^4.17.21
-  modern-css-reset: ^1.4.0
   nanoid: ^4.0.0
   pinia: ^2.0.16
   prettier: ^2.7.1
@@ -40,7 +39,6 @@ dependencies:
   dayjs: 1.11.3
   got: 11.8.5
   lodash-es: 4.17.21
-  modern-css-reset: 1.4.0
   nanoid: 4.0.0
   pinia: 2.0.16_vue@3.2.37
   shepherd.js: 10.0.0
@@ -2002,10 +2000,6 @@ packages:
       pathe: 0.3.2
       pkg-types: 0.3.3
     dev: true
-
-  /modern-css-reset/1.4.0:
-    resolution: {integrity: sha512-0crZmSFmrxkI7159rvQWjpDhy0u4+Awg/iOycJdlVn0RSeft/a+6BrQHR3IqvmdK25sqt0o6Z5Ap7cWgUee2rw==}
-    dev: false
 
   /mrmime/1.0.1:
     resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}

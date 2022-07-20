@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite --port 6789 --open",
-    "build": "vite build && node ./build/index.js",
+    "build": "vite build",
     "lint": "eslint --fix --ext .js,.vue src",
     "preview": "vite preview"
   },
@@ -17,7 +17,6 @@
     "dayjs": "^1.11.3",
     "got": "11.8.5",
     "lodash-es": "^4.17.21",
-    "modern-css-reset": "^1.4.0",
     "nanoid": "^4.0.0",
     "pinia": "^2.0.16",
     "shepherd.js": "^10.0.0",
