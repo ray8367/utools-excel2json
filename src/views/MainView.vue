@@ -101,7 +101,7 @@
             <a-textarea
               v-model="结果对象.数据.结果文字"
               class="rounded-b-8px relative z-1"
-              placeholder="翻译结果"
+              :placeholder="下方placeholder"
               readonly
             />
             <transition v-if="朗读功能 && !是命名模式" name="fade-in-standard">
@@ -228,7 +228,7 @@ const 结果对象 = reactive({
 const 当前翻译api = ref('') // 当前翻译api
 const 设置弹框Ref = ref() // 设置弹窗的ref
 const 用户输入框Ref = ref() // 输入textarea的dom
-
+const 下方placeholder = ref('翻译结果') // 下方placeholder
 const { 朗读功能, 音频Url, 朗读loading, 正在播放, 点击朗读, 重置音频 } =
   use语音朗读模块(form和to的数组, 结果对象)
 
@@ -459,12 +459,14 @@ onMounted(() => {
 
 const 恢复标题 = useTimeoutFn(() => {
   pageTitle.value = '易翻翻译'
+  下方placeholder.value = '翻译结果'
 }, 1000)
 
 // 页面可见性逻辑
 watch(页面可见性, (current, previous) => {
   if (current === 'visible' && previous === 'hidden') {
     pageTitle.value = '欢迎回来🎉 - 易翻翻译'
+    下方placeholder.value = '欢迎回来🎉'
     输入框focus()
     恢复标题.start()
   } else if (current === 'hidden' && previous === 'visible') {

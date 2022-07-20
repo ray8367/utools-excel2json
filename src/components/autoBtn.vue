@@ -14,7 +14,8 @@
         :class="[
           props.modelValue
             ? 'active i-simple-icons-adobeillustrator'
-            : 'disabled i-icon-park-outline-adobe-illustrate text-24px'
+            : 'disabled i-icon-park-outline-adobe-illustrate text-24px',
+          currentTheme === 'dark' && 'dark'
         ]"
       />
     </div>
@@ -30,20 +31,20 @@ const props = defineProps({
     type: Boolean
   }
 })
-const disabledColor = computed(() => {
-  return currentTheme.value === 'light' ? '#ccc' : '#555'
-})
-const enabledColor = computed(() => {
-  return currentTheme.value === 'light' ? '#165dff' : '#ffcc33'
-})
 </script>
 
 <style lang="scss" scoped>
 .active {
-  color: v-bind(enabledColor);
+  color: theme('colors.primary');
+  &.dark {
+    color: #ffcc33;
+  }
 }
 .disabled {
-  color: v-bind(disabledColor);
+  color: #ccc;
+  &.dark {
+    color: #555;
+  }
 }
 .btn_wrapper {
   aspect-ratio: 1 / 1;
