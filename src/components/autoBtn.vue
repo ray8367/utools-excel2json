@@ -23,8 +23,6 @@
 
 <script setup>
 import { useGlobalStore } from '@/store/globalData.js'
-import UnoConfig from '/unocss.config.js'
-const themeConfig = UnoConfig.theme
 const globalStore = useGlobalStore()
 const { currentTheme } = storeToRefs(globalStore)
 const props = defineProps({
@@ -36,7 +34,7 @@ const disabledColor = computed(() => {
   return currentTheme.value === 'light' ? '#ccc' : '#555'
 })
 const enabledColor = computed(() => {
-  return currentTheme.value === 'light' ? themeConfig.colors.primary : '#ffcc33'
+  return currentTheme.value === 'light' ? '#165dff' : '#ffcc33'
 })
 </script>
 
