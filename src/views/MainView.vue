@@ -144,7 +144,7 @@
                   @click="复制按钮事件(2)"
                 >
                   <template #icon>
-                    <i i-line-md-minus class="text-18px v-bottom" />
+                    <i i-line-md-minus class="text-18px" />
                   </template>
                   复制并隐藏
                 </ColorfulBtn>

@@ -10,12 +10,11 @@
     </template>
     <div class="btn_wrapper">
       <i
+        i-simple-icons-adobeillustrator
         class="text-20px rounded-2px overflow-hidden"
         :class="[
-          props.modelValue
-            ? 'active i-simple-icons-adobeillustrator'
-            : 'disabled i-icon-park-outline-adobe-illustrate text-24px',
-          currentTheme === 'dark' && 'dark'
+          props.modelValue ? 'active' : 'disabled',
+          currentTheme === 'dark' && 'dark_icon'
         ]"
       />
     </div>
@@ -36,13 +35,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 .active {
   color: theme('colors.primary');
-  &.dark {
+  &.dark_icon {
     color: #ffcc33;
   }
 }
 .disabled {
-  color: #ccc;
-  &.dark {
+  color: #ddd;
+  &.dark_icon {
     color: #555;
   }
 }

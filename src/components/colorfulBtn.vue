@@ -6,10 +6,12 @@
     @mousedown="显示波纹($event)"
     @mouseup="清除波纹()"
   >
-    <span class="relative z-20">
+    <div class="relative z-20 flex-c space-x-8px">
       <slot name="icon"></slot>
-      <slot></slot>
-    </span>
+      <div class="leading-none flex-c">
+        <slot></slot>
+      </div>
+    </div>
     <div class="ripple_wrapper absolute top-0 right-0 bottom-0 left-0">
       <span
         v-for="item in 波纹数组"
@@ -63,7 +65,7 @@ function 删除第一个波纹dom() {
 .colorful_btn_main {
   border: 1px solid #eeeeee;
   transition: all 0.2s ease;
-  --at-apply: grid-c w-112px h-34px relative overflow-hidden rounded-4px bg-white shadow-lg text-[#333] hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-8 text-[#d1d1d1]);
+  --at-apply: flex-c w-112px h-34px relative overflow-hidden rounded-4px bg-white shadow-lg text-[#333] hover:shadow-md active:shadow-sm dark:(bg-dark-400 text-shadow-xl shadow-dark-8 text-[#d1d1d1]);
 }
 
 .ripple_wrapper {
