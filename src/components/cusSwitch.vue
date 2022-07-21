@@ -44,8 +44,9 @@ function changeVal(e) {
     --at-apply: absolute-y-center left-4px h-70% aspect-ratio-square bg-white rounded-full
       transition-all;
   }
-  &:active:after {
-    aspect-ratio: 4/3;
-  }
+  // 点击时的样式
+  // &:active:after {
+  //   aspect-ratio: 4/3;
+  // }
 }
 </style>
