@@ -16,7 +16,7 @@ html {
       }
 
       .arco-textarea-focus {
-        @apply border-#777;
+        @apply I_border-#777;
       }
 
       .arco-textarea {
@@ -24,8 +24,7 @@ html {
       }
 
       .arco-radio-checked {
-        @apply text-white;
-        background-color: #222 !important;
+        @apply text-white I_bg-#222;
         text-shadow: 0 3px 15px #ffffffb8 !important;
       }
 
@@ -65,7 +64,7 @@ html {
     // 深色下的波纹按钮
     .colorful_btn_main {
       .ripple_wrapper {
-        span[dynamic='true'] {
+        span[dynamic="true"] {
           background: linear-gradient(
             45deg,
             #1900ff77,

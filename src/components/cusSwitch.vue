@@ -1,7 +1,7 @@
 <template>
   <input
     id="switch"
-    class="cus_switch"
+    class="cus_switch im_aa"
     type="checkbox"
     :checked="props.modelValue"
     @input="changeVal($event)"
@@ -27,10 +27,10 @@ function changeVal(e) {
   @apply h-0 w-0 invisible select-none transition-all;
   &:checked {
     & + .cus_switch_label {
-      background: $primary-color;
+      @apply bg-primary dark:bg-dark-primary;
       &:after {
         left: calc(100% - 4px);
-        transform: translate(-100%,-50%);
+        transform: translate(-100%, -50%);
       }
     }
   }

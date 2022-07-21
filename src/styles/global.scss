@@ -42,6 +42,11 @@ body,
   background-color: #fff;
 }
 
+// 深色主色的颜色值
+body[arco-theme='dark'] {
+  --arcoblue-6: 247, 186, 42;
+}
+
 .code_font-family {
   font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas, 'HarmonyOS Sans SC',
     'HarmonyOS' !important;
@@ -64,16 +69,16 @@ body,
 @keyframes stroke_light {
   0% {
     fill: #0000;
-    stroke: rgba($primary-color, $alpha: 0.6);
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
     stroke-width: 0.8;
+    @apply stroke-primary:60;
   }
 
   50% {
     fill: #0000;
-    stroke: rgba($primary-color, $alpha: 0.3);
     stroke-width: 1.2;
+    @apply stroke-primary:30;
   }
 
   70% {

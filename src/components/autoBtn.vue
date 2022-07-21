@@ -12,10 +12,7 @@
       <i
         i-simple-icons-adobeillustrator
         class="text-20px rounded-2px overflow-hidden"
-        :class="[
-          props.modelValue ? 'active' : 'disabled',
-          currentTheme === 'dark' && 'dark_icon'
-        ]"
+        :class="[props.modelValue ? 'active' : 'disabled']"
       />
     </div>
   </a-tooltip>
@@ -34,19 +31,15 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .active {
-  color: theme('colors.primary');
-  &.dark_icon {
-    color: #ffcc33;
-  }
+  @apply text-primary dark:text-dark-primary;
+  // &.dark_icon {
+  //   color: #ffcc33;
+  // }
 }
 .disabled {
-  color: #ddd;
-  &.dark_icon {
-    color: #555;
-  }
+  @apply text-#ddd dark:text-#555;
 }
 .btn_wrapper {
-  aspect-ratio: 1 / 1;
-  @apply select-none w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#f2f3f5] dark:bg-[#3d3d3d]);
+  @apply select-none w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden aspect-ratio-square hover:(bg-[#f2f3f5] dark:bg-[#3d3d3d]);
 }
 </style>

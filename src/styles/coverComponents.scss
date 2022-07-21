@@ -18,7 +18,7 @@
   box-shadow: 0 4px 29px #0000003d !important;
 
   .shepherd-header {
-    background-color: transparent !important;
+    @apply I_bg-transparent;
   }
 
   .shepherd-text,
@@ -28,8 +28,7 @@
   }
 
   .shepherd-text {
-    padding-top: 0 !important;
-    @apply text-#333 leading-relaxed;
+    @apply text-#333 leading-relaxed I_pt-0;
   }
 
   .shepherd-title {
@@ -37,7 +36,7 @@
   }
 
   .shepherd-button {
-    @apply bg-primary text-white py-4px px-16px rounded-2px;
+    @apply bg-primary text-white py-4px px-16px rounded-2px dark:bg-dark-primary;
 
     &:hover {
       filter: brightness(0.9) contrast(200%);
@@ -46,5 +45,5 @@
 }
 
 .shepherd-modal-overlay-container {
-  opacity: 0.4 !important;
+  @apply I_opacity-40;
 }
