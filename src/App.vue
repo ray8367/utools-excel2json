@@ -6,5 +6,3 @@
 import MainView from '@/views/MainView.vue'
 import '@/utils/setTheme.js'
 </script>
-
-<style></style>

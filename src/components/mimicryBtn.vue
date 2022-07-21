@@ -1,5 +1,6 @@
 <template>
   <button
+    border="~ #f2f3f4"
     :disabled="props.loading || props.disabled"
     class="mimicry_btn"
     :class="{ mimicry_btn_disabled: props.loading || props.disabled }"
@@ -48,7 +49,6 @@ const 缩小后的尺寸 = computed(() => {
 }
 
 .mimicry_btn {
-  border: 1px solid #f2f3f4;
   background-image: linear-gradient(
     145deg,
     var(--houdini-colorA) 0%,
@@ -58,8 +58,7 @@ const 缩小后的尺寸 = computed(() => {
   transition: 0.3s --houdini-colorA, 0.3s --houdini-colorB,
     0.1s transform linear, 0.2s box-shadow;
   .text_inner {
-    transition: all 0.1s linear;
-    --at-apply: leading-0;
+    @apply leading-0 transition-all duration-100 ease-linear;
   }
   &:hover,
   &:active {
@@ -73,13 +72,12 @@ const 缩小后的尺寸 = computed(() => {
       transform: scale(v-bind(缩小后的尺寸));
     }
   }
-  --at-apply: p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-4
-    select-none;
+  @apply p-4px z-10 grid-c rounded-8px cursor-pointer text-slate-4 select-none;
 }
 
 // 禁用的样式
 .mimicry_btn_disabled {
-  cursor: not-allowed;
+  @apply cursor-not-allowed;
   &:hover,
   &:active {
     --houdini-colorA: #fff;
@@ -87,9 +85,9 @@ const 缩小后的尺寸 = computed(() => {
   }
   &:active {
     box-shadow: 5px 5px 12px #d9d9d9, -5px -5px 12px #fff;
-    transform: scale(1);
+    @apply scale-100;
     .text_inner {
-      transform: scale(1);
+      @apply scale-100;
     }
   }
 }

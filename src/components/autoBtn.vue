@@ -47,6 +47,6 @@ const props = defineProps({
 }
 .btn_wrapper {
   aspect-ratio: 1 / 1;
-  --at-apply: select-none w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#f2f3f5] dark:bg-[#3d3d3d]);
+  @apply select-none w-32px grid-c cursor-pointer rounded-t-4px transition-all overflow-hidden hover:(bg-[#f2f3f5] dark:bg-[#3d3d3d]);
 }
 </style>

@@ -10,12 +10,12 @@
 
 <style lang="scss" scoped>
 .code_bg {
-  --at-apply: absolute text-100px grid-c left-0 right-0 top-0 bottom-0;
+  @apply absolute text-100px grid-c left-0 right-0 top-0 bottom-0;
   svg {
     width: 415px;
     text {
       animation: stroke_light 2s ease;
-      --at-apply: text-100px animate-fill-both;
+      @apply text-100px animate-fill-both;
       font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas,
         'Liberation Mono', 'Courier New', monospace;
     }

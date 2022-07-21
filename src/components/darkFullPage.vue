@@ -8,7 +8,7 @@
 
 <style lang="scss" scoped>
 .moon {
-  --at-apply: relative w-200px h-200px rounded-full;
+  @apply relative w-200px h-200px rounded-full;
   border-top: 5px solid #fff;
   transform: rotate(60deg);
   filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #fff)

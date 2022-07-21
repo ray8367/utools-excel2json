@@ -24,7 +24,7 @@ function changeVal(e) {
 
 <style lang="scss" scoped>
 .cus_switch {
-  --at-apply: h-0 w-0 invisible select-none transition-all;
+  @apply h-0 w-0 invisible select-none transition-all;
   &:checked {
     & + .cus_switch_label {
       background: $primary-color;
@@ -37,11 +37,11 @@ function changeVal(e) {
 }
 
 .cus_switch_label {
-  --at-apply: cursor-pointer -indent-999 w-40px h-24px block rounded-full relative
+  @apply cursor-pointer -indent-999 w-40px h-24px block rounded-full relative
     bg-gray select-none dark:bg-[#3c3c3f];
   &::after {
     content: '';
-    --at-apply: absolute-y-center left-4px h-70% aspect-ratio-square bg-white rounded-full
+    @apply absolute-y-center left-4px h-70% aspect-ratio-square bg-white rounded-full
       transition-all;
   }
   // 点击时的样式

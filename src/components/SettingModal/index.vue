@@ -492,6 +492,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .text_important {
-  --at-apply: text-red-500 font-bold;
+  @apply text-red-500 font-bold;
 }
 </style>

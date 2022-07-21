@@ -39,8 +39,8 @@
           </a-radio>
         </a-radio-group>
         <div
-          border="solid #f2f3f5 b-width-1px dark:#3d3d3d"
-          class="flex-1 flex justify-end items-center space-x-8px"
+          border="#f2f3f5 b-width-1px dark:#3d3d3d"
+          class="flex flex-1 justify-end items-center space-x-8px"
         >
           <!-- 命名翻译模式的select -->
           <template v-if="是命名模式">
@@ -90,7 +90,7 @@
           <transition name="fade-in-standard">
             <Loading
               v-if="翻译加载"
-              border="solid #e9e9e9 width-1px"
+              border="~ #e9e9e9"
               class="rounded-b-8px absolute top-0 z-100"
             />
           </transition>
@@ -600,35 +600,34 @@ onKeyStroke('Tab', e => {
 
 <style lang="scss" scoped>
 .main_wrapper {
-  --at-apply: grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
+  @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
   .main {
-    --at-apply: p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] bg-dark-3 shadow-lg );
+    @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] bg-dark-3 shadow-lg );
   }
 }
 .icon {
-  transition: all 250ms ease;
-  --at-apply: text-22px text-[#999] cursor-pointer hover: text-[#666];
+  @apply text-22px text-[#999] cursor-pointer transition-all duration-250 hover:text-[#666];
 }
 .code_icon {
-  --at-apply: absolute left-4px bottom-4px;
+  @apply absolute left-4px bottom-4px;
   &:hover {
-    transform: rotate(180deg);
+    @apply rotate-180deg;
   }
   &:active {
     transform: scale(0.8) rotate(180deg);
   }
   &.active {
-    color: theme('colors.primary');
+    @apply text-primary;
   }
 }
 .setting_icon {
-  --at-apply: absolute right-4px bottom-4px;
+  @apply absolute right-4px bottom-4px;
 
   &:hover {
-    transform: rotate(60deg);
+    @apply rotate-60deg;
   }
   &:active {
-    color: theme('colors.primary');
+    @apply text-primary;
     transform: scale(0.8) rotate(60deg);
   }
 }
@@ -636,37 +635,33 @@ onKeyStroke('Tab', e => {
 // 文本域公用样式
 .text_wrapper {
   ::v-deep(.arco-textarea) {
-    height: 100%;
-    padding-right: 26px;
-    padding-bottom: 50px;
     font-size: v-bind(文字尺寸);
-    resize: none;
+    @apply h-full pr-26px pb-50px resize-none;
   }
 
   ::v-deep(.arco-textarea-wrapper) {
-    background-color: transparent;
-    border-color: #e9e9e9;
+    @apply border-#e9e9e9 bg-transparent;
   }
 
   ::v-deep(.arco-textarea-focus) {
-    border-color: theme('colors.primary');
+    @apply border-primary;
   }
 }
 
 // 下面的文本域样式
 .text_readonly {
-  position: relative;
+  @apply relative;
   ::v-deep(.arco-textarea-focus) {
-    border-color: #e9e9e9;
+    @apply border-#e9e9e9;
   }
 }
 
 .tools_wrapper {
   ::v-deep(.arco-select-view-single) {
-    --at-apply: px-16px;
+    @apply px-16px;
   }
   ::v-deep(.arco-select-view-value) {
-    display: grid;
+    @apply grid;
   }
 }
 </style>
