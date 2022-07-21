@@ -32,9 +32,6 @@ const props = defineProps({
 <style lang="scss" scoped>
 .active {
   @apply text-primary dark:text-dark-primary;
-  // &.dark_icon {
-  //   color: #ffcc33;
-  // }
 }
 .disabled {
   @apply text-#ddd dark:text-#555;
