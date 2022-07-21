@@ -662,6 +662,9 @@ onKeyStroke('Tab', e => {
 }
 
 .tools_wrapper {
+  ::v-deep(.arco-select-view-single) {
+    --at-apply: px-16px;
+  }
   ::v-deep(.arco-select-view-value) {
     display: grid;
   }
