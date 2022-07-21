@@ -466,7 +466,7 @@ const 恢复标题 = useTimeoutFn(() => {
 watch(页面可见性, (current, previous) => {
   if (current === 'visible' && previous === 'hidden') {
     pageTitle.value = '欢迎回来🎉 - 易翻翻译'
-    下方placeholder.value = '欢迎回来🎉'
+    下方placeholder.value = '欢迎回来~🎉'
     输入框focus()
     恢复标题.start()
   } else if (current === 'hidden' && previous === 'visible') {
