@@ -465,8 +465,9 @@ const 恢复标题 = useTimeoutFn(() => {
 // 页面可见性逻辑
 watch(页面可见性, (current, previous) => {
   if (current === 'visible' && previous === 'hidden') {
-    pageTitle.value = '欢迎回来🎉 - 易翻翻译'
-    下方placeholder.value = '欢迎回来~🎉'
+    const 欢迎词 = '欢迎回来~🎉'
+    pageTitle.value = `${欢迎词} - 易翻翻译`
+    下方placeholder.value = 欢迎词
     输入框focus()
     恢复标题.start()
   } else if (current === 'hidden' && previous === 'visible') {
@@ -658,7 +659,7 @@ onKeyStroke('Tab', e => {
 
 .tools_wrapper {
   ::v-deep(.arco-select-view-single) {
-    @apply px-16px;
+    @apply px-22px;
   }
   ::v-deep(.arco-select-view-value) {
     @apply grid;

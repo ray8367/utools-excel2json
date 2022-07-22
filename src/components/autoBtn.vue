@@ -11,7 +11,7 @@
     <div class="btn_wrapper">
       <i
         i-simple-icons-adobeillustrator
-        class="text-18px rounded-2px overflow-hidden"
+        class="text-19px rounded-2px overflow-hidden"
         :class="[props.modelValue ? 'active' : 'disabled']"
       />
     </div>
