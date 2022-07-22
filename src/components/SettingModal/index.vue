@@ -367,7 +367,7 @@ import { useGlobalStore } from '@/store/globalData.js'
 import SettingCard from '../settingCard.vue'
 const globalStore = useGlobalStore()
 const { currentOS } = storeToRefs(globalStore)
-const modal可见 = ref(true) // 弹框的显隐
+const modal可见 = ref(false) // 弹框的显隐
 const emit = defineEmits(['ok', 'cancel', 'reset'])
 const formData = reactive({
   homeHasApi: ['baidu', 'tencent', 'youdao', 'ali'], // 首页展示的翻译方式
