@@ -64,7 +64,7 @@ html {
     // 深色下的波纹按钮
     .colorful_btn_main {
       .ripple_wrapper {
-        span[dynamic="true"] {
+        span[dynamic='true'] {
           background: linear-gradient(
             45deg,
             #1900ff77,
@@ -86,6 +86,17 @@ html {
         text {
           animation: stroke_dark 2s ease;
           animation-fill-mode: both;
+        }
+      }
+    }
+    .setting_card {
+      box-shadow: 9px 9px 18px #232324;
+      &:hover {
+        box-shadow: 6px 6px 8px #222222;
+        .title_wrapper {
+          text-shadow: 2px 2px 7px #555;
+          --offset: 4px;
+          text-decoration-color: theme('colors.darkPrimary');
         }
       }
     }
