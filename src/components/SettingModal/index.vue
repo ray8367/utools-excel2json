@@ -46,7 +46,7 @@
         </setting-card>
         <a-form auto-label-width :model="formData">
           <a-row>
-            <section class="mt-16px space-y-24px flex-1">
+            <section class="mt-24px space-y-24px flex-1">
               <setting-card title="基本设置">
                 <a-col :span="20">
                   <a-form-item label="翻译方式">
