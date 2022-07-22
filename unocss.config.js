@@ -7,7 +7,7 @@ import {
   transformerVariantGroup
 } from 'unocss'
 import presetRemToPx from '@unocss/preset-rem-to-px'
-
+import { primaryColor, darkPrimaryColor } from './src/config/colorConfig.js'
 export default defineConfig({
   shortcuts: [
     {
@@ -34,10 +34,8 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: '#165dff', // 浅色主色的颜色值
-      // darkPrimary: '#f7ba2a' // 深色主色的颜色值
-      // darkPrimary: '#f68805' // 深色主色的颜色值
-      darkPrimary: '#646cff' // 深色主色的颜色值
+      primary: primaryColor,
+      darkPrimary: darkPrimaryColor
     }
   },
   transformers: [transformerDirectives(), transformerVariantGroup()],
