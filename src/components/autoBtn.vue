@@ -11,7 +11,7 @@
     <div class="btn_wrapper">
       <i
         i-simple-icons-adobeillustrator
-        class="text-20px rounded-2px overflow-hidden"
+        class="text-18px rounded-2px overflow-hidden"
         :class="[props.modelValue ? 'active' : 'disabled']"
       />
     </div>
@@ -31,7 +31,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .active {
-  @apply text-primary dark:text-dark-primary;
+  @apply text-primary dark:text-#ffcc33;
 }
 .disabled {
   @apply text-#ddd dark:text-#555;
