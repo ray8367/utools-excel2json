@@ -25,7 +25,7 @@ export const 声音映射 = {
   zh: {
     male: 获取发音人('云健'),
     female: 获取发音人('晓秋'),
-    default: 获取发音人('云健')
+    default: 获取发音人('晓秋')
   },
   en: {
     male: 获取发音人('Guy'),

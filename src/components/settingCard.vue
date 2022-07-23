@@ -4,7 +4,7 @@
     class="setting_card rounded-4px overflow-hidden w-full"
   >
     <div
-      class="title_wrapper bg-#2f54ea:7 leading-32px px-22px text-16px select-none dark:(bg-#333)"
+      class="title_wrapper bg-#2f54ea:7 flex items-center py-4px px-22px text-16px select-none dark:(bg-#333)"
     >
       <slot name="title">{{ props.title }}</slot>
     </div>

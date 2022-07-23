@@ -173,26 +173,21 @@
                     </a-radio-group>
                   </a-form-item>
                 </a-col>
-              </setting-card>
-
-              <setting-card>
-                <template #title>
-                  实验性功能
-                  <hover-answer>
-                    这些功能处于实验性，可以尝鲜使用，但不保证其稳定性
-                  </hover-answer>
-                </template>
                 <a-col :span="20">
                   <a-form-item label="语音朗读">
                     <template #label>
                       <div class="space-x-4px">
                         <span>语音朗读</span>
                         <hover-answer>
-                          如果出现朗读失败，你可以尝试减少需要朗读的文字（100字以内），字多了基本都会失败
+                          如果出现朗读失败，可以用以下方式解决<br />
+                          <ul class="list-disc pl-16px">
+                            <li>再次点击按钮重试</li>
+                            <li>减少需要朗读的文字</li>
+                            <li>使用一个更科学的上网方式</li>
+                          </ul>
                         </hover-answer>
                       </div>
                     </template>
-                    <!-- <a-checkbox v-model="formData.readAloud" /> -->
                     <cus-switch v-model="formData.readAloud" />
                   </a-form-item>
                 </a-col>

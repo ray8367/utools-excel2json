@@ -260,7 +260,7 @@ function 格式化级联显示内容(options) {
     h(
       'i',
       {
-        class: 'i-system-uicons-arrow-right text-22px flex-1 absolute-center'
+        class: 'i-gg-arrow-right text-22px flex-1 absolute-center'
       },
       ''
     ),
