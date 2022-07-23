@@ -8,7 +8,7 @@
     >
       <slot name="title">{{ props.title }}</slot>
     </div>
-    <div class="px-18px pt-18px">
+    <div class="px-18px pt-16px">
       <slot></slot>
     </div>
   </div>

@@ -19,7 +19,7 @@ specifiers:
   nanoid: ^4.0.0
   pinia: ^2.0.16
   prettier: ^2.7.1
-  sass: ^1.53.0
+  sass: ^1.54.0
   shepherd.js: ^10.0.0
   terser: ^5.14.2
   unocss: ^0.44.5
@@ -52,12 +52,12 @@ devDependencies:
   eslint-plugin-prettier: 4.2.1_vvfpqh5kol6rhqy7beehv5uezq
   eslint-plugin-vue: 9.2.0_eslint@8.20.0
   prettier: 2.7.1
-  sass: 1.53.0
+  sass: 1.54.0
   terser: 5.14.2
   unocss: 0.44.5_vite@3.0.2
   unplugin-auto-import: 0.9.5_h424so5tb623alsee2e3aarhfi
   unplugin-vue-components: 0.21.1_vite@3.0.2+vue@3.2.37
-  vite: 3.0.2_sass@1.53.0+terser@5.14.2
+  vite: 3.0.2_sass@1.54.0+terser@5.14.2
   vite-plugin-chunk-split: 0.2.4_vite@3.0.2
 
 packages:
@@ -400,7 +400,7 @@ packages:
       '@unocss/scope': 0.44.5
       '@unocss/transformer-directives': 0.44.5
       magic-string: 0.26.2
-      vite: 3.0.2_sass@1.53.0+terser@5.14.2
+      vite: 3.0.2_sass@1.54.0+terser@5.14.2
     dev: true
 
   /@vitejs/plugin-vue/3.0.1_vite@3.0.2+vue@3.2.37:
@@ -410,7 +410,7 @@ packages:
       vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 3.0.2_sass@1.53.0+terser@5.14.2
+      vite: 3.0.2_sass@1.54.0+terser@5.14.2
       vue: 3.2.37
     dev: true
 
@@ -1948,8 +1948,8 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /sass/1.53.0:
-    resolution: {integrity: sha512-zb/oMirbKhUgRQ0/GFz8TSAwRq2IlR29vOUJZOx0l8sV+CkHUfHa4u5nqrG+1VceZp7Jfj59SVW9ogdhTvJDcQ==}
+  /sass/1.54.0:
+    resolution: {integrity: sha512-C4zp79GCXZfK0yoHZg+GxF818/aclhp9F48XBu/+bm9vXEVAYov9iU3FBVRMq3Hx3OA4jfKL+p2K9180mEh0xQ==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -2272,7 +2272,7 @@ packages:
     dependencies:
       acorn: 8.7.1
       chokidar: 3.5.3
-      vite: 3.0.2_sass@1.53.0+terser@5.14.2
+      vite: 3.0.2_sass@1.54.0+terser@5.14.2
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.4
     dev: true
@@ -2308,10 +2308,10 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
     dependencies:
-      vite: 3.0.2_sass@1.53.0+terser@5.14.2
+      vite: 3.0.2_sass@1.54.0+terser@5.14.2
     dev: true
 
-  /vite/3.0.2_sass@1.53.0+terser@5.14.2:
+  /vite/3.0.2_sass@1.54.0+terser@5.14.2:
     resolution: {integrity: sha512-TAqydxW/w0U5AoL5AsD9DApTvGb2iNbGs3sN4u2VdT1GFkQVUfgUldt+t08TZgi23uIauh1TUOQJALduo9GXqw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -2334,7 +2334,7 @@ packages:
       postcss: 8.4.14
       resolve: 1.22.1
       rollup: 2.76.0
-      sass: 1.53.0
+      sass: 1.54.0
       terser: 5.14.2
     optionalDependencies:
       fsevents: 2.3.2
