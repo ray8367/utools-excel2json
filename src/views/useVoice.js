@@ -1,7 +1,10 @@
 /** 语音朗读相关业务 */
 import { storeToRefs } from 'pinia'
 import { 用户设置存储 } from '@/store/userSetting'
-import { 语音朗读生成base64 } from '@/apis/mstts/index.js'
+import {
+  语音朗读生成base64,
+  语音朗读生成ArrayBuffer
+} from '@/apis/mstts/index.js'
 import { 声音映射 } from '@/apis/mstts/data.js'
 import { updateLog } from '@/apis/log'
 import { Message as 提示 } from '@arco-design/web-vue'
@@ -23,7 +26,11 @@ export default function (form和to的数组, 结果对象) {
     const 声音 = 声音对象[朗读性别偏好.value]
     const 语速 = 声音对象.rate || 1
     朗读loading.value = true
-    await 播放音频(声音, 语速)
+    if (window.utools) {
+      await 播放音频V2(声音, 语速)
+    } else {
+      await 播放音频(声音, 语速)
+    }
     朗读loading.value = false
   }
 
@@ -49,6 +56,19 @@ export default function (form和to的数组, 结果对象) {
     }
 
     updateLog('朗读')
+  }
+
+  // 播放语音
+  async function 播放音频V2(声音, 语速) {
+    const params = {
+      voice: 声音,
+      rate: 语速,
+      text: 结果对象.数据?.结果文字
+    }
+    const arrayBuffer = await 语音朗读生成ArrayBuffer(params)
+    const file = new File([arrayBuffer], 'temp.mp3')
+    音频Url.value = window.URL.createObjectURL(file)
+    正在播放.value = true
   }
 
   return {

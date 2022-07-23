@@ -2,6 +2,7 @@
 
 const google = require('./googleTranslateApi')
 const ali = require('./alicloudApi')
+const mstts = require('./mstts')
 
 const _setImmediate = setImmediate
 const _clearImmediate = clearImmediate
@@ -25,5 +26,34 @@ window.servers = {
   // 阿里翻译
   aliTextTranslate: (params, credential) => {
     return ali.textTranslate(params, credential)
+  },
+
+  // 语音朗读
+  voiceReading: async options => {
+    const defaultOptions = {
+      text: '', // 文本
+      voice: 'zh-CN-YunjianNeural', // 发音角色
+      role: '',
+      express: 'general', // 发音风格
+      rate: 1, // 语速
+      pitch: 1 // 语调
+    }
+
+    const params = {
+      ...defaultOptions,
+      ...options
+    }
+
+    const { text, voice, role, express, rate, pitch } = params
+
+    const mp3buffer = await mstts.getTTSData(
+      text,
+      voice,
+      express,
+      role,
+      (rate - 1) * 100,
+      ((pitch - 1) / 2) * 100
+    )
+    return mp3buffer
   }
 }
