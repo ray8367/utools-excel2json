@@ -5,6 +5,7 @@
       fullscreen
       title-align="start"
       modal-animation-name="zoom-br"
+      body-class="pt-10px"
       @open="打开model()"
       @cancel="modal取消()"
     >
@@ -16,7 +17,7 @@
       </template>
       <div>
         <setting-card title="一些提示">
-          <ul class="mb-10px list-disc pl-16px">
+          <ul class="mb-18px list-disc pl-16px">
             <li>
               插件的功能依赖第三方服务，不幸的是，除谷歌翻译外，其他的您需要自行申请之后才能使用它们
               <i class="text-18px" i-twemoji-slightly-frowning-face></i>
@@ -46,7 +47,7 @@
         </setting-card>
         <a-form auto-label-width :model="formData">
           <a-row>
-            <section class="mt-24px space-y-24px flex-1">
+            <section class="mt-18px space-y-18px flex-1">
               <setting-card title="基本设置">
                 <a-col :span="20">
                   <a-form-item label="翻译方式">
