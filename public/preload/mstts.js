@@ -1,19 +1,19 @@
-const axios = require('axios')
+var got = require('got')
 const { v4: uuidv4 } = require('uuid')
 const ws = require('nodejs-websocket')
 
 async function getAuthToken() {
-  // https://azure.microsoft.com/en-gb/services/cognitive-services/text-to-speech/
-
-  const res = await axios.get(
+  const url =
     'https://azure.microsoft.com/en-gb/services/cognitive-services/text-to-speech/'
-  )
+
+  // const res = await axios.get(url)
+
+  const res = await got(url)
 
   const reg = /token: "(.*?)"/
 
-  if (reg.test(res.data)) {
+  if (reg.test(res.body)) {
     const token = RegExp.$1
-
     return token
   }
 }
@@ -104,9 +104,6 @@ async function getTTSData(
         const cmbData = data.slice(index + 2)
         final_data = Buffer.concat([final_data, cmbData])
       })
-    })
-    connect.on('close', function (code, reason) {
-      console.log({ code, reason })
     })
   })
 }
