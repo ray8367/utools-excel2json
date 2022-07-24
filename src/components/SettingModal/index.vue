@@ -11,7 +11,7 @@
     >
       <template #title>
         <div class="flex items-center space-x-8px">
-          <img src="../../../public/favicon.svg" width="24" />
+          <img src="/favicon.svg" width="24" />
           <span>设置</span>
         </div>
       </template>
