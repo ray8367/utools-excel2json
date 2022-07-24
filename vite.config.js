@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
 import { ArcoResolver } from 'unplugin-vue-components/resolvers'
+import { primaryColor } from './src/config/colorConfig.js'
 
 export default defineConfig({
   base: './',
@@ -18,7 +19,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          'arcoblue-6': '#646cff'
+          'arcoblue-6': primaryColor
         },
         javascriptEnabled: true
       },

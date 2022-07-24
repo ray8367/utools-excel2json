@@ -7,6 +7,7 @@ import {
   transformerVariantGroup
 } from 'unocss'
 import presetRemToPx from '@unocss/preset-rem-to-px'
+import { primaryColor } from './src/config/colorConfig.js'
 export default defineConfig({
   shortcuts: [
     {
@@ -33,7 +34,7 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: '#646cff'
+      primary: primaryColor
     }
   },
   transformers: [transformerDirectives(), transformerVariantGroup()],
