@@ -42,6 +42,11 @@ body,
   background-color: #fff;
 }
 
+// Arco主题色设置过后，深色模式下会对主题色进行一个偏移，这里强制指定深色下主题色的颜色值
+body[arco-theme='dark'] {
+  --arcoblue-6: 100, 108, 255;
+}
+
 .code_font-family {
   font-family: 'JetBrains Mono NL', Menlo, Monaco, Consolas, 'HarmonyOS Sans SC',
     'HarmonyOS' !important;

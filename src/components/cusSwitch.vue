@@ -27,7 +27,7 @@ function changeVal(e) {
   @apply h-0 w-0 invisible select-none transition-all;
   &:checked {
     & + .cus_switch_label {
-      @apply bg-primary dark:bg-dark-primary;
+      @apply bg-primary;
       &:after {
         left: calc(100% - 4px);
         transform: translate(-100%, -50%);

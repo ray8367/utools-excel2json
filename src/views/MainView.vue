@@ -603,7 +603,7 @@ onKeyStroke('Tab', e => {
 .main_wrapper {
   @apply grid-c h-screen overflow-hidden px-24px pb-24px relative dark:(bg-[#303133] text-white);
   .main {
-    @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] bg-dark-3 shadow-lg );
+    @apply p-16px flex flex-col h-full w-full shadow-xl rounded-8px overflow-hidden dark:(shadow-[#161616] bg-dark-300 shadow-lg );
   }
 }
 .icon {
@@ -618,7 +618,7 @@ onKeyStroke('Tab', e => {
     transform: scale(0.8) rotate(180deg);
   }
   &.active {
-    @apply text-primary dark:text-dark-primary;
+    @apply text-primary;
   }
 }
 .setting_icon {
@@ -628,7 +628,7 @@ onKeyStroke('Tab', e => {
     @apply rotate-60deg;
   }
   &:active {
-    @apply text-primary dark:text-dark-primary;
+    @apply text-primary;
     transform: scale(0.8) rotate(60deg);
   }
 }
@@ -645,7 +645,7 @@ onKeyStroke('Tab', e => {
   }
 
   ::v-deep(.arco-textarea-focus) {
-    @apply border-primary dark:border-dark-primary;
+    @apply border-primary;
   }
 }
 
