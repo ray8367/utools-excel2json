@@ -609,10 +609,13 @@ onKeyStroke('Tab', e => {
 .icon {
   @apply text-22px text-[#999] cursor-pointer transition-all duration-250 hover:text-[#666];
 }
+
 .code_icon {
   @apply absolute left-4px bottom-4px;
   &:hover {
-    @apply rotate-180deg;
+    // @apply rotate-180deg;
+    // @apply rotate-179.99999deg;
+    transform: rotateZ(180deg);
   }
   &:active {
     transform: scale(0.8) rotate(180deg);
